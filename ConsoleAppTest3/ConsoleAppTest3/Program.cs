@@ -8,6 +8,7 @@ namespace ConsoleAppTest3
         {
             Console.WriteLine("Hello World!");
             //Verdens bedste stykke kode
+            //Fed kode
         }
     }
 }
