@@ -16,6 +16,7 @@ namespace WebApplication5
 {
     public class Startup
     {
+        //tester fra lars
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
