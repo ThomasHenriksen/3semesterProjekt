@@ -7,6 +7,7 @@ namespace ConsoleAppTest3
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            //Verdens bedste stykke kode
         }
     }
 }
