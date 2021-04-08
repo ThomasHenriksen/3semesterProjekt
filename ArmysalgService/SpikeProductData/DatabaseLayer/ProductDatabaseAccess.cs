@@ -52,9 +52,32 @@ namespace SpikeProductData.DatabaseLayer
            
         }
 
-        public Product GetProductById(int id)
+        /* Three possible returns:
+         * A Person object
+         * An empty Person object (no match on id)
+         * Null - Some error occurred
+        */
+        public Product GetProductById(int findId)
         {
-            throw new NotImplementedException();
+            Product foundProduct = null;
+
+            string queryString = "select productNo, name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted from Product where productNo = @Id";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@Id", findId);
+                readCommand.Parameters.Add(idParam);
+
+                con.Open();
+
+                SqlDataReader productReader = readCommand.ExecuteReader();
+                foundProduct = new Product();
+                while (productReader.Read())
+                {
+                    foundProduct = GetProductFromReader(productReader);
+                }
+            }
+            return foundProduct;
         }
 
         public bool UpdateProduct(Product productToUpdate)
