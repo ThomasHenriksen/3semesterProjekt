@@ -17,9 +17,39 @@ namespace SpikeProductData.DatabaseLayer
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
         }
-        public int CreateProduct(Product productToAdd)
+
+        //For Test 
+        public ProductDatabaseAccess(string inConnectionString)
         {
-            throw new NotImplementedException();
+            _connectionString = inConnectionString;
+        }
+
+        public int CreateProduct(Product aProduct)
+        {
+            int insertedId = -1;
+
+            string insertString = "insert into product (name, description, purchasePrice, status, stock, minStock, maxStock) OUTPUT INSERTED.productNo " +
+                "values (@Name, @Description, @PurchasePrice, @Status, @Stock, @MinStock, @MaxStock)";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+            {
+                SqlParameter nameParam = new SqlParameter("@Name", aProduct.Name);
+                CreateCommand.Parameters.Add(nameParam);
+                SqlParameter descParam = new SqlParameter("@Description", aProduct.Description);
+                CreateCommand.Parameters.Add(descParam);
+                SqlParameter purPriceParam = new SqlParameter("@PurchasePrice", aProduct.PurchasePrice);
+                CreateCommand.Parameters.Add(purPriceParam);
+                SqlParameter statusParam = new SqlParameter("@Status", aProduct.Status);
+                CreateCommand.Parameters.Add(statusParam);
+                SqlParameter stockParam = new SqlParameter("@Stock", aProduct.Stock);
+                CreateCommand.Parameters.Add(stockParam);
+                SqlParameter minStockParam = new SqlParameter("@MinStock", aProduct.MinStock);
+                CreateCommand.Parameters.Add(minStockParam);
+                SqlParameter maxStockParam = new SqlParameter("@MaxStock", aProduct.MaxStock);
+                CreateCommand.Parameters.Add(maxStockParam);
+            }
+            return insertedId;
         }
 
         public bool DeleteProductById(int id)
@@ -100,7 +130,7 @@ namespace SpikeProductData.DatabaseLayer
             tempStatus = productReader.GetString(productReader.GetOrdinal("status"));
             tempStock = productReader.GetInt32(productReader.GetOrdinal("stock"));
             tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
-            tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStoct"));
+            tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
             tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
 
             foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted);
