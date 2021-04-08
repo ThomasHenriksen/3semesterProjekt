@@ -63,9 +63,23 @@ namespace ArmysalgService.Controllers
 
         // URL: api/persons
         [HttpPost]
-        public ActionResult PostNewProduct(ProductdataCreateDto inProduct)
+        public ActionResult<int> PostNewProduct(ProductdataCreateDto inProduct)
         {
-            return null;
+            ActionResult<int> foundReturn;
+            int insertedId = -1;
+            if (inProduct != null)
+            {
+                Product dbProduct = ModelConversion.ProductdataCreateDtoConvert.ToProduct(inProduct);
+                insertedId = _pControl.Add(dbProduct);
+            }
+            if (insertedId > 0)
+            {
+                foundReturn = Ok(insertedId);
+            } else
+            {
+                foundReturn = new StatusCodeResult(500);
+            }
+            return foundReturn; 
         }
 
     }
