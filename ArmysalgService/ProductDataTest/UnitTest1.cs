@@ -33,7 +33,21 @@ namespace ProductDataTest
 
             //Assert
             Assert.True(productsWereRead);
+        }
 
+        [Fact]
+        public void TestGetProductById()
+        {
+            //Arrange
+            int idForProduct1 = 1;
+
+            //Act
+            Product productToRead = _productAccess.GetProductById(idForProduct1);
+            bool product1wasFound = (productToRead.Id == 1);
+            extraOutput.WriteLine("Product name: " + productToRead.Name + " Product ID: " + productToRead.Id);
+
+            //Assert
+            Assert.True(product1wasFound);
         }
     }
 }
