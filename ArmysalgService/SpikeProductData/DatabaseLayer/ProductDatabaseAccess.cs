@@ -48,6 +48,9 @@ namespace SpikeProductData.DatabaseLayer
                 CreateCommand.Parameters.Add(minStockParam);
                 SqlParameter maxStockParam = new SqlParameter("@MaxStock", aProduct.MaxStock);
                 CreateCommand.Parameters.Add(maxStockParam);
+
+                con.Open();
+                insertedId = (int)CreateCommand.ExecuteScalar();
             }
             return insertedId;
         }
