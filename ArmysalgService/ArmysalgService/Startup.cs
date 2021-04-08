@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace ArmysalgService
 {
+    // her er brians ting
     public class Startup
     {
         public Startup(IConfiguration configuration)
