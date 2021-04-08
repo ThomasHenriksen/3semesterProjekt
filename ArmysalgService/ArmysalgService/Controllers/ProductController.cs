@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ArmysalgService.Controllers
 {
-    [Route("api/persons")]
+    [Route("api/products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
