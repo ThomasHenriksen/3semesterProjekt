@@ -22,7 +22,7 @@ namespace SpikeProductData.ModelLayer
         {
         }
 
-        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock)
+        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
         {
             Name = name;
             Description = description;
@@ -31,6 +31,7 @@ namespace SpikeProductData.ModelLayer
             Stock = stock;
             MinStock = minStock;
             MaxStock = maxStock;
+            IsDeleted = isDeleted;
         }
 
         public Product(int id, string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)

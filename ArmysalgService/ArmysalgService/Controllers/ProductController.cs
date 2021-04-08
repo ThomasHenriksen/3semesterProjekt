@@ -1,5 +1,6 @@
 ﻿using ArmysalgService.BusinesslogicLayer;
 using ArmysalgService.DTOs;
+using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SpikeProductData.ModelLayer;
@@ -69,7 +70,7 @@ namespace ArmysalgService.Controllers
             int insertedId = -1;
             if (inProduct != null)
             {
-                Product dbProduct = ModelConversion.ProductdataCreateDtoConvert.ToProduct(inProduct);
+                Product dbProduct = ProductdataCreateDtoConvert.ToProduct(inProduct);
                 insertedId = _pControl.Add(dbProduct);
             }
             if (insertedId > 0)
