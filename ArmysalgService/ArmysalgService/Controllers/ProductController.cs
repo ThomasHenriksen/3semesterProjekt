@@ -15,7 +15,7 @@ namespace ArmysalgService.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly ProductdataControl _pControl;
+        private readonly IProductdata _pControl;
         private readonly IConfiguration _configuration;
 
         public ProductController(IConfiguration inConfiguration)
