@@ -6,4 +6,10 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="ModelLayer\" />
+    <Folder Include="ControlLayer\" />
+    <Folder Include="ServiceLayer\" />
+  </ItemGroup>
+
 </Project>
