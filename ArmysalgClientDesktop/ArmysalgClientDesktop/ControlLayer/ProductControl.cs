@@ -23,6 +23,12 @@ namespace ArmysalgClientDesktop.ControlLayer
             return foundProducts;
         }
 
-        public async Task<int> SaveProduct(string )
+        public async Task<int> SaveProduct(string name, string description, decimal purchasePrice, string status,
+            int stock, int minStock, int maxStock, bool isDeleted)
+        {
+            Product newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
+            int insertedId = await _pAccess.SaveProduct(newProduct);
+            return insertedId;
+        }
     }
 }
