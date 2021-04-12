@@ -73,7 +73,34 @@ namespace ArmysalgClientDesktop.ServiceLayer
 
         public async Task<int> SaveProduct(Product productToSave)
         {
-            return 0;
+            int insertedProductId;
+
+            string useRestUrl = restUrl;
+            var uri = new Uri(String.Format(useRestUrl, string.Empty));
+
+            try
+            {
+                var json = JsonConvert.SerializeObject(productToSave);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+                response = await _httpClient.PostAsync(uri, content);
+                string resultingIdString = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Int32.TryParse(resultingIdString, out insertedProductId);
+                }
+                else
+                {
+                    insertedProductId = -2;
+                }
+            }
+            catch 
+            {
+                insertedProductId = -3;
+            }
+            return insertedProductId;
         }
     }
 }

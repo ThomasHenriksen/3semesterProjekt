@@ -8,8 +8,10 @@
 
   <ItemGroup>
     <Folder Include="ModelLayer\" />
-    <Folder Include="ControlLayer\" />
-    <Folder Include="ServiceLayer\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>
