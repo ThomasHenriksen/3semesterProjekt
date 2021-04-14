@@ -30,5 +30,12 @@ namespace ArmysalgDataAccess.ModelLayer
             Status = status;
             SalesLineItem = salesLineItem;
         }
+
+        public SalesOrder(int salesNo, DateTime salesDate, decimal paymentAmount, string status, int salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status, salesLineItem)
+        {
+            ShippingId = shippingId;
+            EmployeeId = employeeId;
+            CustomerId = customerId;
+        }
     }
 }
