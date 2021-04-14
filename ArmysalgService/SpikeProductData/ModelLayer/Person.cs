@@ -26,5 +26,5 @@ namespace ArmysalgDataAccess.ModelLayer
             this.phone = phone;
             this.email = email;
         }
-     }
+    }
 }
