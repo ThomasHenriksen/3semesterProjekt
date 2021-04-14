@@ -54,7 +54,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 insertedSalesOrderId = (int)CreateCommand.ExecuteScalar();
             }
             return insertedSalesOrderId;
-
+        }
         public SalesOrder GetSalesOrderById(int salesOrderId)
         {
             throw new NotImplementedException();
