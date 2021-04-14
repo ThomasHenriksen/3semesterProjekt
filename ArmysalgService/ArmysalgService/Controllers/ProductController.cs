@@ -3,11 +3,11 @@ using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using SpikeProductData.ModelLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArmysalgDataAccess.ModelLayer;
 
 namespace ArmysalgService.Controllers
 {
@@ -57,8 +57,12 @@ namespace ArmysalgService.Controllers
 
         // URL: api/products/{id}
         [HttpGet, Route("{id}")]
-        public ActionResult<ProductdataReadDto> Get(int id)
+        public ActionResult<ProductdataReadDto> Get(int id, Product product)
         {
+            if (id != product.Id)
+            {
+                return BadRequest();
+            }
             return null;
         }
 

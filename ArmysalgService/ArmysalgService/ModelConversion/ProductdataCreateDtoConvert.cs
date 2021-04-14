@@ -1,5 +1,5 @@
 ﻿using ArmysalgService.DTOs;
-using SpikeProductData.ModelLayer;
+using ArmysalgDataAccess.ModelLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;

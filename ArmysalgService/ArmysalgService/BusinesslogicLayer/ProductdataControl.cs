@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SpikeProductData.DatabaseLayer;
-using SpikeProductData.ModelLayer;
+using ArmysalgDataAccess.DatabaseLayer;
+using ArmysalgDataAccess.ModelLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
