@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ArmysalgService.Data;
 
 namespace ArmysalgService
 {
@@ -32,6 +34,9 @@ namespace ArmysalgService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ArmysalgService", Version = "v1" });
             });
+
+            services.AddDbContext<ArmysalgServiceContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ArmysalgServiceContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
