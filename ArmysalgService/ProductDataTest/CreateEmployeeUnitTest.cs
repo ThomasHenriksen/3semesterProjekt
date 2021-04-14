@@ -1,9 +1,5 @@
-using System;
 using Xunit;
-using System.Collections.Generic;
 using Xunit.Abstractions;
-using SpikeProductData.DatabaseLayer;
-using SpikeProductData.ModelLayer;
 
 namespace ArmysalgDataTest
 {
@@ -15,7 +11,7 @@ namespace ArmysalgDataTest
 
         public TestCreateEmployee(ITestOutputHelper output)
         {
-            this.extraOutput = output;
+            this.output = output;
             _employeeAccess = new EmployeeDatabaseAccess(_connectionString);
         }
 
