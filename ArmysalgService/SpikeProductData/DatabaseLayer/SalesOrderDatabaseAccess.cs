@@ -1,5 +1,6 @@
 ﻿using ArmysalgDataAccess.ModelLayer;
 using ArmysalgDataTest;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace ArmysalgDataAccess.DatabaseLayer
     public class SalesOrderDatabaseAccess : ISalesOrderAccess
     {
         readonly string _connectionString;
+
+        public SalesOrderDatabaseAccess(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("ArmysalgConnection");
+        }
 
         // For test
         public SalesOrderDatabaseAccess(string inConnectionString)

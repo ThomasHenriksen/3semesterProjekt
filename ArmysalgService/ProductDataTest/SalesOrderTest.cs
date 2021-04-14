@@ -1,5 +1,6 @@
 ﻿using ArmysalgDataAccess.DatabaseLayer;
 using ArmysalgDataAccess.ModelLayer;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ namespace ArmysalgDataTest
 
         readonly private ISalesOrderAccess _salesOrderAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
+        readonly SalesOrderDatabaseAccess _connection;
         
         // For test
         public SalesOrderTest(ITestOutputHelper output)
         {
             this.extraOutput = output;
-            _salesOrderAccess = new SalesOrderDatabaseAccess(_connectionString);
+           _salesOrderAccess = new SalesOrderDatabaseAccess(_connectionString);
         }
         [Fact]
         public void TestCreateSalesOrderObject()
@@ -49,6 +51,7 @@ namespace ArmysalgDataTest
         public void TestInsertCreatedSalesOrderToDatabase()
         {
             //Arrange
+            
             
             SalesOrder testOrder = new SalesOrder(1, DateTime.Today, 100, "Created", 2);
 
