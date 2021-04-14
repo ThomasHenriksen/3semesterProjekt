@@ -16,20 +16,8 @@ namespace ArmysalgDataAccess.ModelLayer
         public String Phone { get; set; }
         public String Email { get; set; }
 
-        public Person(String firstName, String lastName, String address, String zipCode, String city, String phone, String email) 
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            Address = address;
-            ZipCode = zipCode;
-            City = city;
-            Phone = phone;
-            Email = email;
-        }
-
         public Person()
         {
-
         }
     }
 }
