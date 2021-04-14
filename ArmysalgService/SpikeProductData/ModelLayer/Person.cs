@@ -26,5 +26,10 @@ namespace ArmysalgDataAccess.ModelLayer
             Phone = phone;
             Email = email;
         }
+
+        public Person()
+        {
+
+        }
     }
 }
