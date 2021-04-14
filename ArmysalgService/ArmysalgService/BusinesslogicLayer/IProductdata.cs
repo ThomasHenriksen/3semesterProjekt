@@ -11,7 +11,7 @@ namespace ArmysalgService.BusinesslogicLayer
         Product Get(int id);
         List<Product> Get();
         int Add(Product productToAdd);
-        bool Put(Product productToUpdate);
+        bool Put(Product productToUpdate, int id);
         bool Delete(int id);
     }
 }

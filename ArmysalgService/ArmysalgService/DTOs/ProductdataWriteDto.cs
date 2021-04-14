@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ArmysalgService.DTOs
 {
-    public class ProductdataCreateDto
+    public class ProductdataWriteDto
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -16,11 +16,11 @@ namespace ArmysalgService.DTOs
         public int MaxStock { get; set; }
         public bool IsDeleted { get; set; }
 
-        public ProductdataCreateDto()
+        public ProductdataWriteDto()
         {
         }
 
-        public ProductdataCreateDto(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
+        public ProductdataWriteDto(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
         {
             Name = name;
             Description = description;

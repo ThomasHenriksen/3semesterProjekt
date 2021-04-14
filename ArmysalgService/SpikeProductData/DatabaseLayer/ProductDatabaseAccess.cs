@@ -78,7 +78,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             List<Product> foundProducts;
             Product readProduct;
 
-            string queryString = "select productNo, name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted from Product";
+            string queryString = "select productNo, name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted from Product Where isDeleted = 0";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))

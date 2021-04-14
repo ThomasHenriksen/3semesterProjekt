@@ -25,7 +25,7 @@ namespace ArmysalgService.ModelConversion
             return aProductReadDtoList;
         }
 
-        private static ProductdataReadDto FromProduct(Product inProduct)
+        public static ProductdataReadDto FromProduct(Product inProduct)
         {
             ProductdataReadDto aProductReadDto = null;
             if (inProduct != null)

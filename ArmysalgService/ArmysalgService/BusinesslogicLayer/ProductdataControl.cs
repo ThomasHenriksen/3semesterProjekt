@@ -55,8 +55,9 @@ namespace ArmysalgService.BusinesslogicLayer
             return foundProducts;
         }
 
-        public bool Put(Product productToUpdate)
+        public bool Put(Product productToUpdate, int id)
         {
+            productToUpdate.Id = id;
             return _productAccess.UpdateProduct(productToUpdate);
         }
     }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ArmysalgService.ModelConversion
 {
-    public class ProductdataCreateDtoConvert
+    public class ProductdataWriteDtoConvert
     {
-        public static Product ToProduct(ProductdataCreateDto inDto)
+        public static Product ToProduct(ProductdataWriteDto inDto)
         {
             Product aProduct = null;
             if (inDto != null)
