@@ -2,8 +2,8 @@ using System;
 using Xunit;
 using System.Collections.Generic;
 using Xunit.Abstractions;
-using SpikeProductData.DatabaseLayer;
-using SpikeProductData.ModelLayer;
+using ArmysalgDataAccess.DatabaseLayer;
+using ArmysalgDataAccess.ModelLayer;
 
 namespace ProductDataTest
 {
