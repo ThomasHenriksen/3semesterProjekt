@@ -16,13 +16,21 @@ namespace ArmysalgService.BusinesslogicLayer
         {
             _productAccess = new ProductDatabaseAccess(inConfiguration);
         }
-
+        /*
+           *  this method is use to create a new product in the database
+           *  @param newProduct
+           *  
+           *  @return insertedId
+         */
         public int Add(Product newProduct)
         {
             int insertedId;
-            try {
+            try
+            {
                 insertedId = _productAccess.CreateProduct(newProduct);
-            } catch {
+            }
+            catch
+            {
                 insertedId = -1;
             }
             return insertedId;
@@ -30,31 +38,50 @@ namespace ArmysalgService.BusinesslogicLayer
 
         public bool Delete(int idToMatch)
         {
-            return _productAccess.DeleteProductById(idToMatch); 
+            return _productAccess.DeleteProductById(idToMatch);
         }
-
+        /*
+           *  this method is use to find a product in the database by id
+           *  @param idToMatch
+           *  
+           *  @return Product
+         */
         public Product Get(int idToMatch)
         {
             Product foundProduct;
-            try {
+            try
+            {
                 foundProduct = _productAccess.GetProductById(idToMatch);
-            } catch {
+            }
+            catch
+            {
                 foundProduct = null;
             }
             return foundProduct;
         }
-
+        /*
+           *  this method is use to find all products in the database where IsDelete is false 
+           *  @return List<Product> 
+         */
         public List<Product> Get()
         {
             List<Product> foundProducts;
-            try {
+            try
+            {
                 foundProducts = _productAccess.GetProductAll();
-            } catch {
+            }
+            catch
+            {
                 foundProducts = null;
             }
             return foundProducts;
         }
-
+        /*
+           *  this method is use to update a product where ID is use to find product 
+           *  @param productToUpdate
+           *  @param id 
+           *  @return bool
+         */
         public bool Put(Product productToUpdate, int id)
         {
             productToUpdate.Id = id;
