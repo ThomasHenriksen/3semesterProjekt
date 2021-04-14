@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-
+using Dapper;
 namespace SpikeProductData.DatabaseLayer
 {
     public class ProductDatabaseAccess : IProductAccess
@@ -57,7 +57,19 @@ namespace SpikeProductData.DatabaseLayer
 
         public bool DeleteProductById(int id)
         {
-            throw new NotImplementedException();
+            int numRowsUpdated = 0;
+            string queryString = "UPDATE Product SET isDeleted = @inIsDelete from Product where productNo = @Id";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                numRowsUpdated = con.Execute(queryString,
+                 new
+                 {
+                     inIsDelete = true,
+                     Id = id
+                 });
+            }
+            return (numRowsUpdated == 1);
         }
 
         public List<Product> GetProductAll()
@@ -82,7 +94,7 @@ namespace SpikeProductData.DatabaseLayer
                 }
             }
             return foundProducts;
-           
+
         }
 
         /* Three possible returns:
@@ -115,7 +127,28 @@ namespace SpikeProductData.DatabaseLayer
 
         public bool UpdateProduct(Product productToUpdate)
         {
-            throw new NotImplementedException();
+            int numRowsUpdated = 0;
+            string queryString = "UPDATE Product SET name = @inName, description = @inDescription, purchasePrice = @inPurchasePrice, status = @inStatus, stock = @inStock, minStock = @inMinStock, maxStock = @inMaxStock, isDeleted = @inIsDelete from Product where productNo = @Id";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+
+                numRowsUpdated = con.Execute(queryString,
+                                 new
+                                 {
+                                     inName = productToUpdate.Name,
+                                     inDescription = productToUpdate.Description,
+                                     inPurchasePrice = productToUpdate.PurchasePrice,
+                                     inStatus = productToUpdate.Status,
+                                     inStock = productToUpdate.Stock,
+                                     inMinStock = productToUpdate.MinStock,
+                                     inMaxStock = productToUpdate.MaxStock,
+                                     inIsDelete = productToUpdate.IsDeleted,
+                                     Id = productToUpdate.Id
+                                 });
+            }
+
+            return (numRowsUpdated == 1);
         }
 
         private Product GetProductFromReader(SqlDataReader productReader)

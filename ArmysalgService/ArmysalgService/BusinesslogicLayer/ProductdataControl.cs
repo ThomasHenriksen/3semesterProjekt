@@ -28,9 +28,19 @@ namespace ArmysalgService.BusinesslogicLayer
             return insertedId;
         }
 
-        public bool Delete(int id)
+        public bool Delete(int idToMatch)
         {
-            throw new NotImplementedException();
+            Product foundProduct = null;
+            bool delete = false;
+            try
+            {
+                foundProduct = _productAccess.GetProductById(idToMatch);
+            }
+            catch
+            {
+                foundProduct = null;
+            }
+            return delete;
         }
 
         public Product Get(int idToMatch)
