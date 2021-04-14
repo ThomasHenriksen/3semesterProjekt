@@ -49,5 +49,29 @@ namespace ProductDataTest
             //Assert
             Assert.True(product1wasFound);
         }
+
+        [Fact]
+        public void TestCreateProduct()
+        {
+            //Arrange
+            string name = "bukser";
+            string description = "sort";
+            decimal purchasePrice = 340;
+            string status = "Indorder";
+            int stock = 10;
+            int minStock = 3;
+            int maxStock = 10;
+            bool isDeleted = false;
+            //Act
+            Product productToCreate = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
+            int productToReadByID = _productAccess.CreateProduct(productToCreate);
+            Product productToRead = _productAccess.GetProductById(productToReadByID);
+            
+            bool product1wasFound = (productToRead.Id == 1);
+            extraOutput.WriteLine("Product name: " + productToRead.Name + " Product ID: " + productToRead.Id);
+
+            //Assert
+            Assert.True(productToCreate.Name.Equals(productToRead.Name));
+        }
     }
 }
