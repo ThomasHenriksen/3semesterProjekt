@@ -30,17 +30,7 @@ namespace ArmysalgService.BusinesslogicLayer
 
         public bool Delete(int idToMatch)
         {
-            Product foundProduct = null;
-            bool delete = false;
-            try
-            {
-                foundProduct = _productAccess.GetProductById(idToMatch);
-            }
-            catch
-            {
-                foundProduct = null;
-            }
-            return delete;
+            return _productAccess.DeleteProductById(idToMatch); 
         }
 
         public Product Get(int idToMatch)
@@ -67,7 +57,7 @@ namespace ArmysalgService.BusinesslogicLayer
 
         public bool Put(Product productToUpdate)
         {
-            throw new NotImplementedException();
+            return _productAccess.UpdateProduct(productToUpdate);
         }
     }
 }
