@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArmysalgService", "ArmysalgService\ArmysalgService.csproj", "{BBF0D43E-3A55-4AE0-805B-4B5AC823CCA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpikeProductData", "SpikeProductData\SpikeProductData.csproj", "{A135B850-3223-4D59-AB79-659DA9B865C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArmysalgDataAccess", "SpikeProductData\ArmysalgDataAccess.csproj", "{A135B850-3223-4D59-AB79-659DA9B865C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductDataTest", "ProductDataTest\ProductDataTest.csproj", "{238BB8AC-6844-4CC9-A1AB-15627C35547D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArmysalgDataTest", "ProductDataTest\ArmysalgDataTest.csproj", "{238BB8AC-6844-4CC9-A1AB-15627C35547D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

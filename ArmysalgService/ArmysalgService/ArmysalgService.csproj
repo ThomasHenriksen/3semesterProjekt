@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpikeProductData\SpikeProductData.csproj" />
+    <ProjectReference Include="..\SpikeProductData\ArmysalgDataAccess.csproj" />
   </ItemGroup>
 
 </Project>
