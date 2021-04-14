@@ -58,14 +58,14 @@ namespace SpikeProductData.DatabaseLayer
         public bool DeleteProductById(int id)
         {
             int numRowsUpdated = 0;
-            string queryString = "UPDATE Product SET isDeleted = @inIsDelete from Product where productNo = @Id";
+            string queryString = "UPDATE Product SET  isDeleted = @inIsDelete from Product where productNo = @Id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 numRowsUpdated = con.Execute(queryString,
                  new
                  {
-                     inIsDelete = true,
+                     inIsDelete = 1,
                      Id = id
                  });
             }

@@ -54,7 +54,6 @@ namespace ProductDataTest
         public void TestCreateProduct()
         {
             //Arrange
-           
             string name = "bukser";
             string description = "sort";
             decimal purchasePrice = 340;
@@ -67,7 +66,7 @@ namespace ProductDataTest
             Product productToCreate = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
             int productToReadByID = _productAccess.CreateProduct(productToCreate);
             Product productToRead = _productAccess.GetProductById(productToReadByID);
-            
+
             bool product1wasFound = (productToRead.Id == 1);
             extraOutput.WriteLine("Product name: " + productToRead.Name + " Product ID: " + productToRead.Id);
 
@@ -86,7 +85,6 @@ namespace ProductDataTest
             int stock = 10;
             int minStock = 3;
             int maxStock = 10;
-            bool isDeleted = false;
             //Act
             Product findProductToUpdate = _productAccess.GetProductById(targetId);
             findProductToUpdate.Name = name;
@@ -96,12 +94,7 @@ namespace ProductDataTest
             findProductToUpdate.Stock = stock;
             findProductToUpdate.MinStock = minStock;
             findProductToUpdate.MaxStock = maxStock;
-            findProductToUpdate.IsDeleted = isDeleted;
             bool productToUpdateByID = _productAccess.UpdateProduct(findProductToUpdate);
-           
-
-            
-          
             //Assert
             Assert.True(productToUpdateByID);
         }
@@ -110,16 +103,10 @@ namespace ProductDataTest
         {
             //Arrange
             int targetId = 8;
-        
             //Act
-       
             bool productToUpdateByID = _productAccess.DeleteProductById(targetId);
-
-
-
-
             //Assert
-            Assert.True(productToUpdateByID);
+            Assert.True(_productAccess.GetProductById(targetId).IsDeleted);
         }
     }
 }
