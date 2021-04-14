@@ -1,17 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SpikeProductData.ModelLayer;
+using ArmysalgDataAccess.ModelLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-
-
-namespace ArmysalgDataAccess.DatabaseLayer
-
 using Dapper;
 
+namespace ArmysalgDataAccess.DatabaseLayer
 {
     public class ProductDatabaseAccess : IProductAccess
     {
