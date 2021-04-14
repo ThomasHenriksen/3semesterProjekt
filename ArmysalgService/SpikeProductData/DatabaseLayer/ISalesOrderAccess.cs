@@ -9,6 +9,7 @@ namespace ArmysalgDataTest
 {
     public interface ISalesOrderAccess
     {
-        int CreateSalesOrder(SalesOrder salesOrderToAdd);
+        void CreateSalesOrder(SalesOrder salesOrderToAdd);
+        SalesOrder GetSalesOrderById(int salesOrderId);
     }
 }
