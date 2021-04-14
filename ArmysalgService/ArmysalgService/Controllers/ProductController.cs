@@ -86,6 +86,27 @@ namespace ArmysalgService.Controllers
             }
             return foundReturn; 
         }
-
+        // URL: api/persons
+        [HttpPost, Route("{id}")]
+        public ActionResult<int> PutUpdateProduct(int id, ProductdataCreateDto inProduct)
+        {
+            ActionResult<int> foundReturn;
+            int insertedId = -1;
+            if (inProduct != null)
+            {
+                Product dbProduct = ProductdataCreateDtoConvert.ToProduct(inProduct);
+                _pControl.Put(dbProduct);
+                insertedId = dbProduct.Id;
+            }
+            if (insertedId > 0)
+            {
+                foundReturn = Ok(insertedId);
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);
+            }
+            return foundReturn;
+        }
     }
 }
