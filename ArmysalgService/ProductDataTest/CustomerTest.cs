@@ -2,6 +2,8 @@
 using Xunit;
 using System.Collections.Generic;
 using Xunit.Abstractions;
+using ArmysalgDataAccess.DatabaseLayer;
+using ArmysalgDataAccess.ModelLayer;
 
 
 namespace ProductDataTest
