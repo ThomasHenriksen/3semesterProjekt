@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
-namespace SpikeProductData.DatabaseLayer
+namespace ArmysalgDataAccess.DatabaseLayer
 {
     public class ProductDatabaseAccess : IProductAccess
     {
