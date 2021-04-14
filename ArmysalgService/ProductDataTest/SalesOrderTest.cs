@@ -21,7 +21,7 @@ namespace ArmysalgDataTest
         public SalesOrderTest(ITestOutputHelper output)
         {
             this.extraOutput = output;
-         //   _salesOrderAccess = new SalesOrderDatabaseAccess(_connectionString);
+            _salesOrderAccess = new SalesOrderDatabaseAccess(_connectionString);
         }
         [Fact]
         public void TestCreateSalesOrderObject()
@@ -51,12 +51,12 @@ namespace ArmysalgDataTest
             //Arrange
             
             SalesOrder testOrder = new SalesOrder(1, DateTime.Today, 100, "Created", 2);
-            SalesOrderDatabaseAccess  salesOrderDatabaseAccess= _salesOrderAccess.InsertSalesOrder();
 
             //Act
-
+            _salesOrderAccess.CreateSalesOrder(testOrder);
 
             //Assert
+            
         }
     }
 

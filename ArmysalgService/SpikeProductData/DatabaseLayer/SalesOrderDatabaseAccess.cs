@@ -10,7 +10,20 @@ namespace ArmysalgDataAccess.DatabaseLayer
 {
     public class SalesOrderDatabaseAccess : ISalesOrderAccess
     {
-        public int CreateSalesOrder(SalesOrder salesOrderToAdd)
+        readonly string _connectionString;
+
+        // For test
+        public SalesOrderDatabaseAccess(string inConnectionString)
+        {
+            _connectionString = inConnectionString;
+        }
+
+        public void CreateSalesOrder(SalesOrder salesOrderToAdd)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SalesOrder GetSalesOrderById(int salesOrderId)
         {
             throw new NotImplementedException();
         }
