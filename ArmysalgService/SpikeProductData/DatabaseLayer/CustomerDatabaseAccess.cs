@@ -29,7 +29,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
         {
             int insertedId = -1;
 
-            string insertString = "insert into product (firstName, lastName, address, zipCode, phone, email) OUTPUT INSERTED.customerNo " +
+            string insertString = "insert into customer (firstName, lastName, address, zipCode_fk, phone, email) OUTPUT INSERTED.customerNo " +
                 "values (@FirstName, @LastName, @Address, @ZipCode, @Phone, @Email)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -37,7 +37,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             {
                 SqlParameter firstNameParam = new SqlParameter("@FirstName", aCustomer.FirstName);
                 CreateCommand.Parameters.Add(firstNameParam);
-                SqlParameter lastNameParam = new SqlParameter("@LastName", aCustomer.FirstName);
+                SqlParameter lastNameParam = new SqlParameter("@LastName", aCustomer.LastName);
                 CreateCommand.Parameters.Add(lastNameParam);
                 SqlParameter address = new SqlParameter("@Address", aCustomer.Address);
                 CreateCommand.Parameters.Add(address);
@@ -66,7 +66,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
         {
             Customer foundCustomer = null;
 
-            string queryString = "select customerNo, firstName, address, zipCode, city, phone, email from Customer where customerNo = @CustomerNo" + "join zipCity zc on customer.zipCity_fk = zc.zipCode";
+            string queryString = "select customerNo, firstName, lastName, address, zipCode, city, phone, email from Customer" + " join zipCity zc on customer.zipCode_fk = zc.zipCode" + " where customerNo = @CustomerNo";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -94,11 +94,11 @@ namespace ArmysalgDataAccess.DatabaseLayer
             tempCustomerNo = customerReader.GetInt32(customerReader.GetOrdinal("customerNo"));
             tempFirstName = customerReader.GetString(customerReader.GetOrdinal("firstName"));
             tempLastName = customerReader.GetString(customerReader.GetOrdinal("lastName"));
-            tempAddress = customerReader.GetString(customerReader.GetOrdinal("addressName"));
-            tempZipCode = customerReader.GetString(customerReader.GetOrdinal("zipCodeName"));
-            tempCity = customerReader.GetString(customerReader.GetOrdinal("cityName"));
-            tempPhone = customerReader.GetString(customerReader.GetOrdinal("phoneName"));
-            tempEmail = customerReader.GetString(customerReader.GetOrdinal("emailName"));
+            tempAddress = customerReader.GetString(customerReader.GetOrdinal("address"));
+            tempZipCode = customerReader.GetString(customerReader.GetOrdinal("zipCode"));
+            tempCity = customerReader.GetString(customerReader.GetOrdinal("city"));
+            tempPhone = customerReader.GetString(customerReader.GetOrdinal("phone"));
+            tempEmail = customerReader.GetString(customerReader.GetOrdinal("email"));
 
             foundCustomer = new Customer(tempFirstName, tempLastName, tempAddress, tempZipCode, tempCity, tempPhone, tempEmail, tempCustomerNo);
 
