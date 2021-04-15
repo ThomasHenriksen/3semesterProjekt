@@ -32,7 +32,7 @@ namespace ArmysalgService.Controllers
         }
 
         // URL: api/salesOrders/{id}
-        [HttpGet, Route("salesOrder/{id}")]
+        [HttpGet, Route("{id}")]
         public ActionResult<SalesOrderdataReadDto> Get(int id, SalesOrder salesOrder)
         {
             ActionResult<SalesOrderdataReadDto> foundReturn;
