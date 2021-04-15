@@ -8,13 +8,13 @@ namespace ArmysalgDataAccess.ModelLayer
 {
     public class Person
     {
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public String Address { get; set; }
-        public String ZipCode { get; set; }
-        public String City { get; set; }
-        public String Phone { get; set; }
-        public String Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string ZipCode { get; set; }
+        public string City { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
 
         public Person()
         {

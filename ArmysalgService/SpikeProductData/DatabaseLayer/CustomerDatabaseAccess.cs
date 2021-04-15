@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using ArmysalgDataAccess.ModelLayer;
 using System;
 using System.Collections.Generic;

@@ -14,6 +14,17 @@ namespace ArmysalgDataAccess.ModelLayer
         {
         }
 
+        public Customer(string firstName, string lastName, string address, string zipCode, string city, string phone, string email)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Address = address;
+            ZipCode = zipCode;
+            City = city;
+            Phone = phone;
+            Email = email;
+        }
+
         public Customer(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, int customerNo)
         {
             FirstName = firstName;
