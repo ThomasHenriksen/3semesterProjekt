@@ -37,7 +37,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             {
                 SqlParameter firstNameParam = new SqlParameter("@FirstName", aEmployee.FirstName);
                 CreateCommand.Parameters.Add(firstNameParam);
-                SqlParameter lastNameParam = new SqlParameter("@LastName", aEmployee.FirstName);
+                SqlParameter lastNameParam = new SqlParameter("@LastName", aEmployee.LastName);
                 CreateCommand.Parameters.Add(lastNameParam);
                 SqlParameter address = new SqlParameter("@Address", aEmployee.Address);
                 CreateCommand.Parameters.Add(address);
