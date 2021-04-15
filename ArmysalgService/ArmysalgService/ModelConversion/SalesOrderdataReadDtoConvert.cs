@@ -23,17 +23,17 @@ namespace ArmysalgService.ModelConversion
                 }
             }
                 return aSalesOrderReadDtoList;
-            }
+        }
 
-            public static SalesOrderdataReadDto FromSalesOrder(SalesOrder inSalesOrder)
-            {
+        public static SalesOrderdataReadDto FromSalesOrder(SalesOrder inSalesOrder)
+        {
                 SalesOrderdataReadDto aSalesOrderReadDto = null;
                 if (inSalesOrder != null)
                 {
                     aSalesOrderReadDto = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem);
                 }
                 return aSalesOrderReadDto;
-            }
         }
+        
     }
 }
