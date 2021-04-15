@@ -1,4 +1,5 @@
 ﻿using ArmysalgService.BusinesslogicLayer;
+using ArmysalgService.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -21,6 +22,26 @@ namespace ArmysalgService.Controllers
             _sControl = new SalesOrderdataControl(_configuration);
         }
 
+        //URL: api/salesOrders
+        [HttpGet]
+        public ActionResult<List<SalesOrderdataReadDto>> Get()
+        {
+            return null;
+        }
+
+        // URL: api/salesOrders/{id}
+        [HttpGet, Route("id")]
+        public ActionResult<SalesOrderdataReadDto> Get(int id)
+        {
+            return null;
+        }
+
+        // URL: api/salesOrders
+        [HttpPost]
+        public ActionResult PostNewSalesOrder(SalesOrderdataWriteDto inSalesOrder)
+        {
+            return null;
+        }
 
     }
 }
