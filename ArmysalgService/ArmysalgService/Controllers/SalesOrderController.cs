@@ -61,10 +61,24 @@ namespace ArmysalgService.Controllers
 
         // URL: api/salesOrders
         [HttpPost]
-        public ActionResult PostNewSalesOrder(SalesOrderdataWriteDto inSalesOrder)
+        public ActionResult<int> PostNewSalesOrder(SalesOrderdataWriteDto inSalesOrder)
         {
-            return null;
-            //Test fra Lars
+            ActionResult<int> foundReturn;
+            int insertedSalesNo = -1;
+            if(inSalesOrder != null)
+            {
+                SalesOrder dbSalesOrder = ModelConversion.SalesOrderdataWriteDtoConvert.ToSalesOrder(inSalesOrder);
+                insertedSalesNo = _sControl.AddSalesOrder(dbSalesOrder);
+            }
+            if (insertedSalesNo > 0) 
+            {
+                foundReturn = Ok(insertedSalesNo);
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);
+            }
+            return foundReturn;
         }
 
     }
