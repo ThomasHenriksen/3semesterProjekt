@@ -9,7 +9,7 @@ namespace ArmysalgService.ModelConversion
 {
     public class SalesOrderdataWriteDtoConvert
     {
-        public static SalesOrder ToSalesOrder (SalesOrderdataWriteDto inDto)
+        public static SalesOrder ToSalesOrder(SalesOrderdataWriteDto inDto)
         {
             SalesOrder aSalesOrder = null;
             if(inDto != null)
