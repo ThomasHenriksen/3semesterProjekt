@@ -51,16 +51,16 @@ namespace ArmysalgDataTest
         public void TestInsertCreatedSalesOrderToDatabase()
         {
             //Arrange
-            
-            
-            SalesOrder testOrder = new SalesOrder(1, DateTime.Today, 100, "Created", 2);
+            int salesOrderNo = 10;
+            SalesOrder testOrder = new SalesOrder(salesOrderNo, DateTime.Today, 100, "Created", 1);
+            SalesOrder salesOrderToDatabase = new SalesOrder(DateTime.Today, 100, "Created", 1);
 
             //Act
-            _salesOrderAccess.CreateSalesOrder(testOrder);
+            int salesOrderNoOnNewSalesOrderInDatabase = _salesOrderAccess.CreateSalesOrder(salesOrderToDatabase);
+            SalesOrder getNewlyInsertedSalesOrder = _salesOrderAccess.GetSalesOrderById(salesOrderNoOnNewSalesOrderInDatabase);
 
             //Assert
-            
+            Assert.Equal(getNewlyInsertedSalesOrder.SalesNo.ToString(), salesOrderNoOnNewSalesOrderInDatabase.ToString());
         }
     }
-
 }
