@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArmysalgDataTest
+namespace ArmysalgDataAccess.DatabaseLayer
 {
     public interface ISalesOrderAccess
     {

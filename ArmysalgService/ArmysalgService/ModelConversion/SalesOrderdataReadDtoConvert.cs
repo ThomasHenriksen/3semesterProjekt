@@ -9,6 +9,13 @@ namespace ArmysalgService.ModelConversion
 {
     public class SalesOrderdataReadDtoConvert
     {
+
+        public static SalesOrderdataReadDto FromOrderToReadDto(SalesOrder inSalesOrder)
+        {
+            SalesOrderdataReadDto foundSales = new SalesOrderdataReadDto(inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem);
+            return foundSales;
+        }
+
         public static List<SalesOrderdataReadDto> FromSalesOrderCollection(List<SalesOrder> inSalesOrders)
         {
             List<SalesOrderdataReadDto> aSalesOrderReadDtoList = null;

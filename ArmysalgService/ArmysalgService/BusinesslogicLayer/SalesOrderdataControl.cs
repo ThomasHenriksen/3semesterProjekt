@@ -1,6 +1,5 @@
 ﻿using ArmysalgDataAccess.DatabaseLayer;
 using ArmysalgDataAccess.ModelLayer;
-using ArmysalgDataTest;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
