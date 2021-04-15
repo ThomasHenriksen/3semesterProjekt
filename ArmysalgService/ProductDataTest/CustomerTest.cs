@@ -1,113 +1,53 @@
-using Microsoft.Extensions.Configuration;
-using ArmysalgDataAccess.ModelLayer;
-using System;
+﻿using System;
+using Xunit;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using Dapper;
+using Xunit.Abstractions;
+using ArmysalgDataAccess.DatabaseLayer;
+using ArmysalgDataAccess.ModelLayer;
 
-namespace ArmysalgDataAccess.DatabaseLayer
+
+namespace CustomerDataTest
 {
-    public class CustomerDatabaseAccess : ICustomerAccess
+    public class TestCustomerDataAccess
     {
-        readonly string _connectionString;
+        private readonly ITestOutputHelper extraOutput;
 
-        public CustomerDatabaseAccess(IConfiguration configuration)
+        readonly private ICustomerAccess _customerAccess;
+        readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
+
+        public TestCustomerDataAccess(ITestOutputHelper output)
         {
-            _connectionString = configuration.GetConnectionString("ArmysalgConnection");
+            this.extraOutput = output;
+            _customerAccess = new CustomerDatabaseAccess(_connectionString);
         }
 
-        //For Test 
-        public CustomerDatabaseAccess(string inConnectionString)
+        [Fact]
+        public void TestCreateCustomer()
         {
-            _connectionString = inConnectionString;
-        }
+            //Arrange
+            string firstName = "Carsten";
+            string lastName = "Dolberg";
+            string address = "Vestrebro 45, 3. tv.";
+            string zipCode = "8000";
+            string city = "Aarhus";
+            string phone = "20856640";
+            string email = "cardolberg@gmail.com";
 
-        public int CreateCustomer(Customer aCustomer)
-        {
-            int insertedId = -1;
+            //Act
+            Customer customerToCreate = new Customer(firstName, lastName, address, zipCode, city, phone, email);
+            int customerNoOfInsertedCustomer = _customerAccess.CreateCustomer(customerToCreate);
+            Customer customerToRead = _customerAccess.GetCustomerByCustomerNo(customerNoOfInsertedCustomer);
 
-            string insertString = "insert into product (firstName, lastName, address, zipCode, phone, email) OUTPUT INSERTED.customerNo " +
-                "values (@FirstName, @LastName, @Address, @ZipCode, @Phone, @Email)";
+            extraOutput.WriteLine("KUNDEINFO");
+            extraOutput.WriteLine("Kunde nr: " + customerToRead.CustomerNo);
+            extraOutput.WriteLine("Navn: " + customerToRead.FirstName + " " + customerToRead.LastName);
+            extraOutput.WriteLine("Adresse: " + customerToRead.Address);
+            extraOutput.WriteLine("By: " + customerToRead.ZipCode + " " + customerToRead.City);
+            extraOutput.WriteLine("Telefon: " + customerToRead.Phone);
+            extraOutput.WriteLine("Mail: " + customerToRead.Email);
 
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
-            {
-                SqlParameter firstNameParam = new SqlParameter("@FirstName", aCustomer.FirstName);
-                CreateCommand.Parameters.Add(firstNameParam);
-                SqlParameter lastNameParam = new SqlParameter("@LastName", aCustomer.FirstName);
-                CreateCommand.Parameters.Add(lastNameParam);
-                SqlParameter address = new SqlParameter("@Address", aCustomer.Address);
-                CreateCommand.Parameters.Add(address);
-                SqlParameter zipCode = new SqlParameter("@ZipCode", aCustomer.ZipCode);
-                CreateCommand.Parameters.Add(zipCode);
-                SqlParameter phone = new SqlParameter("@Phone", aCustomer.Phone);
-                CreateCommand.Parameters.Add(phone);
-                SqlParameter email = new SqlParameter("@Email", aCustomer.Email);
-                CreateCommand.Parameters.Add(email);
-
-                con.Open();
-                insertedId = (int)CreateCommand.ExecuteScalar();
-            }
-            return insertedId;
-        }
-
-
-
-
-        /* Three possible returns:
-         * A Customer object
-         * An empty Customer object (no match on customerNo)
-         * Null - Some error occurred
-        */
-        public Customer GetCustomerByCustomerNo(int findCustomerNo)
-        {
-            Customer foundCustomer = null;
-
-            string queryString = "select customerNo, firstName, address, zipCode, city, phone, email from Customer where customerNo = @CustomerNo" + "join zipCity zc on customer.zipCity_fk = zc.zipCode";
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
-            {
-                SqlParameter idParam = new SqlParameter("@CustomerNo", findCustomerNo);
-                readCommand.Parameters.Add(idParam);
-
-                con.Open();
-
-                SqlDataReader customerReader = readCommand.ExecuteReader();
-                foundCustomer = new Customer();
-                while (customerReader.Read())
-                {
-                    foundCustomer = GetCustomerFromReader(customerReader);
-                }
-            }
-            return foundCustomer;
-        }
-
-        private Customer GetCustomerFromReader(SqlDataReader customerReader)
-        {
-            Customer foundCustomer;
-            int tempCustomerNo;
-            string tempFirstName, tempLastName, tempAddress, tempZipCode, tempCity, tempPhone, tempEmail;
-
-            tempCustomerNo = customerReader.GetInt32(customerReader.GetOrdinal("customerNo"));
-            tempFirstName = customerReader.GetString(customerReader.GetOrdinal("firstName"));
-            tempLastName = customerReader.GetString(customerReader.GetOrdinal("lastName"));
-            tempAddress = customerReader.GetString(customerReader.GetOrdinal("addressName"));
-            tempZipCode = customerReader.GetString(customerReader.GetOrdinal("zipCodeName"));
-            tempCity = customerReader.GetString(customerReader.GetOrdinal("cityName"));
-            tempPhone = customerReader.GetString(customerReader.GetOrdinal("phoneName"));
-            tempEmail = customerReader.GetString(customerReader.GetOrdinal("emailName"));
-
-            foundCustomer = new Customer(tempFirstName, tempLastName, tempAddress, tempZipCode, tempCity, tempPhone, tempEmail, tempCustomerNo);
-
-            return foundCustomer;
-        }
-
-        public bool DeleteCustomerByCustomerNo(int customerNo)
-        {
-            throw new NotImplementedException();
+            //Assert
+            Assert.True(customerToCreate.FirstName.Equals(customerToRead.FirstName));
         }
     }
 }
