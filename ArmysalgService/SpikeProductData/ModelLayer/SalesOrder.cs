@@ -28,9 +28,17 @@ namespace ArmysalgDataAccess.ModelLayer
             PaymentAmount = paymentAmount;
             Status = status;
             SalesLineItem = salesLineItem;
-            //ShippingId = shippingId;
-            //EmployeeId = employeeId;
-            //CustomerId = customerId;
+        }
+
+        public SalesOrder(DateTime salesDate, decimal paymentAmount, string status, int salesLineItem, int shippingId, int employeeId, int customerId)
+        {
+            SalesDate = salesDate;
+            PaymentAmount = paymentAmount;
+            Status = status;
+            SalesLineItem = salesLineItem;
+            ShippingId = shippingId;
+            EmployeeId = employeeId;
+            CustomerId = customerId;
         }
 
 
