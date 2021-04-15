@@ -9,8 +9,8 @@ namespace ArmysalgDataAccess.DatabaseLayer
 {
     public interface IEmployeeDatabaseAccess
     {
-        Employee GetEmployeeByCustomerNo(int employeeNo);
+        Employee GetEmployeeByEmployeeNo(int employeeNo);
         int CreateEmployee(Employee employeeToAdd);
-        bool DeleteEmployeeByCustomerNo(int employeeNo);
+        bool DeleteEmployeeByEmployeeNo(int employeeNo);
     }
 }
