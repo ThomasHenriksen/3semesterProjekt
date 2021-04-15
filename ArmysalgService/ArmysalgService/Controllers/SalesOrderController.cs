@@ -1,5 +1,7 @@
-﻿using ArmysalgService.BusinesslogicLayer;
+﻿using ArmysalgDataAccess.ModelLayer;
+using ArmysalgService.BusinesslogicLayer;
 using ArmysalgService.DTOs;
+using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -30,11 +32,31 @@ namespace ArmysalgService.Controllers
         }
 
         // URL: api/salesOrders/{id}
-        [HttpGet, Route("id")]
-        public ActionResult<SalesOrderdataReadDto> Get(int id)
+        [HttpGet, Route("{id}")]
+        public ActionResult<SalesOrderdataReadDto> Get(int id, SalesOrder salesOrder)
         {
-            // hello from brian
-            return null;
+            ActionResult<SalesOrderdataReadDto> foundReturn;
+
+            SalesOrder foundSalesOrder = _sControl.GetSalesOrderById(id);
+
+            SalesOrderdataReadDto foundDts = SalesOrderdataReadDtoConvert.FromSalesOrder(foundSalesOrder);
+
+            if(foundDts != null)
+            {
+                if(foundDts != null)
+                {
+                    foundReturn = Ok(foundDts);             // Statuscode 200
+                }
+                else
+                {
+                    foundReturn = new StatusCodeResult(204);    //Ok, but not content
+                }
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);        // Server error
+            }
+            return foundReturn;
         }
 
         // URL: api/salesOrders
