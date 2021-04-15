@@ -57,7 +57,7 @@ namespace ArmysalgService.Controllers
 
         // URL: api/products/{id}
         [HttpGet, Route("{id}")]
-        public ActionResult<ProductdataReadDto> Get(int id, Product product)
+        public ActionResult<ProductdataReadDto> Get(int id)
         {
             ActionResult<ProductdataReadDto> foundReturn;
             // retrieve and convert data
