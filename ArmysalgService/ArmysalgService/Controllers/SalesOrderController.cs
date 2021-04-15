@@ -33,6 +33,7 @@ namespace ArmysalgService.Controllers
         [HttpGet, Route("id")]
         public ActionResult<SalesOrderdataReadDto> Get(int id)
         {
+            // hello from brian
             return null;
         }
 
