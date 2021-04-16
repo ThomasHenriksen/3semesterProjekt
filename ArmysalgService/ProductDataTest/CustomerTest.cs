@@ -48,6 +48,12 @@ namespace CustomerDataTest
 
             //Assert
             Assert.True(customerToCreate.FirstName.Equals(customerToRead.FirstName));
+            Assert.True(customerToCreate.LastName.Equals(customerToRead.LastName));
+            Assert.True(customerToCreate.Address.Equals(customerToRead.Address));
+            Assert.True(customerToCreate.ZipCode.Equals(customerToRead.ZipCode));
+            Assert.True(customerToCreate.City.Equals(customerToRead.City));
+            Assert.True(customerToCreate.Phone.Equals(customerToRead.Phone));
+            Assert.True(customerToCreate.Email.Equals(customerToRead.Email));
         }
     }
 }

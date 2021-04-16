@@ -16,16 +16,16 @@ namespace ArmysalgService.DTOs
         public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
 
-        public SalesOrderdataReadDto(DateTime salesDate, decimal paymentAmount, string status, int salesLineItem)
+        public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, string status, int salesLineItem)
         {
-            
+            SalesNo = salesNo;
             SalesDate = salesDate;
             PaymentAmount = paymentAmount;
             Status = status;
             SalesLineItem = salesLineItem;
         }
 
-        public SalesOrderdataReadDto(DateTime salesDate, decimal paymentAmount, string status, int salesLineItem, int shippingId, int employeeId, int customerId) : this(salesDate, paymentAmount, status, salesLineItem)
+        public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, string status, int salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status, salesLineItem)
         {
             ShippingId = shippingId;
             EmployeeId = employeeId;

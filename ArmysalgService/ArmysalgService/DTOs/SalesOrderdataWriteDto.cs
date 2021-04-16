@@ -7,7 +7,7 @@ namespace ArmysalgService.DTOs
 {
     public class SalesOrderdataWriteDto
     {
-        public int SalesNo { get; set; }
+        //public int SalesNo { get; set; }
         public DateTime SalesDate { get; set; }
         public decimal PaymentAmount { get; set; }
         public string Status { get; set; }
@@ -15,6 +15,10 @@ namespace ArmysalgService.DTOs
         public int ShippingId { get; set; }
         public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
+
+        public SalesOrderdataWriteDto()
+        {
+        }
 
         public SalesOrderdataWriteDto(DateTime salesDate, decimal paymentAmount, string status, int salesLineItem)
         {
