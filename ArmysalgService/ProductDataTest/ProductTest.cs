@@ -102,11 +102,20 @@ namespace ProductDataTest
         public void TestDeleteProduct()
         {
             //Arrange
-            int targetId = 8;
+            string name = "bukser";
+            string description = "sort";
+            decimal purchasePrice = 340;
+            string status = "Indorder";
+            int stock = 10;
+            int minStock = 3;
+            int maxStock = 10;
+            bool isDeleted = false;
             //Act
-            bool productToUpdateByID = _productAccess.DeleteProductById(targetId);
+            Product productToCreate = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
+            int productToReadByID = _productAccess.CreateProduct(productToCreate);
+            bool productToUpdateByID = _productAccess.DeleteProductById(productToReadByID);
             //Assert
-            Assert.True(_productAccess.GetProductById(targetId).IsDeleted);
+            Assert.True(_productAccess.GetProductById(productToReadByID).IsDeleted);
         }
     }
 }
