@@ -46,5 +46,10 @@ namespace ArmysalgClientDesktop.ModelLayer
             MaxStock = maxStock;
             IsDeleted = isDeleted;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

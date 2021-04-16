@@ -7,6 +7,7 @@ namespace ArmysalgService.DTOs
 {
     public class ProductdataReadDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal PurchasePrice { get; set; }
@@ -20,8 +21,9 @@ namespace ArmysalgService.DTOs
         {
         }
 
-        public ProductdataReadDto(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
+        public ProductdataReadDto(int id ,string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
         {
+            Id = id;
             Name = name;
             Description = description;
             PurchasePrice = purchasePrice;
