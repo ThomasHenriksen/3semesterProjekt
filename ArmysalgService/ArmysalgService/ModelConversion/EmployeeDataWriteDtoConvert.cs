@@ -9,7 +9,7 @@ namespace ArmysalgService.ModelConversion
 {   
     public class EmployeeDataWriteDtoConvert
     {
-        public static Employee FromEmployee(EmployeeDataWriteDto inDto)
+        public static Employee ToEmployee(EmployeeDataWriteDto inDto)
         {
             Employee aEmployee = null;
             if (inDto != null)
