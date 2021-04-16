@@ -28,5 +28,13 @@ namespace ArmysalgClientWeb.Models
             Status = status;
             SalesLineItem = salesLineItem;
         }
+
+        public SalesOrder(DateTime salesDate, decimal paymentAmount, string status, int salesLineItem)
+        {
+            SalesDate = salesDate;
+            PaymentAmount = paymentAmount;
+            Status = status;
+            SalesLineItem = salesLineItem;
+        }
     }
 }
