@@ -33,16 +33,12 @@ namespace ArmysalgClientDesktop.GuiLayer
             int maxStock = int.Parse(txtBMaxStock.Text);
             bool isDeleted = cbIsDeleted.Checked;
             _ = await productController.SaveProduct(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
-
-
         }
 
         private async void GetAllProductsAsync()
         {
             List<Product> products = await productController.GetAllProducts();
-           
             listBoxProducts.DataSource = products;
-       
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
@@ -54,7 +50,6 @@ namespace ArmysalgClientDesktop.GuiLayer
         private void listBoxProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
             Product test = (Product)listBoxProducts.SelectedItem;
-           
         }
     }
 }
