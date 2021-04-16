@@ -54,9 +54,7 @@ namespace ArmysalgClientDesktop.GuiLayer
         private void listBoxProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
             Product test = (Product)listBoxProducts.SelectedItem;
-            txtBName.Text = test.Name;
-
-
+           
         }
     }
 }
