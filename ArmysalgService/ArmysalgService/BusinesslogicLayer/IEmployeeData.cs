@@ -9,6 +9,7 @@ namespace ArmysalgService.BusinesslogicLayer
     public interface IEmployeeData
     {
         Employee GetEmployee(int employeeNo);
+        List<Employee> GetAllEmployees();
         int AddEmployee(Employee employeeToAdd);
     }
 }

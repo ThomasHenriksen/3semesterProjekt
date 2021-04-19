@@ -109,6 +109,30 @@ namespace ArmysalgDataAccess.DatabaseLayer
             return foundEmployee;
         }
 
+        public List<Employee> GetAllEmployees()
+        {
+            List<Employee> foundEmployees;
+            Employee readEmployee;
+
+            string queryString = "select employeeNo, firstName, lastName, address, zipCode, city, phone, email, salary, position from Employee" + " join zipCity zc on employee.zipCode_fk = zc.zipCode";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                con.Open();
+
+                SqlDataReader employeeReader = readCommand.ExecuteReader();
+
+                foundEmployees = new List<Employee>();
+                while (employeeReader.Read())
+                {
+                    readEmployee = GetEmployeeFromReader(employeeReader);
+                    foundEmployees.Add(readEmployee);
+                }
+            }
+            return foundEmployees;
+        }
+
         public bool DeleteEmployeeByEmployeeNo(int id)
         {
             int numRowsUpdated = 0;

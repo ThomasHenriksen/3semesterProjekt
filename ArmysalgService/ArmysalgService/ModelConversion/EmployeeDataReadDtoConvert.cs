@@ -18,5 +18,21 @@ namespace ArmysalgService.ModelConversion
             }
             return aEmployeeReadDto;
         }
+
+        public static List<EmployeeDataReadDto> FromEmployeeCollection(List<Employee> employees) 
+        {
+            List<EmployeeDataReadDto> anEmployeeCollection = null;
+            if(employees != null)
+            {
+                anEmployeeCollection = new List<EmployeeDataReadDto>();
+                EmployeeDataReadDto tempDto;
+                foreach(Employee anEmployee in employees)
+                {
+                    tempDto = FromEmployee(anEmployee);
+                    anEmployeeCollection.Add(tempDto);
+                }
+            }
+            return anEmployeeCollection;
+        }
     }
 }
