@@ -38,10 +38,9 @@ namespace ArmysalgService.BusinesslogicLayer
         }
 
         /*
-           *  Find a employee in the database by employeeNo
-           *  @param employeeNoToMatch
+           *  Find all employees in the db
            *  
-           *  @return Employee
+           *  @return List<Employee>
          */
         public Employee GetEmployee(int employeeNoToMatch)
         {
@@ -55,6 +54,20 @@ namespace ArmysalgService.BusinesslogicLayer
                 foundEmployee = null;
             }
             return foundEmployee;
+        }
+
+        public List<Employee> GetAllEmployees()
+        {
+            List<Employee> foundEmployees;
+            try
+            {
+                foundEmployees = _employeeAccess.GetAllEmployees();
+            }
+            catch
+            {
+                foundEmployees = null;
+            }
+            return foundEmployees;
         }
     }
 }

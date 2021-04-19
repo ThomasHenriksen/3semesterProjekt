@@ -52,6 +52,32 @@ namespace ArmysalgService.Controllers
             // send response back to client
             return foundReturn;
         }
+        public ActionResult<List<EmployeeDataReadDto>> GetAll()
+        {
+            ActionResult<List<EmployeeDataReadDto>> foundReturn;
+            // retrieve and convert data
+            List<Employee> foundEmployees = _employeeControl.GetAllEmployees();
+            List<EmployeeDataReadDto> foundDts = ModelConversion.EmployeeDataReadDtoConvert.FromEmployeeCollection(foundEmployees);
+            // evaluate
+            if (foundDts != null)
+            {
+                if (foundDts != null)
+                {
+                    foundReturn = Ok(foundDts);         //Statuscode 200
+                }
+                else
+                {
+                    foundReturn = new StatusCodeResult(204);    //Ok, but no content
+                }
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);        //Server error
+            }
+            // send response back to client
+            return foundReturn;
+        }
+
 
         // URL: api/Product
         [HttpPost]
