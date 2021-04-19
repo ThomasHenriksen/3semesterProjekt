@@ -1,0 +1,73 @@
+﻿@model ArmysalgClientWeb.Models.SalesOrder
+
+@{
+    ViewData["Title"] = "CreateSalesOrder";
+}
+
+<h1>CreateSalesOrder</h1>
+
+
+<h4>SalesOrder</h4>
+@if (TempData["ProcessTest"] != null)
+{
+    <div>@TempData["ProcessTest"]</div>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateSalesOrder">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SalesNo" class="control-label"></label>
+                <input asp-for="SalesNo" class="form-control" />
+                <span asp-validation-for="SalesNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalesDate" class="control-label"></label>
+                <input asp-for="SalesDate" class="form-control" />
+                <span asp-validation-for="SalesDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentAmount" class="control-label"></label>
+                <input asp-for="PaymentAmount" class="form-control" />
+                <span asp-validation-for="PaymentAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalesLineItem" class="control-label"></label>
+                <input asp-for="SalesLineItem" class="form-control" />
+                <span asp-validation-for="SalesLineItem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShippingId" class="control-label"></label>
+                <input asp-for="ShippingId" class="form-control" />
+                <span asp-validation-for="ShippingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <input asp-for="EmployeeId" class="form-control" />
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerId" class="control-label"></label>
+                <input asp-for="CustomerId" class="form-control" />
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

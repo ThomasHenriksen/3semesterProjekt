@@ -29,7 +29,7 @@ namespace ArmysalgClientWeb.Controllers
                 {
                     TempData["ProcessText"] = "Error inserting salesOrder";
                 }
-                return null; // HER MANGLER NOGET
+                return null; // HER MANGLER NOGET -- Måske ikke, måske kun hvis vi vil se den nye order
             }
             catch 
             {
