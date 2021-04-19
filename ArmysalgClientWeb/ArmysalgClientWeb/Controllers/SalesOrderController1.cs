@@ -40,7 +40,7 @@ namespace ArmysalgClientWeb.Controllers
             {
                 _salesOrderLogic = new SalesOrderLogic();
                 _salesOrderLogic.InsertSalesOrder(inSalesOrder);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction();
             }
             catch
             {
