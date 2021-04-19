@@ -27,8 +27,7 @@ namespace ArmysalgClientDesktop.ControlLayer
             int stock, int minStock, int maxStock, bool isDeleted)
         {
             Product newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
-            int insertedId = await _pAccess.SaveProduct(newProduct);
-            return insertedId;
+            return await _pAccess.SaveProduct(newProduct);
         }
     }
 }
