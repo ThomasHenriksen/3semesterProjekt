@@ -28,6 +28,13 @@ namespace ArmysalgClientWeb.Controllers
             return View();
         }
 
+        [HttpPost]
+        // SalesOrder/createSalesOrder
+        public IActionResult CreateSalesOrder()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

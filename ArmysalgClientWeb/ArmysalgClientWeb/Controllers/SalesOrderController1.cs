@@ -4,11 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArmysalgClientWeb.BusinessLogicLayer;
+using ArmysalgClientWeb.Models;
+using ArmysalgClientWeb.BusinessLogic;
 
 namespace ArmysalgClientWeb.Controllers
 {
     public class SalesOrderController1 : Controller
     {
+        private SalesOrderLogic _salesOrderLogic;
         // GET: SalesOrderController1
         public ActionResult Index()
         {
@@ -27,13 +31,15 @@ namespace ArmysalgClientWeb.Controllers
             return View();
         }
 
-        // POST: SalesOrderController1/Create
+        //// POST: SalesOrderController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(SalesOrder inSalesOrder)
         {
             try
             {
+                _salesOrderLogic = new SalesOrderLogic();
+                _salesOrderLogic.InsertSalesOrder(inSalesOrder);
                 return RedirectToAction(nameof(Index));
             }
             catch
