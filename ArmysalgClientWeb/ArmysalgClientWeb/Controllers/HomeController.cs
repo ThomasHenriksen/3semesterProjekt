@@ -35,6 +35,13 @@ namespace ArmysalgClientWeb.Controllers
             return View();
         }
 
+        [HttpPost]
+        // Customer/createCustomer
+        public IActionResult CreateCustomer()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

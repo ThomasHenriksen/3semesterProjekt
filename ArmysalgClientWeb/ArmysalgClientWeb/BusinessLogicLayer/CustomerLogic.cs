@@ -19,9 +19,8 @@ namespace ArmysalgClientWeb.BusinessLogicLayer
             List<Customer> foundCustomers = await _cAccess.GetCustomers();
             return foundCustomers;
         }
-        public async Task<int> SaveCustomer(string firstName, string lastName, string address, string zipCode, string city, string phone, string email)
+        public async Task<int> SaveCustomer(Customer newCustomer)
         {
-            Customer newCustomer = new Customer(firstName, lastName, address, zipCode, city, phone, email);
             return await _cAccess.SaveCustomer(newCustomer);
         }
     }

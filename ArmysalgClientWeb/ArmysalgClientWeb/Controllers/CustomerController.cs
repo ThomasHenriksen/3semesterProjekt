@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArmysalgClientWeb.BusinessLogicLayer;
+using ArmysalgClientWeb.Models;
 
 namespace ArmysalgClientWeb.Controllers
 {
@@ -13,6 +15,8 @@ namespace ArmysalgClientWeb.Controllers
     {
 
         private CustomerLogic _cmdAcces;
+
+
         // GET: CustomerController
         public ActionResult Index()
         {
@@ -30,22 +34,30 @@ namespace ArmysalgClientWeb.Controllers
         // GET: CustomerController/Create
         public ActionResult Create()
         {
+            _cmdAcces = new CustomerLogic();
+
             return View();
         }
 
         // POST: CustomerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Customer inCustomer)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _cmdAcces = new CustomerLogic();
+                _cmdAcces.SaveCustomer(inCustomer);
+
+                return RedirectToAction();
             }
             catch
             {
                 return View();
             }
+
+
+
         }
 
         // GET: CustomerController/Edit/5
