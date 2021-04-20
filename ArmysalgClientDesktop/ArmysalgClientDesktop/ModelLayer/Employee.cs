@@ -53,8 +53,7 @@ namespace ArmysalgClientDesktop.ModelLayer
 
         public override string ToString()
         {
-            return FirstName;
+            return FirstName + " " + LastName;
         }
-
     }
 }

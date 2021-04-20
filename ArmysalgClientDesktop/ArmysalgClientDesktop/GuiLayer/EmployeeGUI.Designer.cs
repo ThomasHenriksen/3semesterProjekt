@@ -70,6 +70,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.listOfEmployees.Name = "listOfEmployees";
             this.listOfEmployees.Size = new System.Drawing.Size(120, 94);
             this.listOfEmployees.TabIndex = 2;
+            this.listOfEmployees.SelectedIndexChanged += new System.EventHandler(this.listOfEmployees_SelectedIndexChanged);
             // 
             // textBox1
             // 

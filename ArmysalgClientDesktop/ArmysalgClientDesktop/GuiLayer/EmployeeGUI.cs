@@ -48,5 +48,10 @@ namespace ArmysalgClientDesktop.GuiLayer
             List<Employee> employeesToShow = await employeeControl.GetAllEmployees();
             listOfEmployees.DataSource = employeesToShow;
         }
+
+        private void listOfEmployees_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
