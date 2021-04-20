@@ -38,5 +38,11 @@ namespace ArmysalgClientDesktop.GuiLayer
             panel.Controls.Add(form);
             form.Show();
         }
+
+        private void btnEmployeeMenu_Click(object sender, EventArgs e)
+        {
+            EmployeeGUI employee = new EmployeeGUI();
+            NavigateTo(employee, ContentPanel);
+        }
     }
 }
