@@ -25,5 +25,13 @@ namespace ArmysalgDataAccess.Security
             SymmetricSecurityKey SIGNING_KEY = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SECRET_KEY));
             return SIGNING_KEY;
         }
+
+        public bool IsValidUsernameAndPassword(string username, string password)
+        {
+            string allowedUsername = _configuration["AllowDesktopApp:Username"];
+            string allowedPassword = _configuration["AllowDesktopApp:Password"];
+            bool credentialsOk = (username.Equals(allowedUsername)) && (password.Equals(allowedPassword));
+            return credentialsOk;
+        }
     }
 }
