@@ -31,7 +31,7 @@ namespace ArmysalgClientDesktop.GuiLayer
         {
             this.ContentPanel = new System.Windows.Forms.Panel();
             this.MenuPanel = new System.Windows.Forms.Panel();
-            this.btn3Menu = new System.Windows.Forms.Button();
+            this.btnEmployeeMenu = new System.Windows.Forms.Button();
             this.btnProductsMenu = new System.Windows.Forms.Button();
             this.btnHomeMenu = new System.Windows.Forms.Button();
             this.MenuPanel.SuspendLayout();
@@ -47,7 +47,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             // 
             // MenuPanel
             // 
-            this.MenuPanel.Controls.Add(this.btn3Menu);
+            this.MenuPanel.Controls.Add(this.btnEmployeeMenu);
             this.MenuPanel.Controls.Add(this.btnProductsMenu);
             this.MenuPanel.Controls.Add(this.btnHomeMenu);
             this.MenuPanel.Location = new System.Drawing.Point(12, 5);
@@ -55,14 +55,15 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.MenuPanel.Size = new System.Drawing.Size(775, 46);
             this.MenuPanel.TabIndex = 6;
             // 
-            // btn3Menu
+            // btnEmployeeMenu
             // 
-            this.btn3Menu.Location = new System.Drawing.Point(162, 23);
-            this.btn3Menu.Name = "btn3Menu";
-            this.btn3Menu.Size = new System.Drawing.Size(75, 23);
-            this.btn3Menu.TabIndex = 2;
-            this.btn3Menu.Text = "button";
-            this.btn3Menu.UseVisualStyleBackColor = true;
+            this.btnEmployeeMenu.Location = new System.Drawing.Point(162, 23);
+            this.btnEmployeeMenu.Name = "btnEmployeeMenu";
+            this.btnEmployeeMenu.Size = new System.Drawing.Size(75, 23);
+            this.btnEmployeeMenu.TabIndex = 2;
+            this.btnEmployeeMenu.Text = "Employee";
+            this.btnEmployeeMenu.UseVisualStyleBackColor = true;
+            this.btnEmployeeMenu.Click += new System.EventHandler(this.btnEmployeeMenu_Click);
             // 
             // btnProductsMenu
             // 
@@ -102,7 +103,7 @@ namespace ArmysalgClientDesktop.GuiLayer
         #endregion
         private System.Windows.Forms.Panel ContentPanel;
         private System.Windows.Forms.Panel MenuPanel;
-        private System.Windows.Forms.Button btn3Menu;
+        private System.Windows.Forms.Button btnEmployeeMenu;
         private System.Windows.Forms.Button btnProductsMenu;
         private System.Windows.Forms.Button btnHomeMenu;
     }

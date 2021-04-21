@@ -30,7 +30,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
             bool hasValidId = (id > 0);
             if (hasValidId)
             {
-                useRestUrl += id;
+                useRestUrl += "/" + id;
             }
             var uri = new Uri(String.Format(useRestUrl));
             try
@@ -41,7 +41,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
                     var content = await response.Content.ReadAsStringAsync();
                     if (hasValidId)
                     {
-                        Employee foundEmployee = JsonConvert.DeserializeObject<Employee>(content);
+                        employeeFromService = JsonConvert.DeserializeObject<Employee>(content);
                     }
                 }
                 else
@@ -73,11 +73,8 @@ namespace ArmysalgClientDesktop.ServiceLayer
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    Employee foundEmployee = JsonConvert.DeserializeObject<Employee>(content);
-                    if(foundEmployee != null)
-                    {
-                        employeesFromService = new List<Employee> { foundEmployee };
-                    }
+                    employeesFromService = JsonConvert.DeserializeObject<List<Employee>>(content);
+                    
                 }
                 else
                 {

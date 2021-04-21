@@ -23,7 +23,8 @@ namespace ArmysalgClientDesktop.ModelLayer
         {
         }
 
-        public Employee(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, double salary, string position)
+        public Employee(double salary, string position, string firstName, string lastName,
+            string address, string zipCode, string city, string phone, string email)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -35,8 +36,8 @@ namespace ArmysalgClientDesktop.ModelLayer
             Salary = salary;
             Position = position;
         }
-
-        public Employee(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, int employeeNo, double salary, string position)
+        public Employee(int employeeNo, double salary, string position, string firstName, string lastName, 
+            string address, string zipCode, string city, string phone, string email)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -48,6 +49,11 @@ namespace ArmysalgClientDesktop.ModelLayer
             EmployeeNo = employeeNo;
             Salary = salary;
             Position = position;
+        }
+
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
         }
     }
 }

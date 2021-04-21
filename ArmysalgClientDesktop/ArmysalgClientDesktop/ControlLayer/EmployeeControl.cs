@@ -32,8 +32,8 @@ namespace ArmysalgClientDesktop.ControlLayer
         public async Task<int> SaveEmployee(string firstName, string lastName, string address, string zipCode,
             string city, string phone, string email, double salary, string position)
         {
-            Employee newEmployee = new(firstName, lastName, address, zipCode,
-            city, phone, email, salary, position);
+            Employee newEmployee = new(salary,position,firstName,lastName,
+            address,zipCode, city, phone, email);
             int insertedId = await _eAccess.SaveEmployee(newEmployee);
             return insertedId;
         }
