@@ -27,10 +27,10 @@ namespace ArmysalgDataAccess.DatabaseLayer
         public int CreateSalesOrder(SalesOrder aSalesOrder)
         {
             int insertedSalesOrderId = -1;
-            //, shipping_id_fk, employeeNo_fk, customerNo_fk
-            string insertSalesOrderString = "insert into SalesOrder (salesDate, paymentAmount, status, salesLineItem_id_kf) " +
-            "OUTPUT INSERTED.salesNo values(@SalesDate, @PaymentAmount, @Status, @SalesLineItemsId)";
-            //, @ShippingId, @EmployeeId, @CustomerId
+            //, shipping_id_fk, employeeNo_fk, customerNo_fk, salesLineItem_id_kf
+            string insertSalesOrderString = "insert into SalesOrder (salesDate, paymentAmount, status) " +
+            "OUTPUT INSERTED.salesNo values(@SalesDate, @PaymentAmount, @Status)";
+            //, @ShippingId, @EmployeeId, @CustomerId, @SalesLineItemsId
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertSalesOrderString, con))
             {
@@ -40,8 +40,8 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 CreateCommand.Parameters.Add(paymentAmountParam);
                 SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
                 CreateCommand.Parameters.Add(statusParam);
-                SqlParameter salesLineItemParam = new SqlParameter("@SalesLineItemsId", aSalesOrder.SalesLineItem);
-                CreateCommand.Parameters.Add(salesLineItemParam);
+                //SqlParameter salesLineItemParam = new SqlParameter("@SalesLineItemsId", aSalesOrder.SalesLineItem);
+                //CreateCommand.Parameters.Add(salesLineItemParam);
                 
                 //SqlParameter shippingParam = new SqlParameter("@ShippingId", aSalesOrder.ShippingId);
                 //CreateCommand.Parameters.Add(shippingParam);
@@ -59,7 +59,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
         {
             SalesOrder foundSalesOrder = null;
 
-            string getSalesOrderIdString = "select salesNo, salesDate, paymentAmount, status, salesLineItem_id_kf from SalesOrder where salesNo = @Id"; //, shipping_id_fk, employeeNo_fk, customerNo_fk
+            string getSalesOrderIdString = "select salesNo, salesDate, paymentAmount, status from SalesOrder where salesNo = @Id"; //, shipping_id_fk, employeeNo_fk, customerNo_fk, salesLineItem_id_kf 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(getSalesOrderIdString, con))
             {
@@ -89,7 +89,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             tempSalesDate = salesOrderReader.GetDateTime(salesOrderReader.GetOrdinal("salesDate"));
             tempPayMentAmount = salesOrderReader.GetDecimal(salesOrderReader.GetOrdinal("paymentAmount"));
             tempStatus = salesOrderReader.GetString(salesOrderReader.GetOrdinal("status"));
-            tempSalesLineItem = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("salesLineItem_id_kf"));
+            //tempSalesLineItem = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("salesLineItem_id_kf"));
             //tempShipping = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("shipping_id_fk"));
             //if (tempShipping.Equals(null))
             //{
@@ -109,7 +109,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             //    tempCustomer = tempCus;
             //}
 
-            foundSalesOrder = new SalesOrder(tempId, tempSalesDate, tempPayMentAmount, tempStatus, tempSalesLineItem);           //, tempShipping, tempEmployee, tempCustomer
+            foundSalesOrder = new SalesOrder(tempId, tempSalesDate, tempPayMentAmount, tempStatus);           //, tempShipping, tempEmployee, tempCustomer, tempSalesLineItem
 
             return foundSalesOrder;
         }
