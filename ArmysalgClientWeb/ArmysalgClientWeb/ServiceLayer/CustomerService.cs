@@ -18,16 +18,19 @@ namespace ArmysalgClientWeb.ServiceLayer
             _httpClient = new HttpClient();
         }
 
-        public async Task<List<Customer>> GetCustomers(int id = -1) {
+        public async Task<List<Customer>> GetCustomers(int id = -1)
+        {
             List<Customer> customerFromService = null;
 
             string useRestUrl = restUrl;
             bool hasValidId = (id > 0);
-            if (hasValidId) {
+            if (hasValidId)
+            {
                 useRestUrl += id;
             }
             var uri = new Uri(String.Format(useRestUrl));
-            try {
+            try
+            {
                 var response = await _httpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -45,22 +48,26 @@ namespace ArmysalgClientWeb.ServiceLayer
                         customerFromService = JsonConvert.DeserializeObject<List<Customer>>(content);
                     }
                 }
-                else {
+                else
+                {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
                         customerFromService = new List<Customer>();
                     }
-                    else {
+                    else
+                    {
                         customerFromService = null;
                     }
                 }
             }
-            catch {
+            catch
+            {
                 customerFromService = null;
             }
             return customerFromService;
         }
-        public async Task<int> SaveCustomer(Customer customerToSave) {
+        public async Task<int> SaveCustomer(Customer customerToSave)
+        {
             int insertedCustomerNo;
             string useRestUrl = restUrl;
             var uri = new Uri(String.Format(useRestUrl, string.Empty));
