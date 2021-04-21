@@ -5,7 +5,6 @@ using Xunit.Abstractions;
 using ArmysalgDataAccess.DatabaseLayer;
 using ArmysalgDataAccess.ModelLayer;
 
-
 namespace CustomerDataTest
 {
     public class TestCustomerDataAccess
