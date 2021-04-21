@@ -25,7 +25,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
             var uriToken = new Uri(string.Format(useRestUrl));
             HttpContent appAdminLogin = new FormUrlEncodedContent(new[]
             {
-                new KeyValuePair<string, string>("grant_type", accountToUse.GrantType),
+                new KeyValuePair<string, string>("grantType", accountToUse.GrantType),
                 new KeyValuePair<string, string>("username", accountToUse.Username),
                 new KeyValuePair<string, string>("password", accountToUse.Password)
                 });
