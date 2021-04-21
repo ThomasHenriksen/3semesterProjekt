@@ -1,13 +1,12 @@
 ﻿using ArmysalgClientWeb.BusinessLogicLayer;
 using ArmysalgClientWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ArmysalgClientWeb.BusinessLogicLayer;
-using ArmysalgClientWeb.Models;
 
 namespace ArmysalgClientWeb.Controllers
 {
@@ -32,14 +31,14 @@ namespace ArmysalgClientWeb.Controllers
         }
 
         // GET: CustomerController/Create
+        [Authorize]
         public ActionResult Create()
         {
-            _cmdAcces = new CustomerLogic();
-
             return View();
         }
 
         // POST: CustomerController/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Customer inCustomer)

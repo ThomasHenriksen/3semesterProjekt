@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ArmysalgClientWeb.BusinessLogic;
+using ArmysalgClientWeb.BusinessLogicLayer;
+using ArmysalgClientWeb.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ArmysalgClientWeb.BusinessLogicLayer;
-using ArmysalgClientWeb.Models;
-using ArmysalgClientWeb.BusinessLogic;
 
 namespace ArmysalgClientWeb.Controllers
 {
@@ -39,12 +39,12 @@ namespace ArmysalgClientWeb.Controllers
             try
             {
                 _salesOrderLogic = new SalesOrderLogic();
-               int wasOk = await _salesOrderLogic.InsertSalesOrder(inSalesOrder);       
+                int wasOk = await _salesOrderLogic.InsertSalesOrder(inSalesOrder);
 
                 return RedirectToAction();
             }
             catch
-            {                
+            {
                 return View();
             }
         }

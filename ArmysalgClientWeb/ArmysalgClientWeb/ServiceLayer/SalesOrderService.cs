@@ -14,7 +14,7 @@ namespace ArmysalgClientWeb.ServiceLayer
         static readonly string restUrl = "http://localhost:50902/api/salesOrders/";
         readonly HttpClient _client;
 
-       
+
         public SalesOrderService()
         {
             _client = new HttpClient();
@@ -44,7 +44,7 @@ namespace ArmysalgClientWeb.ServiceLayer
                     insertedSalesOrderNo = -2;
                 }
             }
-            catch 
+            catch
             {
                 insertedSalesOrderNo = -3;
             }

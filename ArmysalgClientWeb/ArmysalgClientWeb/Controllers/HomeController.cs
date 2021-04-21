@@ -1,4 +1,5 @@
 ﻿using ArmysalgClientWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -24,20 +25,6 @@ namespace ArmysalgClientWeb.Controllers
         }
 
         public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        // SalesOrder/createSalesOrder
-        public IActionResult CreateSalesOrder()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        // Customer/createCustomer
-        public IActionResult CreateCustomer()
         {
             return View();
         }
