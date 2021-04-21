@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ArmysalgService.Data;
+using Microsoft.IdentityModel.Tokens;
+using ArmysalgDataAccess.Security;
 
 namespace ArmysalgService
 {
@@ -28,29 +30,51 @@ namespace ArmysalgService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            SymmetricSecurityKey SIGNING_KEY = new SecurityHelper(Configuration).GetSecurityKey();
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddAuthentication(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ArmysalgService", Version = "v1" });
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            }).AddJwtBearer("JwtBearer", jwtOptions =>
+            {
+                jwtOptions.TokenValidationParameters = new TokenValidationParameters()
+                {
+
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = SIGNING_KEY,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(3)
+                };
             });
 
+
+
+            services.AddControllers();
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ArmysalgService", Version = "v1" });
+            //});
+
             services.AddDbContext<ArmysalgServiceContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ArmysalgServiceContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("ArmysalgServiceContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ArmysalgService v1"));
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ArmysalgService v1"));
+            //}
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
