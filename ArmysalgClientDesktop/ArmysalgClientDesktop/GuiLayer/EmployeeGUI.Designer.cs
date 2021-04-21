@@ -42,6 +42,8 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.phone = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.lblErrorEmpNotFound = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // Employees
@@ -154,11 +156,20 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.lblErrorEmpNotFound.Size = new System.Drawing.Size(0, 15);
             this.lblErrorEmpNotFound.TabIndex = 12;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(560, 145);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(208, 112);
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
+            // 
             // EmployeeGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblErrorEmpNotFound);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.phone);
@@ -175,6 +186,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "EmployeeGUI";
             this.Text = "Employee";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,5 +207,6 @@ namespace ArmysalgClientDesktop.GuiLayer
         private System.Windows.Forms.TextBox phone;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblErrorEmpNotFound;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

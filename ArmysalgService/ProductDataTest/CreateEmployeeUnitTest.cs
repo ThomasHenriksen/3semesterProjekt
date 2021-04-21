@@ -21,15 +21,15 @@ namespace ArmysalgDataTest
         public void CreateEmployeeTest()
         {
             //Arrange
-            string firstName = "Larskovic";
-            string lastName = "35 lol";
-            string address = "Oldstreet 1986";
+            string firstName = "Per";
+            string lastName = "Ølstrøm";
+            string address = "Østergade 45";
             string zipCode = "9400";
             string city = "Nørresundby";
             string phone = "35353535";
             string email = "livefastdiemiddleage@onlyfans.com";
             double salary = 350000;
-            string position = "Swaggy";
+            string position = "RX designer";
             //Act
             Employee employeeToCreate = new(firstName, lastName, address, zipCode, city, phone, email, salary, position);
             employeeToCreate.EmployeeNo = _employeeAccess.CreateEmployee(employeeToCreate);

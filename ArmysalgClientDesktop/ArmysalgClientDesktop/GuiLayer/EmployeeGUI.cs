@@ -21,6 +21,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             InitializeComponent();
             this.employeeControl = new();
             SetEmployeeList();
+            SetPicture();
         }
 
         private async void Search_Click(object sender, EventArgs e)
@@ -47,6 +48,12 @@ namespace ArmysalgClientDesktop.GuiLayer
         {
             List<Employee> employeesToShow = await employeeControl.GetAllEmployees();
             listOfEmployees.DataSource = employeesToShow;
+        }
+
+        private void SetPicture()
+        {
+            pictureBox1.Image = Image.FromFile("C:\\Users\\45218\\OneDrive\\Billeder\\Saved Pictures\\jessieGUI.jpg");
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void listOfEmployees_SelectedIndexChanged(object sender, EventArgs e)
