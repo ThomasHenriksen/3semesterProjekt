@@ -16,7 +16,7 @@ namespace ArmysalgClientDesktop.Security
 
         public TokenManager()
         {
-            _tokenAdminValues = ConfigurationManager.AppSettings,
+            _tokenAdminValues = ConfigurationManager.AppSettings;
         }
 
         // Relay for calling appropriate method according to TokenState
@@ -51,10 +51,10 @@ namespace ArmysalgClientDesktop.Security
             string foundToken;
 
             // Get AccountData
-            ApiAccount accounddata = GetApiAccountCredentials();
+            ApiAccount accountdata = GetApiAccountCredentials();
             // Access a new Token from service (Web API)
             TokenServiceAccess tokenServiceAccess = new TokenServiceAccess();
-            foundToken = await tokenServiceAccess.GetNewToken(accounddata);
+            foundToken = await tokenServiceAccess.GetNewToken(accountdata);
 
             if (foundToken != null)
             {
