@@ -21,7 +21,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
             _httpClient = new HttpClient();
         }
 
-        public HttpStatusCode CurrentHttpStatusCode { get; private set; }
+        public HttpStatusCode CurrentHttpStatusCode { get; set; }
 
         /* Method to retrieve Products 
          */
