@@ -50,8 +50,26 @@ namespace ArmysalgClientDesktop.ControlLayer
         public async Task<int> SaveProduct(string name, string description, decimal purchasePrice, string status,
             int stock, int minStock, int maxStock, bool isDeleted)
         {
-            Product newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
-            return await _pAccess.SaveProduct(newProduct, null);
+            Product newProduct = null;
+            TokenState currentState = TokenState.Valid;
+            string tokenValue = await GetToken(currentState);
+            if (tokenValue != null)
+            {
+                newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
+                if (_pAccess.CurrentHttpStatusCode == HttpStatusCode.Unauthorized)
+                {
+                    currentState = TokenState.Invalid;
+                }
+            }
+            if (currentState == TokenState.Invalid)
+            {
+                tokenValue = await GetToken(currentState);
+                if (tokenValue != null)
+                {
+                    newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
+                }
+            }
+            return await _pAccess.SaveProduct(newProduct, tokenValue);
         }
 
         private async Task<string> GetToken(TokenState useState)
