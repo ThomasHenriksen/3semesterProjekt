@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArmysalgDataAccess.ModelLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,12 +16,12 @@ namespace ArmysalgService.DTOs
         public int MinStock { get; set; }
         public int MaxStock { get; set; }
         public bool IsDeleted { get; set; }
-
+        public Price price { get; set; }
         public ProductdataWriteDto()
         {
         }
 
-        public ProductdataWriteDto(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
+        public ProductdataWriteDto(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price price)
         {
             Name = name;
             Description = description;
@@ -30,6 +31,7 @@ namespace ArmysalgService.DTOs
             MinStock = minStock;
             MaxStock = maxStock;
             IsDeleted = isDeleted;
+            this.price = price;
         }
     }
 }

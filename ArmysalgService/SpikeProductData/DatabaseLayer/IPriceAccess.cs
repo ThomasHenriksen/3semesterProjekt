@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ArmysalgDataAccess.DatabaseLayer
 {
-    public  interface IPriceAccess
+    public interface IPriceAccess
     {
-        int CreatePrice(Price aPrice);
-        int CreatePriceWithOutEndDate(Price aPrice);
+        int CreatePrice(Price aPrice, Product product);
+        int CreatePriceWithOutEndDate(Price aPrice, Product product);
         List<Price> GetPriceAll();
         List<Price> GetPriceByProductNo(int productNo);
         bool UpdateEndDatePrice(Price priceToUpdate);

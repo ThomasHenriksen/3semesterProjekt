@@ -17,17 +17,17 @@ namespace ArmysalgDataAccess.DatabaseLayer
         public PriceDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
-            _productAccess = new ProductDatabaseAccess(_connectionString);
+         
         }
 
         //For Test 
         public PriceDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
-            _productAccess = new ProductDatabaseAccess(_connectionString);
+          
         }
 
-        public int CreatePrice(Price aPrice)
+        public int CreatePrice(Price aPrice, Product product)
         {
             int insertedId = -1;
 
@@ -44,7 +44,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 SqlParameter endDateParam = new SqlParameter("@endDate", aPrice.EndDate);
                 CreateCommand.Parameters.Add(endDateParam);
 
-                SqlParameter productNoParam = new SqlParameter("@productNo_fk", aPrice.Product.Id);
+                SqlParameter productNoParam = new SqlParameter("@productNo_fk", product.Id);
                 CreateCommand.Parameters.Add(productNoParam);
 
 
@@ -53,7 +53,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             }
             return insertedId;
         }
-        public int CreatePriceWithOutEndDate(Price aPrice)
+        public int CreatePriceWithOutEndDate(Price aPrice, Product product)
         {
             int insertedId = -1;
 
@@ -67,7 +67,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 CreateCommand.Parameters.Add(priceParam);
                 SqlParameter startDateParam = new SqlParameter("@startDate", aPrice.StartDate);
                 CreateCommand.Parameters.Add(startDateParam);
-                SqlParameter productNoParam = new SqlParameter("@productNo_fk", aPrice.Product.Id);
+                SqlParameter productNoParam = new SqlParameter("@productNo_fk", product.Id);
                 CreateCommand.Parameters.Add(productNoParam);
 
 
@@ -100,7 +100,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             return foundPrices;
 
         }
-        public List<Price> GetPriceByProductNo(int productNo)
+        public List<Price> GetPriceByProductNo( int productNo)
         {
             List<Price> foundPrices;
             Price readPrice;
@@ -176,7 +176,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             decimal tempValue;
             DateTime tempStartDate;
             DateTime? tempEndDate = null;
-            Product tempProduct;
+            
 
 
             tempId = priceReader.GetInt32(priceReader.GetOrdinal("id"));
@@ -185,10 +185,10 @@ namespace ArmysalgDataAccess.DatabaseLayer
             if (!priceReader.IsDBNull(priceReader.GetOrdinal("endDate"))) {
                 tempEndDate = priceReader.GetDateTime(priceReader.GetOrdinal("endDate"));
             }
-            tempProduct = _productAccess.GetProductById(priceReader.GetInt32(priceReader.GetOrdinal("productNo_fk")));
+            
 
 
-            foundPrice = new Price(tempId, tempValue, tempStartDate, tempEndDate, tempProduct);
+            foundPrice = new Price(tempId, tempValue, tempStartDate, tempEndDate);
 
 
 

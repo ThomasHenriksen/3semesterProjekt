@@ -13,16 +13,18 @@ namespace ArmysalgDataAccess.DatabaseLayer
     public class ProductDatabaseAccess : IProductAccess
     {
         readonly string _connectionString;
-
+        private IPriceAccess _PriceAccess;
         public ProductDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
+            _PriceAccess = new PriceDatabaseAccess(_connectionString);
         }
 
         //For Test 
         public ProductDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
+            _PriceAccess = new PriceDatabaseAccess(_connectionString);
         }
 
         public int CreateProduct(Product aProduct)
@@ -49,9 +51,10 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 CreateCommand.Parameters.Add(minStockParam);
                 SqlParameter maxStockParam = new SqlParameter("@MaxStock", aProduct.MaxStock);
                 CreateCommand.Parameters.Add(maxStockParam);
-
+               
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
+          
             }
             return insertedId;
         }
@@ -159,7 +162,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             string tempName, tempDescription, tempStatus;
             decimal tempPurchasePrice;
             bool tempIsDeleted;
-
+            Price tempPrice;
             tempId = productReader.GetInt32(productReader.GetOrdinal("productNo"));
             tempName = productReader.GetString(productReader.GetOrdinal("name"));
             tempDescription = productReader.GetString(productReader.GetOrdinal("description"));
@@ -169,8 +172,8 @@ namespace ArmysalgDataAccess.DatabaseLayer
             tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
             tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
             tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
-
-            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted);
+            tempPrice = _PriceAccess.GetPriceByProductNoAndNoEndDate(tempId);
+            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, tempPrice);
 
             return foundProduct;
         }

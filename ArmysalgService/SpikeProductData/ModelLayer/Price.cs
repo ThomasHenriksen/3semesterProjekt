@@ -13,31 +13,31 @@ namespace ArmysalgDataAccess.ModelLayer
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public Product Product { get; set; }
+
 
         public Price() { }
 
-        public Price(decimal value, DateTime startDate, DateTime? endDate, Product product)
+        public Price(decimal value, DateTime startDate, DateTime? endDate)
         {
             Value = value;
             StartDate = startDate;
             EndDate = endDate;
-            Product = product;
+
         }
-        public Price(int id, decimal value, DateTime startDate, Product product)
+        public Price(int id, decimal value, DateTime startDate)
         {
             Id = id;
             Value = value;
             StartDate = startDate;
-            Product = product;
+
         }
-        public Price(int id, decimal value, DateTime startDate, DateTime? endDate, Product product)
+        public Price(int id, decimal value, DateTime startDate, DateTime? endDate)
         {
             Id = id;
             Value = value;
             StartDate = startDate;
             EndDate = endDate;
-            Product = product;
+
         }
     }
 }
