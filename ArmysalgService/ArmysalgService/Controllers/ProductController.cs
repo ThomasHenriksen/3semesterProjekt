@@ -14,7 +14,7 @@ namespace ArmysalgService.Controllers
 {
     [Route("api/products")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductdata _pControl;

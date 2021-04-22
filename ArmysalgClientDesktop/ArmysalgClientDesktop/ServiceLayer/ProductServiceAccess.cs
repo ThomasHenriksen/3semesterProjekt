@@ -21,7 +21,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
             _httpClient = new HttpClient();
         }
 
-        public HttpStatusCode CurrentHttpStatusCode { get; private set; }
+        public HttpStatusCode CurrentHttpStatusCode { get; set; }
 
         /* Method to retrieve Products 
          */
@@ -101,6 +101,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
 
                 HttpResponseMessage response = null;
                 response = await _httpClient.PostAsync(uri, content);
+
                 CurrentHttpStatusCode = response.StatusCode;
                 string resultingIdString = await response.Content.ReadAsStringAsync();
 
