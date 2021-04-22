@@ -162,7 +162,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
             string tempName, tempDescription, tempStatus;
             decimal tempPurchasePrice;
             bool tempIsDeleted;
-            Price tempPrice;
+            
             tempId = productReader.GetInt32(productReader.GetOrdinal("productNo"));
             tempName = productReader.GetString(productReader.GetOrdinal("name"));
             tempDescription = productReader.GetString(productReader.GetOrdinal("description"));

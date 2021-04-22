@@ -20,57 +20,8 @@ namespace ProductDataTest
             _PriceAccess = new PriceDatabaseAccess(_connectionString);
             _productAccess = new ProductDatabaseAccess(_connectionString);
         }
-        [Fact]
-        public void TestCreateProduct()
-        {
-            //Arrange
-            decimal value = 200;
-            DateTime startTime = DateTime.Today;
-            DateTime? endTime = null;
-            Product product = null;
-            //Act
-            product = _productAccess.GetProductById(1);
-            Price PriceToCreate = new Price(value, startTime, endTime, product);
-            int productToReadByID = _PriceAccess.CreatePriceWithOutEndDate(PriceToCreate);
-
-            bool PrisCreate = (productToReadByID > 0);
-            
-            extraOutput.WriteLine("Product name: " + PriceToCreate.Product.Name + " Product ID: " + PriceToCreate.Product.Id + " Price: " + PriceToCreate.Value + " StartTime: " + PriceToCreate.StartDate + " EndTime: " + PriceToCreate.EndDate);
-
-            //Assert
-            Assert.True(PrisCreate);
-        }
-        [Fact]
-        public void TestGetPriceAll()
-        {
-            //Arrange
-
-            //Act
-            List<Price> readPrices = _PriceAccess.GetPriceAll();
-            bool PricesWereRead = (readPrices.Count > 0);
-            // Print output
-            extraOutput.WriteLine("Number of products: " + readPrices.Count);
-
-            //Assert
-            Assert.True(PricesWereRead);
-        }
-
-        [Fact]
-        public void TestGetPriceForByProductId()
-        {
-            //Arrange
-            int idForProduct1 = 1;
-
-            //Act
-            Product productToRead = _productAccess.GetProductById(idForProduct1);
-        
-            Price price = _PriceAccess.GetPriceByProductNoAndNoEndDate(productToRead.Id);
-            bool priceForProductFound = (price.Value == 200);
-            extraOutput.WriteLine("Product name: " + price.Product.Name + " Product ID: " + price.Product.Id + " Price: " + price.Value);
-
-            //Assert
-            Assert.True(priceForProductFound);
-        }
+      
+      
 
 
         

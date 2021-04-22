@@ -13,7 +13,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
     public class PriceDatabaseAccess : IPriceAccess
     {
         readonly string _connectionString;
-        private IProductAccess _productAccess;
+        
         public PriceDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");

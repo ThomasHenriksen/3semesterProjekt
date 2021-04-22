@@ -68,14 +68,21 @@ namespace ArmysalgService.BusinesslogicLayer
         public List<Product> Get()
         {
             List<Product> foundProducts;
-            try
+
+            foundProducts = _productAccess.GetProductAll();
+            foreach (Product product in foundProducts)
             {
-                foundProducts = _productAccess.GetProductAll();
+                if (_priceData.Get(product.Id) != null)
+                {
+                    product.price = _priceData.Get(product.Id);
+                }
+                else
+                {
+                    product.price = null;
+                }
             }
-            catch
-            {
-                foundProducts = null;
-            }
+
+
             return foundProducts;
         }
         /*

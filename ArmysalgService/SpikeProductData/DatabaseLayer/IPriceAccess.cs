@@ -15,5 +15,6 @@ namespace ArmysalgDataAccess.DatabaseLayer
         List<Price> GetPriceByProductNo(int productNo);
         bool UpdateEndDatePrice(Price priceToUpdate);
         Price GetPriceByProductNoAndNoEndDate(int productNo);
+        Price GetPriceById(int priceId);
     }
 }

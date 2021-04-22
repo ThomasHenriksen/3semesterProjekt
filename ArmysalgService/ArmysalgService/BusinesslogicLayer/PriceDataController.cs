@@ -24,10 +24,13 @@ namespace ArmysalgService.BusinesslogicLayer
             {
                 if (newPrice.EndDate != null)
                 {
-                    insertedId = _PriceAccess.CreatePrice(newPrice, product);
+                    insertedId = _PriceAccess. CreatePrice(newPrice, product);
                 }
                 else
                 {
+                    Price price = product.price;
+                    price.EndDate = newPrice.StartDate;
+                    Put(product.price);
                     insertedId = _PriceAccess.CreatePriceWithOutEndDate(newPrice, product);
                 }
             }
@@ -56,23 +59,27 @@ namespace ArmysalgService.BusinesslogicLayer
             bool foundt = false;
             while (i < size && !foundt)
             {
-                i++;
+               
                 Price temp = FoundPrices[i];
-                if (temp.StartDate > now && now < temp.EndDate)
+                if (temp.StartDate < now && now < temp.EndDate)
                 {
                     foundPrice = temp;
                     foundt = true;
                 }
+          
+                i++;
             }
             while (j < size && !foundt)
             {
-                j++;
+
                 Price temp = FoundPrices[j];
-                if (temp.StartDate > now)
+           
+                if (temp.StartDate < now && temp.EndDate == null)
                 {
                     foundPrice = temp;
                     foundt = true;
                 }
+                j++;
             }
             return foundPrice;
         }
@@ -100,9 +107,8 @@ namespace ArmysalgService.BusinesslogicLayer
            *  @param id 
            *  @return bool
          */
-        public bool Put(Price PriceToUpdate, int id)
+        public bool Put(Price PriceToUpdate)
         {
-            PriceToUpdate.Id = id;
             return _PriceAccess.UpdateEndDatePrice(PriceToUpdate);
         }
     }

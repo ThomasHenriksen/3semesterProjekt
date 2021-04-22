@@ -11,6 +11,6 @@ namespace ArmysalgService.BusinesslogicLayer
         int Add(Price newPrice, Product product);
         Price Get(int idToMatch);
         List<Price> GetAll(int idToMatch);
-        bool Put(Price PriceToUpdate, int id);
+        bool Put(Price PriceToUpdate);
     }
 }

@@ -3,10 +3,7 @@ using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArmysalgDataAccess.ModelLayer;
 using Microsoft.AspNetCore.Authorization;
 
@@ -14,7 +11,7 @@ namespace ArmysalgService.Controllers
 {
     [Route("api/products")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductdata _pControl;
