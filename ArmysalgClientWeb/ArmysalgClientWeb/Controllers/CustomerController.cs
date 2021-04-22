@@ -46,7 +46,7 @@ namespace ArmysalgClientWeb.Controllers
             try
             {
                 _cmdAcces = new CustomerLogic();
-                _cmdAcces.SaveCustomer(inCustomer);
+                Task<int> customerNo = _cmdAcces.SaveCustomer(inCustomer);
 
                 return RedirectToAction();
             }

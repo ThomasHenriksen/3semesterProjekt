@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using ArmysalgClientWeb.Controllers;
+using ArmysalgClientWeb.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,6 +25,7 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly CustomerController _customerManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -34,6 +37,7 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _customerManager = new CustomerController();
         }
 
         [BindProperty]
@@ -45,6 +49,26 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required]
+            [Display(Name = "Navn")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Efternavn")]
+            public string LastName { get; set; }
+
+            [Required]
+            [Display(Name = "Adresse")]
+            public string Address { get; set; }
+
+            [Required]
+            [Display(Name = "Postnummer")]
+            public string ZipCode { get; set; }
+
+            [Required]
+            [Display(Name = "Telefon")]
+            public string Phone { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -78,6 +102,9 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    var customer = new Customer { FirstName = Input.FirstName, LastName = Input.LastName, Address = Input.Address, ZipCode = Input.ZipCode, Phone = Input.Phone, Email = Input.Email };
+                    _customerManager.Create(customer);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -29,7 +29,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
         {
             int insertedId = -1;
 
-            string insertString = "insert into customer (firstName, lastName, address, zipCode_fk, phone, email) OUTPUT INSERTED.customerNo " +
+            string insertString = "insert into Customer (firstName, lastName, address, zipCode_fk, phone, email) OUTPUT INSERTED.customerNo " +
                 "values (@FirstName, @LastName, @Address, @ZipCode, @Phone, @Email)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -50,9 +50,50 @@ namespace ArmysalgDataAccess.DatabaseLayer
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
+
+                if (CheckIfCustomerHasAspNetUser(aCustomer.Email) == 1)
+                {
+                    ConnectCustomerToAspNetUser(insertedId, aCustomer.Email);
+                }
             }
             return insertedId;
         }
+
+        public int CheckIfCustomerHasAspNetUser(string email)
+        {
+
+            string queryString = "select count(1) from AspNetUsers where email = (@Email) ";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand GetCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter emailParam = new SqlParameter("@Email", email);
+                GetCommand.Parameters.Add(emailParam);
+
+                con.Open();
+                int hasIdentityUser = (int)GetCommand.ExecuteScalar();
+
+                return hasIdentityUser;
+            }
+        }
+
+        public void ConnectCustomerToAspNetUser(int customerNo, string email)
+        {
+            string insertString = "update AspNetUsers set customerNo_fk = (@CustomerNo) where email = (@Email) ";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand UpdateCommand = new SqlCommand(insertString, con))
+            {
+                SqlParameter customerNoParam = new SqlParameter("@CustomerNo", customerNo);
+                UpdateCommand.Parameters.Add(customerNoParam);
+                SqlParameter emailParam = new SqlParameter("@Email", email);
+                UpdateCommand.Parameters.Add(emailParam);
+
+                con.Open();
+                UpdateCommand.ExecuteScalar();
+            }
+        }
+
 
 
 
