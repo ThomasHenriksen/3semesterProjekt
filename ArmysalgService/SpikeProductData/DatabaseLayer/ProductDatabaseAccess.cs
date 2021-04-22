@@ -172,8 +172,8 @@ namespace ArmysalgDataAccess.DatabaseLayer
             tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
             tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
             tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
-            tempPrice = _PriceAccess.GetPriceByProductNoAndNoEndDate(tempId);
-            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, tempPrice);
+            
+            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted);
 
             return foundProduct;
         }

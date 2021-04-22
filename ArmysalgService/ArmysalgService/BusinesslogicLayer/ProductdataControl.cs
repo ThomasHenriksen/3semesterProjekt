@@ -11,10 +11,11 @@ namespace ArmysalgService.BusinesslogicLayer
     public class ProductdataControl : IProductdata
     {
         IProductAccess _productAccess;
-
+        IPriceData _priceData;
         public ProductdataControl(IConfiguration inConfiguration)
         {
             _productAccess = new ProductDatabaseAccess(inConfiguration);
+            _priceData = new PriceDataController(inConfiguration);
         }
         /*
            *  this method is use to create a new product in the database
@@ -52,6 +53,7 @@ namespace ArmysalgService.BusinesslogicLayer
             try
             {
                 foundProduct = _productAccess.GetProductById(idToMatch);
+                foundProduct.price = _priceData.Get(idToMatch);
             }
             catch
             {

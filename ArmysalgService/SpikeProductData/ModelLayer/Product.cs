@@ -22,7 +22,7 @@ namespace ArmysalgDataAccess.ModelLayer
         {
         }
 
-        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price price)
+        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
         {
             Name = name;
             Description = description;
@@ -35,7 +35,7 @@ namespace ArmysalgDataAccess.ModelLayer
             this.price = price;
         }
 
-        public Product(int id, string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price price)
+        public Product(int id, string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
         {
             Id = id;
             Name = name;
@@ -46,7 +46,7 @@ namespace ArmysalgDataAccess.ModelLayer
             MinStock = minStock;
             MaxStock = maxStock;
             IsDeleted = isDeleted;
-            this.price = price;
+          
         }
     }
 }

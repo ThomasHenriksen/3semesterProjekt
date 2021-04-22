@@ -169,6 +169,30 @@ namespace ArmysalgDataAccess.DatabaseLayer
             return foundPrice;
 
         }
+    
+        public Price GetPriceById(int priceId)
+        {
+            Price foundPrice = null;
+
+            string queryString = "select id, price, startDate, endDate, productNo_fk from Price where id = @id";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter productNoParam = new SqlParameter("@id", priceId);
+                readCommand.Parameters.Add(productNoParam);
+
+                con.Open();
+
+                SqlDataReader priceReader = readCommand.ExecuteReader();
+                foundPrice = new Price();
+                while (priceReader.Read())
+                {
+                    foundPrice = GetPriceFromReader(priceReader);
+                }
+            }
+            return foundPrice;
+
+        }
         private Price GetPriceFromReader(SqlDataReader priceReader)
         {
             Price foundPrice;
