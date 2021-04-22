@@ -101,6 +101,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
 
                 HttpResponseMessage response = null;
                 response = await _httpClient.PostAsync(uri, content);
+
                 CurrentHttpStatusCode = response.StatusCode;
                 string resultingIdString = await response.Content.ReadAsStringAsync();
 
