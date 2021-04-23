@@ -26,6 +26,7 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly CustomerController _customerManager;
+        private readonly CartController _cartManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -38,6 +39,7 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _customerManager = new CustomerController();
+            _cartManager = new CartController();
         }
 
         [BindProperty]
@@ -104,6 +106,8 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
                 {
                     var customer = new Customer { FirstName = Input.FirstName, LastName = Input.LastName, Address = Input.Address, ZipCode = Input.ZipCode, Phone = Input.Phone, Email = Input.Email };
                     _customerManager.Create(customer);
+                    var cart = new Cart { };
+                    _cartManager.Create(cart);
 
                     _logger.LogInformation("User created a new account with password.");
 

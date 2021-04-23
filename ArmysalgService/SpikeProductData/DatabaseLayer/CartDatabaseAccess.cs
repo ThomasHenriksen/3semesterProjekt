@@ -34,7 +34,6 @@ namespace ArmysalgDataAccess.DatabaseLayer
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
-
             }
             return insertedId;
         }
