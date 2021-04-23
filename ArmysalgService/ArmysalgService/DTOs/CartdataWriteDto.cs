@@ -7,11 +7,10 @@ namespace ArmysalgService.DTOs
 {
     public class CartdataWriteDto
     {
-        public DateTime LastUpdated;
+        public DateTime LastUpdated { get; set; }
 
         public CartdataWriteDto()
         {
-
         }
 
         public CartdataWriteDto(DateTime lastUpdated) 
