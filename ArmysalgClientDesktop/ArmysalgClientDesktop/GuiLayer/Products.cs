@@ -24,6 +24,10 @@ namespace ArmysalgClientDesktop.GuiLayer
 
         private async void CreateNewProduct()
         {
+            /*
+             * New Product
+             *
+             */
             string name = txtBName.Text;
             string description = txtBDescription.Text;
             decimal purchasePrice = decimal.Parse(txtBPurchasePrice.Text);
@@ -32,7 +36,15 @@ namespace ArmysalgClientDesktop.GuiLayer
             int minStock = int.Parse(txtBMinStock.Text);
             int maxStock = int.Parse(txtBMaxStock.Text);
             bool isDeleted = cbIsDeleted.Checked;
-            _ = await productController.SaveProduct(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
+            /*
+             * New price
+             * 
+             */
+            decimal value = decimal.Parse(txtBPrice.Text);
+            DateTime startDate = DateTime.Now;
+           
+            DateTime? endDate = null ;
+            _ = await productController.SaveProduct(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, value, startDate, endDate);
         }
 
         private async void GetAllProductsAsync()
@@ -50,6 +62,7 @@ namespace ArmysalgClientDesktop.GuiLayer
         private void listBoxProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
             Product test = (Product)listBoxProducts.SelectedItem;
+
         }
     }
 }

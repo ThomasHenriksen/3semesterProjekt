@@ -29,6 +29,8 @@ namespace ArmysalgService.BusinesslogicLayer
             try
             {
                 insertedId = _productAccess.CreateProduct(newProduct);
+                newProduct.Id = insertedId;
+                _priceData.Add(newProduct.price, newProduct);
             }
             catch
             {
@@ -94,6 +96,21 @@ namespace ArmysalgService.BusinesslogicLayer
         public bool Put(Product productToUpdate, int id)
         {
             productToUpdate.Id = id;
+
+           Price checkPrice = _priceData.Get(productToUpdate.Id);
+            if (checkPrice == null)
+            {
+                _priceData.Add(productToUpdate.price, productToUpdate);
+
+            }
+            else {
+                if (checkPrice.Id != productToUpdate.Id ) {
+                    _priceData.Add(productToUpdate.price, productToUpdate);
+                }
+            }
+
+
+
             return _productAccess.UpdateProduct(productToUpdate);
         }
     }

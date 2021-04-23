@@ -46,6 +46,10 @@
             this.lblMaxStock = new System.Windows.Forms.Label();
             this.lblIsDeleted = new System.Windows.Forms.Label();
             this.btnCreate = new System.Windows.Forms.Button();
+            this.txtBPrice = new System.Windows.Forms.TextBox();
+            this.lblPrice = new System.Windows.Forms.Label();
+            this.txtBEndDate = new System.Windows.Forms.TextBox();
+            this.lblEndDate = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBoxProducts
@@ -198,6 +202,38 @@
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
+            // txtBPrice
+            // 
+            this.txtBPrice.Location = new System.Drawing.Point(507, 66);
+            this.txtBPrice.Name = "txtBPrice";
+            this.txtBPrice.Size = new System.Drawing.Size(100, 23);
+            this.txtBPrice.TabIndex = 18;
+            // 
+            // lblPrice
+            // 
+            this.lblPrice.AutoSize = true;
+            this.lblPrice.Location = new System.Drawing.Point(448, 69);
+            this.lblPrice.Name = "lblPrice";
+            this.lblPrice.Size = new System.Drawing.Size(56, 15);
+            this.lblPrice.TabIndex = 19;
+            this.lblPrice.Text = "PriceTest:";
+            // 
+            // txtBEndDate
+            // 
+            this.txtBEndDate.Location = new System.Drawing.Point(507, 98);
+            this.txtBEndDate.Name = "txtBEndDate";
+            this.txtBEndDate.Size = new System.Drawing.Size(100, 23);
+            this.txtBEndDate.TabIndex = 20;
+            // 
+            // lblEndDate
+            // 
+            this.lblEndDate.AutoSize = true;
+            this.lblEndDate.Location = new System.Drawing.Point(448, 103);
+            this.lblEndDate.Name = "lblEndDate";
+            this.lblEndDate.Size = new System.Drawing.Size(54, 15);
+            this.lblEndDate.TabIndex = 21;
+            this.lblEndDate.Text = "EndDate:";
+            // 
             // Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -205,6 +241,10 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(800, 385);
+            this.Controls.Add(this.lblEndDate);
+            this.Controls.Add(this.txtBEndDate);
+            this.Controls.Add(this.lblPrice);
+            this.Controls.Add(this.txtBPrice);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.lblIsDeleted);
             this.Controls.Add(this.lblMaxStock);
@@ -252,5 +292,9 @@
         private System.Windows.Forms.TextBox txtBMaxStock;
         private System.Windows.Forms.Label lblIsDeleted;
         private System.Windows.Forms.Button btnCreate;
+        private System.Windows.Forms.TextBox txtBPrice;
+        private System.Windows.Forms.Label lblPrice;
+        private System.Windows.Forms.TextBox txtBEndDate;
+        private System.Windows.Forms.Label lblEndDate;
     }
 }

@@ -48,5 +48,9 @@ namespace ArmysalgDataAccess.ModelLayer
             IsDeleted = isDeleted;
           
         }
+        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price newPrice) : this(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted)
+        {
+            this.price = newPrice;
+        }
     }
 }

@@ -22,17 +22,26 @@ namespace ArmysalgService.BusinesslogicLayer
             int insertedId;
             try
             {
-                if (newPrice.EndDate != null)
+                Price price = Get(product.Id);
+                if (price != null)
                 {
-                    insertedId = _PriceAccess. CreatePrice(newPrice, product);
-                }
-                else
-                {
-                    Price price = product.price;
                     price.EndDate = newPrice.StartDate;
                     Put(product.price);
                     insertedId = _PriceAccess.CreatePriceWithOutEndDate(newPrice, product);
                 }
+                else
+                {
+                    if (newPrice.EndDate != null)
+                    {
+                        insertedId = _PriceAccess.CreatePrice(newPrice, product);
+                    }
+                    else
+                    {
+                        insertedId = _PriceAccess.CreatePriceWithOutEndDate(newPrice, product);
+                    }
+
+                }
+
             }
             catch
             {
@@ -59,21 +68,21 @@ namespace ArmysalgService.BusinesslogicLayer
             bool foundt = false;
             while (i < size && !foundt)
             {
-               
+
                 Price temp = FoundPrices[i];
                 if (temp.StartDate < now && now < temp.EndDate)
                 {
                     foundPrice = temp;
                     foundt = true;
                 }
-          
+
                 i++;
             }
             while (j < size && !foundt)
             {
 
                 Price temp = FoundPrices[j];
-           
+
                 if (temp.StartDate < now && temp.EndDate == null)
                 {
                     foundPrice = temp;
