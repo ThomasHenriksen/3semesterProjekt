@@ -24,7 +24,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
         {
             int insertedId = -1;
 
-            string insertString = "insert into Cart (lastUpdated) values (@LastUpdated)";
+            string insertString = "insert into Cart (lastUpdated) OUTPUT INSERTED.id values (@LastUpdated) ";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
@@ -34,7 +34,6 @@ namespace ArmysalgDataAccess.DatabaseLayer
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
-
             }
             return insertedId;
         }
