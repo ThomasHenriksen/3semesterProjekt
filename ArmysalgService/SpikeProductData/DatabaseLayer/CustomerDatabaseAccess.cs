@@ -51,16 +51,11 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 con.Open();
                 insertedCustomerNo = (int)CreateCommand.ExecuteScalar();
 
-                if (CheckIfCustomerHasAspNetUser(aCustomer))
-                {
-                    aCustomer.CustomerNo = insertedCustomerNo;
-                    ConnectCustomerToAspNetUser(aCustomer);
-                }
             }
             return insertedCustomerNo;
         }
 
-        public bool CheckIfCustomerHasAspNetUser(Customer aCustomer)
+        public bool CustomerHasAspNetUser(Customer aCustomer)
         {
             bool customerHasAspNetUser = false;
 

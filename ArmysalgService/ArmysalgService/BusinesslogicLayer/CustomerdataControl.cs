@@ -28,18 +28,16 @@ namespace ArmysalgService.BusinesslogicLayer
         public int AddCustomer(Customer newCustomer)
         {
             int insertedCustomerNo;
-            bool customerHasAspNetUser;
 
             try
             {
                 insertedCustomerNo = _customerAccess.CreateCustomer(newCustomer);
-                customerHasAspNetUser = _customerAccess.CheckIfCustomerHasAspNetUser(newCustomer);
-                
-                if(customerHasAspNetUser)
+
+                //Connect customer to AspNetUser and a new cart if customer has AspNetUser
+                if (_customerAccess.CustomerHasAspNetUser(newCustomer))
                 {
                     newCustomer.CustomerNo = insertedCustomerNo;
-                    Cart newCart = new Cart(newCustomer);
-                    _cartAccess.CreateCart(newCart);
+                    AddWebUserPropertiesToCustomer(newCustomer);
                 }
             }
             catch
@@ -47,6 +45,34 @@ namespace ArmysalgService.BusinesslogicLayer
                 insertedCustomerNo = -1;
             }
             return insertedCustomerNo;
+        }
+
+        /*
+          *  Connect customer to AspNetUser and a new cart
+          *  @param customer
+          *  
+          *  @return wasAdded
+        */
+        public bool AddWebUserPropertiesToCustomer(Customer customer)
+        {
+            bool wasAdded;
+
+            try
+            {
+                //Connect customer to AspNetUser
+                _customerAccess.ConnectCustomerToAspNetUser(customer);
+
+                //Create and add new cart to customer
+                Cart newCart = new Cart(customer);
+                _cartAccess.CreateCart(newCart);
+
+                wasAdded = true;
+            }
+            catch
+            {
+                wasAdded = false;
+            }
+            return wasAdded;
         }
 
         /*
