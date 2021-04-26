@@ -30,7 +30,7 @@ namespace ArmysalgService.BusinesslogicLayer
             {
                 insertedId = _productAccess.CreateProduct(newProduct);
                 newProduct.Id = insertedId;
-                _priceData.Add(newProduct.price, newProduct);
+                _priceData.Add(newProduct.Price, newProduct);
             }
             catch
             {
@@ -55,7 +55,7 @@ namespace ArmysalgService.BusinesslogicLayer
             try
             {
                 foundProduct = _productAccess.GetProductById(idToMatch);
-                foundProduct.price = _priceData.Get(idToMatch);
+                foundProduct.Price = _priceData.Get(idToMatch);
             }
             catch
             {
@@ -76,11 +76,11 @@ namespace ArmysalgService.BusinesslogicLayer
             {
                 if (_priceData.Get(product.Id) != null)
                 {
-                    product.price = _priceData.Get(product.Id);
+                    product.Price = _priceData.Get(product.Id);
                 }
                 else
                 {
-                    product.price = null;
+                    product.Price = null;
                 }
             }
 
@@ -100,12 +100,12 @@ namespace ArmysalgService.BusinesslogicLayer
            Price checkPrice = _priceData.Get(productToUpdate.Id);
             if (checkPrice == null)
             {
-                _priceData.Add(productToUpdate.price, productToUpdate);
+                _priceData.Add(productToUpdate.Price, productToUpdate);
 
             }
             else {
                 if (checkPrice.Id != productToUpdate.Id ) {
-                    _priceData.Add(productToUpdate.price, productToUpdate);
+                    _priceData.Add(productToUpdate.Price, productToUpdate);
                 }
             }
 

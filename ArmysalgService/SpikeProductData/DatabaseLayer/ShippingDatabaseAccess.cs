@@ -19,7 +19,8 @@ namespace ArmysalgDataAccess.DatabaseLayer
         }
 
         //For test
-        public ShippingDatabaseAccess(string inConnectionString){
+        public ShippingDatabaseAccess(string inConnectionString)
+        {
             _connectionString = inConnectionString;
         }
 
@@ -49,7 +50,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 CreateCommand.Parameters.Add(phone);
                 SqlParameter email = new SqlParameter("@Email", aShipping.Email);
                 CreateCommand.Parameters.Add(email);
-                
+
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
@@ -57,5 +58,5 @@ namespace ArmysalgDataAccess.DatabaseLayer
             return insertedId;
         }
     }
-    }
 }
+
