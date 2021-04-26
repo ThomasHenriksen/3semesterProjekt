@@ -14,10 +14,12 @@ namespace ArmysalgDataAccess.DatabaseLayer
     {
         readonly string _connectionString;
         private IPriceAccess _PriceAccess;
+        private ICategoryAccess _CategoryAccess;
         public ProductDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
             _PriceAccess = new PriceDatabaseAccess(_connectionString);
+            _CategoryAccess = new CategoryDatabaseAccess(_connectionString);
         }
 
         //For Test 
@@ -25,6 +27,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
         {
             _connectionString = inConnectionString;
             _PriceAccess = new PriceDatabaseAccess(_connectionString);
+            _CategoryAccess = new CategoryDatabaseAccess(_connectionString);
         }
 
         public int CreateProduct(Product aProduct)
@@ -51,14 +54,62 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 CreateCommand.Parameters.Add(minStockParam);
                 SqlParameter maxStockParam = new SqlParameter("@MaxStock", aProduct.MaxStock);
                 CreateCommand.Parameters.Add(maxStockParam);
-               
+
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
-          
+                foreach (Category inCategory in aProduct.Category)
+                {
+                    CreateProductCategory(insertedId, inCategory);
+                }
             }
             return insertedId;
         }
+        private void CreateProductCategory(int insertedId, Category aCategory)
+        {
+            string insertString = "insert into ProductCategory (category_id_fk, productNo_fk) values (@categoryId, @productNo)";
+            if (!CheckProductCategory(insertedId, aCategory))
+            {
 
+
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+                {
+                    SqlParameter nameParam = new SqlParameter("@categoryId", aCategory.Id);
+                    CreateCommand.Parameters.Add(nameParam);
+                    SqlParameter descParam = new SqlParameter("@productNo", insertedId);
+                    CreateCommand.Parameters.Add(descParam);
+
+                    con.Open();
+                    CreateCommand.ExecuteScalar();
+
+                }
+            }
+        }
+        private bool CheckProductCategory(int insertedId, Category aCategory)
+        {
+            string queryString = "select category_id_fk, productNo_fk from ProductCategory where category_id_fk = @categoryId and productNo_fk = @productNo";
+
+
+            bool exiting = false;
+
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParamCategoryId = new SqlParameter("@categoryId", aCategory.Id);
+                readCommand.Parameters.Add(idParamCategoryId);
+                SqlParameter idParamProductNo = new SqlParameter("@productNo", insertedId);
+                readCommand.Parameters.Add(idParamProductNo);
+                con.Open();
+
+                SqlDataReader reader = readCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    exiting = true;
+                }
+            }
+            return exiting;
+        }
         public bool DeleteProductById(int id)
         {
             int numRowsUpdated = 0;
@@ -100,7 +151,32 @@ namespace ArmysalgDataAccess.DatabaseLayer
             return foundProducts;
 
         }
+        public List<Product> GetAllProductsForCategory(int categoryId)
+        {
+            List<Product> foundProducts;
+            Product readProduct;
 
+            string queryString = "select productNo, name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted from Product inner join ProductCategory on ProductCategory.productNo_fk = Product.productNo where ProductCategory.category_id_fk  = @CategoryId ";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@CategoryId", categoryId);
+                readCommand.Parameters.Add(idParam);
+                con.Open();
+
+                SqlDataReader productReader = readCommand.ExecuteReader();
+
+                foundProducts = new List<Product>();
+                while (productReader.Read())
+                {
+                    readProduct = GetProductFromReader(productReader);
+                    foundProducts.Add(readProduct);
+                }
+            }
+            return foundProducts;
+
+        }
         /* Three possible returns:
          * A Person object
          * An empty Person object (no match on id)
@@ -151,7 +227,10 @@ namespace ArmysalgDataAccess.DatabaseLayer
                                      Id = productToUpdate.Id
                                  });
             }
-
+            foreach (Category inCategory in productToUpdate.Category)
+            {
+                CreateProductCategory(productToUpdate.Id, inCategory);
+            }
             return (numRowsUpdated == 1);
         }
 
@@ -162,7 +241,8 @@ namespace ArmysalgDataAccess.DatabaseLayer
             string tempName, tempDescription, tempStatus;
             decimal tempPurchasePrice;
             bool tempIsDeleted;
-            
+            List<Category> tempCategorys;
+
             tempId = productReader.GetInt32(productReader.GetOrdinal("productNo"));
             tempName = productReader.GetString(productReader.GetOrdinal("name"));
             tempDescription = productReader.GetString(productReader.GetOrdinal("description"));
@@ -172,8 +252,9 @@ namespace ArmysalgDataAccess.DatabaseLayer
             tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
             tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
             tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
-            
-            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted);
+            tempCategorys = _CategoryAccess.GetAllCategorysForAProduct(tempId);
+
+            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, tempCategorys);
 
             return foundProduct;
         }

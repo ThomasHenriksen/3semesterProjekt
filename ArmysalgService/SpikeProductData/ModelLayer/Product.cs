@@ -17,7 +17,8 @@ namespace ArmysalgDataAccess.ModelLayer
         public int MinStock { get; set; }
         public int MaxStock { get; set; }
         public bool IsDeleted { get; set; }
-        public Price? price { get; set; }
+        public Price? Price { get; set; }
+        public List<Category> Category { get; set; }
         public Product()
         {
         }
@@ -32,7 +33,6 @@ namespace ArmysalgDataAccess.ModelLayer
             MinStock = minStock;
             MaxStock = maxStock;
             IsDeleted = isDeleted;
-            this.price = price;
         }
 
         public Product(int id, string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
@@ -48,9 +48,56 @@ namespace ArmysalgDataAccess.ModelLayer
             IsDeleted = isDeleted;
           
         }
-        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price newPrice) : this(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted)
+        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price? price) 
         {
-            this.price = newPrice;
+          
+            Name = name;
+            Description = description;
+            PurchasePrice = purchasePrice;
+            Status = status;
+            Stock = stock;
+            MinStock = minStock;
+            MaxStock = maxStock;
+            IsDeleted = isDeleted;
+            Price = price;
+        }
+        public Product(int id, string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price? price)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            PurchasePrice = purchasePrice;
+            Status = status;
+            Stock = stock;
+            MinStock = minStock;
+            MaxStock = maxStock;
+            IsDeleted = isDeleted;
+            Price = price;
+        }
+        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, List<Category> category)
+        {
+            Name = name;
+            Description = description;
+            PurchasePrice = purchasePrice;
+            Status = status;
+            Stock = stock;
+            MinStock = minStock;
+            MaxStock = maxStock;
+            IsDeleted = isDeleted;
+            Category = category;
+        }
+        public Product(int id ,string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted,  List<Category> category)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            PurchasePrice = purchasePrice;
+            Status = status;
+            Stock = stock;
+            MinStock = minStock;
+            MaxStock = maxStock;
+            IsDeleted = isDeleted;
+            Category = category;
         }
     }
 }
