@@ -19,7 +19,7 @@ namespace ArmysalgClientWeb.ServiceLayer
             _httpClient = new HttpClient();
         }
 
-        public async Task<int> SaveCart(Cart cartToSave)
+        public async Task<int> SaveCart(Cart cartToSave, string email)
         {
             int insertedcartId;
             string useRestUrl = restUrl;

@@ -107,7 +107,8 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
                     var customer = new Customer { FirstName = Input.FirstName, LastName = Input.LastName, Address = Input.Address, ZipCode = Input.ZipCode, Phone = Input.Phone, Email = Input.Email };
                     _customerManager.Create(customer);
                     var cart = new Cart();
-                    _cartManager.Create(cart);
+                    string email = Input.Email;
+                    _cartManager.Create(cart, email);
 
 
                     _logger.LogInformation("User created a new account with password.");
