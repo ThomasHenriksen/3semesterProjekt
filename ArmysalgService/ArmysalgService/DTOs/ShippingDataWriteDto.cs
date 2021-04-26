@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace ArmysalgService.DTOs
 {
+
+
     public class ShippingDataWriteDto
     {
         public double Price { get; set; }
