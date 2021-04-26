@@ -14,5 +14,6 @@ namespace ArmysalgDataAccess.DatabaseLayer
         int CreateProduct(Product productToAdd);
         bool UpdateProduct(Product productToUpdate);
         bool DeleteProductById(int id);
+        List<Product> GetAllProductsForCategory(int categoryId);
     }
 }
