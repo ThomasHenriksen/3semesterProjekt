@@ -19,7 +19,6 @@ namespace ArmysalgDataAccess.DatabaseLayer
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
         }
 
-        //For Test 
         public EmployeeDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
@@ -60,8 +59,8 @@ namespace ArmysalgDataAccess.DatabaseLayer
 
 
         /* Three possible returns:
-        * A Customer object
-        * An empty Customer object (no match on customerNo)
+        * A Employee object
+        * An empty Employee object (no match on customerNo)
         * Null - Some error occurred
         */
         public Employee GetEmployeeByEmployeeNo(int findEmployeeNo)
