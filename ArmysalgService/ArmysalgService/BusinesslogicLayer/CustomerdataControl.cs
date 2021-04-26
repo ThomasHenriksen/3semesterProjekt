@@ -20,10 +20,10 @@ namespace ArmysalgService.BusinesslogicLayer
         }
 
         /*
-           *  Create a new customer in the database
-           *  @param newCustomer
-           *  
-           *  @return insertedCustomerNo
+         *  Create a new customer in the database
+         *  @param newCustomer
+         *  
+         *  @return insertedCustomerNo
          */
         public int AddCustomer(Customer newCustomer)
         {
@@ -47,11 +47,11 @@ namespace ArmysalgService.BusinesslogicLayer
             return insertedCustomerNo;
         }
 
-        /*
-          *  Connect customer to AspNetUser and a new cart
-          *  @param customer
-          *  
-          *  @return wasAdded
+       /*
+        *  Connect customer to AspNetUser and a new cart
+        *  @param customer
+        *  
+        *  @return wasAdded
         */
         public bool AddWebUserPropertiesToCustomer(Customer customer)
         {
@@ -76,10 +76,10 @@ namespace ArmysalgService.BusinesslogicLayer
         }
 
         /*
-           *  Find a customer in the database by customerNo
-           *  @param customerNoToMatch
-           *  
-           *  @return Customer
+         *  Find a customer in the database by customerNo
+         *  @param customerNoToMatch
+         *  
+         *  @return Customer
          */
         public Customer GetCustomer(int customerNoToMatch)
         {

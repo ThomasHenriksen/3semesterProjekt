@@ -25,6 +25,12 @@ namespace ArmysalgDataAccess.DatabaseLayer
             _connectionString = inConnectionString;
         }
 
+        /*
+         *  Add customer to the database
+         *  @param aCustomer
+         *  
+         *  @return insertedCustomerNo
+         */
         public int CreateCustomer(Customer aCustomer)
         {
             int insertedCustomerNo = -1;
@@ -55,6 +61,12 @@ namespace ArmysalgDataAccess.DatabaseLayer
             return insertedCustomerNo;
         }
 
+        /*
+         *  Checks if customer has AspNetUser by comparing email parameter
+         *  @param aCustomer
+         *  
+         *  @return customerHasAspNetUser
+         */
         public bool CustomerHasAspNetUser(Customer aCustomer)
         {
             bool customerHasAspNetUser = false;
@@ -74,11 +86,16 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 {
                     customerHasAspNetUser = true;
                 }
-                
+
                 return customerHasAspNetUser;
             }
         }
 
+        /*
+         *  Connect customer to AspNetUser by adding customerNo to customerNo_fk on AspNetUser
+         *  @param aCustomer
+         *  
+         */
         public void ConnectCustomerToAspNetUser(Customer aCustomer)
         {
             string insertString = "update AspNetUsers set customerNo_fk = (@CustomerNo) where email = (@Email) ";
@@ -100,10 +117,10 @@ namespace ArmysalgDataAccess.DatabaseLayer
 
 
 
-        /* Three possible returns:
-         * A Customer object
-         * An empty Customer object (no match on customerNo)
-         * Null - Some error occurred
+       /* Three possible returns:
+        * A Customer object
+        * An empty Customer object (no match on customerNo)
+        * Null - Some error occurred
         */
         public Customer GetCustomerByCustomerNo(int findCustomerNo)
         {
