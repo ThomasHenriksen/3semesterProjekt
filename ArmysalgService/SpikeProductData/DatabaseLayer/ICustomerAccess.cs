@@ -12,5 +12,6 @@ namespace ArmysalgDataAccess.DatabaseLayer
         Customer GetCustomerByCustomerNo(int customerNo);
         int CreateCustomer(Customer customerToAdd);
         bool DeleteCustomerByCustomerNo(int customerNo);
+        bool CheckIfCustomerHasAspNetUser(Customer aCustomer);
     }
 }

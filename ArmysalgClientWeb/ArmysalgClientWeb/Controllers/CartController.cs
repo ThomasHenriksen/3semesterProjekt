@@ -36,13 +36,11 @@ namespace ArmysalgClientWeb.Controllers
         // POST: CartController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Cart inCart, string email)
+        public ActionResult Create(Cart inCart)
         {
             try
             {
                 _cmdAcces = new CartLogic();
-                Task<int> cartId = _cmdAcces.SaveCart(inCart, email);
-
                 return RedirectToAction();
             }
             catch

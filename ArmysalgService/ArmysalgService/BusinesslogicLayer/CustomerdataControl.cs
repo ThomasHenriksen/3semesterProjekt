@@ -11,10 +11,12 @@ namespace ArmysalgService.BusinesslogicLayer
     public class CustomerdataControl : ICustomerdata
     {
         ICustomerAccess _customerAccess;
+        ICartDatabaseAccess _cartAccess;
 
         public CustomerdataControl(IConfiguration inConfiguration)
         {
             _customerAccess = new CustomerDatabaseAccess(inConfiguration);
+            _cartAccess = new CartDatabaseAccess(inConfiguration);
         }
 
         /*
@@ -26,9 +28,19 @@ namespace ArmysalgService.BusinesslogicLayer
         public int AddCustomer(Customer newCustomer)
         {
             int insertedCustomerNo;
+            bool customerHasAspNetUser;
+
             try
             {
                 insertedCustomerNo = _customerAccess.CreateCustomer(newCustomer);
+                customerHasAspNetUser = _customerAccess.CheckIfCustomerHasAspNetUser(newCustomer);
+                
+                if(customerHasAspNetUser)
+                {
+                    newCustomer.CustomerNo = insertedCustomerNo;
+                    Cart newCart = new Cart(newCustomer);
+                    _cartAccess.CreateCart(newCart);
+                }
             }
             catch
             {

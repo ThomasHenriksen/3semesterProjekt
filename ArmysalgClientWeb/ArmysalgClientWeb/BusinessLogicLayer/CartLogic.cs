@@ -14,10 +14,5 @@ namespace ArmysalgClientWeb.BusinessLogicLayer
         {
             _cAccess = new CartService();
         }
-
-        public async Task<int> SaveCart(Cart newCart, string email)
-        {
-            return await _cAccess.SaveCart(newCart, email);
-        }
     }
 }

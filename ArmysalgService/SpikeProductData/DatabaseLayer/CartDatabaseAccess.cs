@@ -24,13 +24,15 @@ namespace ArmysalgDataAccess.DatabaseLayer
         {
             int insertedId = -1;
 
-            string insertString = "insert into Cart (lastUpdated) OUTPUT INSERTED.id values (@LastUpdated) ";
+            string insertString = "insert into Cart (lastUpdated, customerNo_fk) OUTPUT INSERTED.id values (@LastUpdated, @CustomerNo) ";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
                 SqlParameter lastUpdatedParam = new SqlParameter("@LastUpdated", aCart.LastUpdated);
                 CreateCommand.Parameters.Add(lastUpdatedParam);
+                SqlParameter customerNoParam = new SqlParameter("@CustomerNo", aCart.Customer.CustomerNo);
+                CreateCommand.Parameters.Add(customerNoParam);
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();

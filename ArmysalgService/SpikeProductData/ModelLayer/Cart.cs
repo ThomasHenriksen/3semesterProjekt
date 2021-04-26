@@ -10,9 +10,16 @@ namespace ArmysalgDataAccess.ModelLayer
     {
         public int Id { get; set; }
         public DateTime LastUpdated { get; set; }
+        public Customer Customer { get; set; }
 
         public Cart()
         {
+        }
+
+        public Cart(Customer customer)
+        {
+            LastUpdated = DateTime.Now;
+            Customer = customer;
         }
 
         public Cart(DateTime lastUpdated)

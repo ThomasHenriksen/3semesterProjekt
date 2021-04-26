@@ -27,7 +27,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
 
         public int CreateCustomer(Customer aCustomer)
         {
-            int insertedId = -1;
+            int insertedCustomerNo = -1;
 
             string insertString = "insert into Customer (firstName, lastName, address, zipCode_fk, phone, email) OUTPUT INSERTED.customerNo " +
                 "values (@FirstName, @LastName, @Address, @ZipCode, @Phone, @Email)";
@@ -49,44 +49,51 @@ namespace ArmysalgDataAccess.DatabaseLayer
                 CreateCommand.Parameters.Add(email);
 
                 con.Open();
-                insertedId = (int)CreateCommand.ExecuteScalar();
+                insertedCustomerNo = (int)CreateCommand.ExecuteScalar();
 
-                if (CheckIfCustomerHasAspNetUser(aCustomer.Email) == 1)
+                if (CheckIfCustomerHasAspNetUser(aCustomer))
                 {
-                    ConnectCustomerToAspNetUser(insertedId, aCustomer.Email);
+                    aCustomer.CustomerNo = insertedCustomerNo;
+                    ConnectCustomerToAspNetUser(aCustomer);
                 }
             }
-            return insertedId;
+            return insertedCustomerNo;
         }
 
-        public int CheckIfCustomerHasAspNetUser(string email)
+        public bool CheckIfCustomerHasAspNetUser(Customer aCustomer)
         {
+            bool customerHasAspNetUser = false;
 
             string queryString = "select count(1) from AspNetUsers where email = (@Email) ";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand GetCommand = new SqlCommand(queryString, con))
             {
-                SqlParameter emailParam = new SqlParameter("@Email", email);
+                SqlParameter emailParam = new SqlParameter("@Email", aCustomer.Email);
                 GetCommand.Parameters.Add(emailParam);
 
                 con.Open();
-                int hasIdentityUser = (int)GetCommand.ExecuteScalar();
+                int count = (int)GetCommand.ExecuteScalar();
 
-                return hasIdentityUser;
+                if (count == 1)
+                {
+                    customerHasAspNetUser = true;
+                }
+                
+                return customerHasAspNetUser;
             }
         }
 
-        public void ConnectCustomerToAspNetUser(int customerNo, string email)
+        public void ConnectCustomerToAspNetUser(Customer aCustomer)
         {
             string insertString = "update AspNetUsers set customerNo_fk = (@CustomerNo) where email = (@Email) ";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand UpdateCommand = new SqlCommand(insertString, con))
             {
-                SqlParameter customerNoParam = new SqlParameter("@CustomerNo", customerNo);
+                SqlParameter customerNoParam = new SqlParameter("@CustomerNo", aCustomer.CustomerNo);
                 UpdateCommand.Parameters.Add(customerNoParam);
-                SqlParameter emailParam = new SqlParameter("@Email", email);
+                SqlParameter emailParam = new SqlParameter("@Email", aCustomer.Email);
                 UpdateCommand.Parameters.Add(emailParam);
 
                 con.Open();
