@@ -60,7 +60,7 @@ namespace ArmysalgDataAccess.DatabaseLayer
 
         /* Three possible returns:
         * A Employee object
-        * An empty Employee object (no match on customerNo)
+        * An empty Employee object (no match on employeeNo)
         * Null - Some error occurred
         */
         public Employee GetEmployeeByEmployeeNo(int findEmployeeNo)

@@ -39,7 +39,7 @@ namespace ArmysalgDataTest
             Shipping shippingToCreate = new(price, freeShipping, firstName, lastName, address, zipCode, city, phone, email);
             Shipping shippingToCompare = null;
             int shippingID = _shippingAccess.CreateShipping(shippingToCreate);
-            shippingToCompare = _shippingAccess.GetShippingByID(shippingID);
+            shippingToCompare = _shippingAccess.GetShippingByShippingID(shippingID);
             //Assert
             Assert.Equal(shippingToCreate.LastName, shippingToCompare.LastName);
         }       
