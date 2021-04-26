@@ -17,11 +17,12 @@ namespace ArmysalgService.DTOs
         public int MaxStock { get; set; }
         public bool IsDeleted { get; set; }
         public Price? price { get; set; }
+        public List<Category> Categories { get; set; }
         public ProductdataWriteDto()
         {
         }
 
-        public ProductdataWriteDto(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price price)
+        public ProductdataWriteDto(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price price, List<Category> categories)
         {
             Name = name;
             Description = description;
@@ -32,6 +33,7 @@ namespace ArmysalgService.DTOs
             MaxStock = maxStock;
             IsDeleted = isDeleted;
             this.price = price;
+            Categories = categories;
         }
     }
 }
