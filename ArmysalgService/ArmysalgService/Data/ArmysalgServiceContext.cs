@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ArmysalgDataAccess.ModelLayer;
+using ArmysalgDataAccess.Model;
 
 namespace ArmysalgService.Data
 {
@@ -14,6 +14,6 @@ namespace ArmysalgService.Data
         {
         }
 
-        public DbSet<ArmysalgDataAccess.ModelLayer.Product> Product { get; set; }
+        public DbSet<ArmysalgDataAccess.Model.Product> Product { get; set; }
     }
 }

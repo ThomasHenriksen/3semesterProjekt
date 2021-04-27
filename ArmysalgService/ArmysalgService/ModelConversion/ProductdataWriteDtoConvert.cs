@@ -1,5 +1,5 @@
 ﻿using ArmysalgService.DTOs;
-using ArmysalgDataAccess.ModelLayer;
+using ArmysalgDataAccess.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

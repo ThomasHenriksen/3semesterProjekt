@@ -2,8 +2,8 @@ using System;
 using Xunit;
 using System.Collections.Generic;
 using Xunit.Abstractions;
-using ArmysalgDataAccess.DatabaseLayer;
-using ArmysalgDataAccess.ModelLayer;
+using ArmysalgDataAccess.Database;
+using ArmysalgDataAccess.Model;
 
 namespace ProductDataTest
 {
@@ -11,7 +11,7 @@ namespace ProductDataTest
     {
         private readonly ITestOutputHelper extraOutput;
 
-        readonly private IProductAccess _productAccess;
+        readonly private IProductDatabaseAccess _productAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
 
         public TestProductDataAccess(ITestOutputHelper output)

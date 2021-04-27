@@ -54,9 +54,6 @@ namespace ArmysalgClientWeb.Controllers
             {
                 return View();
             }
-
-
-
         }
 
         // GET: CustomerController/Edit/5

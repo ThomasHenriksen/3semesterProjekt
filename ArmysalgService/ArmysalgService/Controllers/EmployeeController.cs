@@ -1,5 +1,5 @@
-﻿using ArmysalgDataAccess.ModelLayer;
-using ArmysalgService.BusinesslogicLayer;
+﻿using ArmysalgDataAccess.Model;
+using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +15,13 @@ namespace ArmysalgService.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IEmployeeData _employeeControl;
+        private readonly IEmployeeLogic _employeeControl;
         private readonly IConfiguration _configuration;
 
         public EmployeeController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _employeeControl = new EmployeeDataControl(_configuration);
+            _employeeControl = new EmployeeLogic(_configuration);
         }
 
         // URL: api/products/{employeeNo}

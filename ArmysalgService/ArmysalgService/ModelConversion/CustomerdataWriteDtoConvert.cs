@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ArmysalgService.DTOs;
-using ArmysalgDataAccess.ModelLayer;
+using ArmysalgDataAccess.Model;
 
 namespace ArmysalgService.ModelConversion
 {

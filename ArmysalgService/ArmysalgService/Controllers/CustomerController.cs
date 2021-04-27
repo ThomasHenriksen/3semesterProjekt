@@ -1,4 +1,4 @@
-﻿using ArmysalgService.BusinesslogicLayer;
+﻿using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ArmysalgDataAccess.ModelLayer;
+using ArmysalgDataAccess.Model;
 
 namespace ArmysalgService.Controllers
 {
@@ -15,16 +15,16 @@ namespace ArmysalgService.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerdata _customerControl;
+        private readonly ICustomerLogic _customerControl;
         private readonly IConfiguration _configuration;
 
         public CustomerController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _customerControl = new CustomerdataControl(_configuration);
+            _customerControl = new CustomerLogic(_configuration);
         }
 
-        // URL: api/products/{customerNo}
+        // URL: api/customer/{customerNo}
         [HttpGet, Route("{customerNo}")]
         public ActionResult<CustomerdataReadDto> Get(int customerNo)
         {
@@ -53,7 +53,7 @@ namespace ArmysalgService.Controllers
             return foundReturn;
         }
 
-        // URL: api/Product
+        // URL: api/customer
         [HttpPost]
         public ActionResult<int> PostNewCustomer(CustomerdataWriteDto inCustomer)
         {

@@ -1,5 +1,5 @@
 ﻿using ArmysalgService.DTOs;
-using ArmysalgDataAccess.ModelLayer;
+using ArmysalgDataAccess.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace ArmysalgService.ModelConversion
             ProductdataReadDto aProductReadDto = null;
             if (inProduct != null)
             {
-                aProductReadDto = new ProductdataReadDto(inProduct.Id ,inProduct.Name, inProduct.Description, inProduct.PurchasePrice, inProduct.Status, inProduct.Stock, inProduct.MinStock, inProduct.MaxStock, inProduct.IsDeleted, inProduct.Price);
+                aProductReadDto = new ProductdataReadDto(inProduct.Id ,inProduct.Name, inProduct.Description, inProduct.PurchasePrice, inProduct.Status, inProduct.Stock, inProduct.MinStock, inProduct.MaxStock, inProduct.IsDeleted, inProduct.Price, inProduct.Category);
             }
             return aProductReadDto;
         }

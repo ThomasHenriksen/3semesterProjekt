@@ -1,5 +1,5 @@
-﻿using ArmysalgDataAccess.ModelLayer;
-using ArmysalgService.BusinesslogicLayer;
+﻿using ArmysalgDataAccess.Model;
+using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,13 +15,13 @@ namespace ArmysalgService.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private readonly CartdataControl _cControl;
+        private readonly CartLogic _cControl;
         private readonly IConfiguration _configuration;
 
         public CartController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _cControl = new CartdataControl(_configuration);
+            _cControl = new CartLogic(_configuration);
         }
 
         // URL: api/persons/{id}

@@ -1,4 +1,4 @@
-﻿using ArmysalgDataAccess.ModelLayer;
+﻿using ArmysalgDataAccess.Model;
 using ArmysalgService.DTOs;
 using System;
 using System.Collections.Generic;

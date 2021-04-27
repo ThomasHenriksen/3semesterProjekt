@@ -1,10 +1,10 @@
-﻿using ArmysalgService.BusinesslogicLayer;
+﻿using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
-using ArmysalgDataAccess.ModelLayer;
+using ArmysalgDataAccess.Model;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ArmysalgService.Controllers
@@ -14,13 +14,13 @@ namespace ArmysalgService.Controllers
    // [Authorize]
     public class ProductController : ControllerBase
     {
-        private readonly IProductdata _pControl;
+        private readonly IProductLogic _pControl;
         private readonly IConfiguration _configuration;
 
         public ProductController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _pControl = new ProductdataControl(_configuration);
+            _pControl = new ProductLogic(_configuration);
         }
 
 

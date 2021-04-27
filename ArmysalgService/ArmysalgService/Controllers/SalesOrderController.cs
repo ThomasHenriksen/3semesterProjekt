@@ -1,5 +1,5 @@
-﻿using ArmysalgDataAccess.ModelLayer;
-using ArmysalgService.BusinesslogicLayer;
+﻿using ArmysalgDataAccess.Model;
+using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +15,13 @@ namespace ArmysalgService.Controllers
     [ApiController]
     public class SalesOrderController : ControllerBase
     {
-        private readonly SalesOrderdataControl _sControl;
+        private readonly SalesOrderLogic _sControl;
         private readonly IConfiguration _configuration;
 
         public SalesOrderController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _sControl = new SalesOrderdataControl(_configuration);
+            _sControl = new SalesOrderLogic(_configuration);
         }
 
         //URL: api/salesOrders

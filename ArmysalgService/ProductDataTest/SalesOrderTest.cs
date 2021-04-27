@@ -1,5 +1,5 @@
-﻿using ArmysalgDataAccess.DatabaseLayer;
-using ArmysalgDataAccess.ModelLayer;
+﻿using ArmysalgDataAccess.Database;
+using ArmysalgDataAccess.Model;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace ArmysalgDataTest
     {
         private readonly ITestOutputHelper extraOutput;
 
-        readonly private ISalesOrderAccess _salesOrderAccess;
+        readonly private ISalesOrderDatabaseAccess _salesOrderAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
         readonly SalesOrderDatabaseAccess _connection;
         
