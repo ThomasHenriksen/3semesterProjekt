@@ -12,11 +12,11 @@ using System.Windows.Forms;
 
 namespace ArmysalgClientDesktop.GuiLayer
 {
-    public partial class EmployeeGUI : Form
+    public partial class Employee : Form
     {
         EmployeeControl employeeControl;
 
-        public EmployeeGUI()
+        public Employee()
         {
             InitializeComponent();
             this.employeeControl = new();
@@ -27,7 +27,7 @@ namespace ArmysalgClientDesktop.GuiLayer
         private async void Search_Click(object sender, EventArgs e)
         {
             int idFromTextBox;
-            Employee foundEmployee = null;
+            ModelLayer.Employee foundEmployee = null;
             if (int.TryParse(textBox1.Text, out idFromTextBox))
             {
                 foundEmployee = await employeeControl.GetEmployee(idFromTextBox);
@@ -46,7 +46,7 @@ namespace ArmysalgClientDesktop.GuiLayer
 
         private async void SetEmployeeList()
         {
-            List<Employee> employeesToShow = await employeeControl.GetAllEmployees();
+            List<ModelLayer.Employee> employeesToShow = await employeeControl.GetAllEmployees();
             listOfEmployees.DataSource = employeesToShow;
         }
 
@@ -57,6 +57,11 @@ namespace ArmysalgClientDesktop.GuiLayer
         }
 
         private void listOfEmployees_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void firstName_TextChanged(object sender, EventArgs e)
         {
 
         }

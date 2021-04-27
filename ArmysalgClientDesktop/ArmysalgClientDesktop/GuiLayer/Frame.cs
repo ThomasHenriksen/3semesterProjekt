@@ -21,7 +21,7 @@ namespace ArmysalgClientDesktop.GuiLayer
 
         private void btnHomeMenu_Click(object sender, EventArgs e)
         {
-            Form1 form = new Form1();
+            Products form = new Products();
             NavigateTo(form, ContentPanel);
         }
 
@@ -41,7 +41,7 @@ namespace ArmysalgClientDesktop.GuiLayer
 
         private void btnEmployeeMenu_Click(object sender, EventArgs e)
         {
-            EmployeeGUI employee = new EmployeeGUI();
+            Employee employee = new Employee();
             NavigateTo(employee, ContentPanel);
         }
     }

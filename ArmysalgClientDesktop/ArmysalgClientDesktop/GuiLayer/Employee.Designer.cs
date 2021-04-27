@@ -1,7 +1,7 @@
 ﻿
 namespace ArmysalgClientDesktop.GuiLayer
 {
-    partial class EmployeeGUI
+    partial class Employee
     {
         /// <summary>
         /// Required designer variable.
@@ -97,6 +97,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.firstName.Name = "firstName";
             this.firstName.Size = new System.Drawing.Size(100, 23);
             this.firstName.TabIndex = 5;
+            this.firstName.TextChanged += new System.EventHandler(this.firstName_TextChanged);
             // 
             // label1
             // 
@@ -164,7 +165,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.pictureBox1.TabIndex = 13;
             this.pictureBox1.TabStop = false;
             // 
-            // EmployeeGUI
+            // Employee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -184,7 +185,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.Controls.Add(this.EmployeeByID);
             this.Controls.Add(this.Employees);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "EmployeeGUI";
+            this.Name = "Employee";
             this.Text = "Employee";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
