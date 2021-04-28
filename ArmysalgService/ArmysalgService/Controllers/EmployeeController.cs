@@ -79,7 +79,7 @@ namespace ArmysalgService.Controllers
         }
 
 
-        // URL: api/Product
+        // URL: api/employees
         [HttpPost]
         public ActionResult<int> PostNewEmployee(EmployeeDataWriteDto inEmployee)
         {
