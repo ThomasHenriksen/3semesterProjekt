@@ -24,7 +24,7 @@ namespace ArmysalgService.Controllers
             _employeeControl = new EmployeeLogic(_configuration);
         }
 
-        // URL: api/products/{employeeNo}
+        // URL: api/employees/{employeeNo}
         [HttpGet, Route("{employeeNo}")]
         public ActionResult<EmployeeDataReadDto> Get(int employeeNo)
         {
