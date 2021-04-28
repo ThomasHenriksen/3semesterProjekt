@@ -10,13 +10,16 @@ namespace ArmysalgService.BusinessLogic
 {
     public class ProductLogic : IProductLogic
     {
-        IProductDatabaseAccess _productAccess;
-        IPriceLogic _priceData;
+        private IProductDatabaseAccess _productAccess;
+        private IPriceLogic _priceData;
+        private ICategoryDatabaseAccess _categoryAccess;
         public ProductLogic(IConfiguration inConfiguration)
         {
             _productAccess = new ProductDatabaseAccess(inConfiguration);
             _priceData = new PriceLogic(inConfiguration);
+            _categoryAccess = new CategoryDatabaseAccess(inConfiguration);
         }
+     
         /*
            *  this method is use to create a new product in the database
            *  @param newProduct
@@ -56,6 +59,7 @@ namespace ArmysalgService.BusinessLogic
             {
                 foundProduct = _productAccess.GetProductById(idToMatch);
                 foundProduct.Price = _priceData.Get(idToMatch);
+                foundProduct.Category = _categoryAccess.GetAllCategorysForAProduct(foundProduct.Id);
             }
             catch
             {
@@ -97,14 +101,16 @@ namespace ArmysalgService.BusinessLogic
         {
             productToUpdate.Id = id;
 
-           Price checkPrice = _priceData.Get(productToUpdate.Id);
+            Price checkPrice = _priceData.Get(productToUpdate.Id);
             if (checkPrice == null)
             {
                 _priceData.Add(productToUpdate.Price, productToUpdate);
 
             }
-            else {
-                if (checkPrice.Id != productToUpdate.Id ) {
+            else
+            {
+                if (checkPrice.Id != productToUpdate.Id)
+                {
                     _priceData.Add(productToUpdate.Price, productToUpdate);
                 }
             }

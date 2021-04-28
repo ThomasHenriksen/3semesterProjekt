@@ -13,21 +13,23 @@ namespace ArmysalgDataAccess.Database
     public class ProductDatabaseAccess : IProductDatabaseAccess
     {
         readonly string _connectionString;
-        private IPriceDatabaseAccess _PriceAccess;
-        private ICategoryDatabaseAccess _CategoryAccess;
+    
+   
         public ProductDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
-            _PriceAccess = new PriceDatabaseAccess(_connectionString);
-            _CategoryAccess = new CategoryDatabaseAccess(_connectionString);
+         
+        
         }
 
         //For Test 
         public ProductDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
-            _PriceAccess = new PriceDatabaseAccess(_connectionString);
-            _CategoryAccess = new CategoryDatabaseAccess(_connectionString);
+          
+               
+           
+         
         }
 
         public int CreateProduct(Product aProduct)
@@ -241,7 +243,7 @@ namespace ArmysalgDataAccess.Database
             string tempName, tempDescription, tempStatus;
             decimal tempPurchasePrice;
             bool tempIsDeleted;
-            List<Category> tempCategorys;
+         
 
             tempId = productReader.GetInt32(productReader.GetOrdinal("productNo"));
             tempName = productReader.GetString(productReader.GetOrdinal("name"));
@@ -252,9 +254,8 @@ namespace ArmysalgDataAccess.Database
             tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
             tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
             tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
-            tempCategorys = _CategoryAccess.GetAllCategorysForAProduct(tempId);
-
-            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, tempCategorys);
+         
+            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted);
 
             return foundProduct;
         }

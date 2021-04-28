@@ -12,7 +12,7 @@ namespace ArmysalgDataAccess.Database
         int CreateCategory(Category aCategory);
         List<Category> GetCategorysAll();
         Category GetCategoryById(int findId);
-        bool UpdateProduct(Category categoryToUpdate);
+        bool UpdateCategory(Category categoryToUpdate);
         List<Category> GetAllCategorysForAProduct(int productId);
     }
 }

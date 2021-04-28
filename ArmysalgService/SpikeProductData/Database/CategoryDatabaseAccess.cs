@@ -11,21 +11,21 @@ using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
 {
-    class CategoryDatabaseAccess : ICategoryDatabaseAccess
+    public class CategoryDatabaseAccess : ICategoryDatabaseAccess
     {
         readonly string _connectionString;
-        private IProductDatabaseAccess _productAccess;
+      
         public CategoryDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
-            _productAccess = new ProductDatabaseAccess(_connectionString);
+           
         }
 
         //For Test 
         public CategoryDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
-            _productAccess = new ProductDatabaseAccess(_connectionString);
+        
         }
 
         public int CreateCategory(Category aCategory)
@@ -82,7 +82,7 @@ namespace ArmysalgDataAccess.Database
         {
             string queryString = "select category_id_fk, productNo_fk from ProductCategory where category_id_fk = @categoryId and productNo_fk = @productNo";
 
-            
+
             bool exiting = false;
 
             // Create the TransactionScope to execute the commands, guaranteeing
@@ -164,7 +164,7 @@ namespace ArmysalgDataAccess.Database
             return foundCategory;
         }
 
-        public bool UpdateProduct(Category categoryToUpdate)
+        public bool UpdateCategory(Category categoryToUpdate)
         {
             int numRowsUpdated = 0;
             string queryString = "UPDATE category SET name = @inName, description = @inDescription from category where id = @Id";
@@ -213,17 +213,18 @@ namespace ArmysalgDataAccess.Database
         }
         private Category GetCategoryFromReader(SqlDataReader categoryReader)
         {
+
             Category foundCateGory;
             int tempId;
             string tempName, tempDescription;
-            List<Product> tempProducts;
+         
 
             tempId = categoryReader.GetInt32(categoryReader.GetOrdinal("id"));
             tempName = categoryReader.GetString(categoryReader.GetOrdinal("name"));
             tempDescription = categoryReader.GetString(categoryReader.GetOrdinal("description"));
-            tempProducts = _productAccess.GetAllProductsForCategory(tempId);
+      
 
-            foundCateGory = new Category(tempId, tempName, tempDescription, tempProducts);
+            foundCateGory = new Category(tempId, tempName, tempDescription);
 
             return foundCateGory;
         }
