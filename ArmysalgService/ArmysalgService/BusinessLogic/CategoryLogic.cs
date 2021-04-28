@@ -11,13 +11,13 @@ namespace ArmysalgService.BusinessLogic
     public class CategoryLogic : ICategoryLogic
     {
         private ICategoryDatabaseAccess _CategoryAccess;
-        private IProductDatabaseAccess _productAccess;
+        private IProductLogic _productAccess;
 
         public CategoryLogic(IConfiguration inConfiguration)
         {
             _CategoryAccess = new CategoryDatabaseAccess(inConfiguration);
 
-            _productAccess = new ProductDatabaseAccess(inConfiguration);
+            _productAccess = new ProductLogic(inConfiguration);
 
         }
 
@@ -42,10 +42,14 @@ namespace ArmysalgService.BusinessLogic
         public Category Get(int idToMatch)
         {
             Category foundCategory = null;
-
             foundCategory = _CategoryAccess.GetCategoryById(idToMatch);
-            foundCategory.ProductCategory = _productAccess.GetAllProductsForCategory(idToMatch);
-
+            
+            List<Product> foundtProducts = new List<Product>();
+            
+            foreach (int productId in _CategoryAccess.GetAllProductsForACategory(foundCategory)) {
+                foundtProducts.Add(_productAccess.Get(productId));
+            }
+            foundCategory.ProductCategory = foundtProducts;
             return foundCategory;
         }
         /*
@@ -57,7 +61,15 @@ namespace ArmysalgService.BusinessLogic
             List<Category> foundCategory;
 
             foundCategory = _CategoryAccess.GetCategorysAll();
-                     
+
+            foreach (Category category in foundCategory) {
+                List<Product> foundtProducts = new List<Product>();
+                foreach (int productId in _CategoryAccess.GetAllProductsForACategory(category))
+                {
+                    foundtProducts.Add(_productAccess.Get(productId));
+                }
+                category.ProductCategory = foundtProducts;
+            }
 
             return foundCategory;
         }

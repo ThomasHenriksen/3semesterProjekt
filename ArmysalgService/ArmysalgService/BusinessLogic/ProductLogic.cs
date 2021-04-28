@@ -19,7 +19,7 @@ namespace ArmysalgService.BusinessLogic
             _priceData = new PriceLogic(inConfiguration);
             _categoryAccess = new CategoryDatabaseAccess(inConfiguration);
         }
-     
+
         /*
            *  this method is use to create a new product in the database
            *  @param newProduct
@@ -85,6 +85,14 @@ namespace ArmysalgService.BusinessLogic
                 else
                 {
                     product.Price = null;
+                }
+                if (_categoryAccess.GetAllCategorysForAProduct(product.Id) != null)
+                {
+                    product.Category = _categoryAccess.GetAllCategorysForAProduct(product.Id);
+                }
+                else
+                {
+                    product.Category = null;
                 }
             }
 

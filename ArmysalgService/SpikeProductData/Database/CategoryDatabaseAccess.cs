@@ -211,6 +211,31 @@ namespace ArmysalgDataAccess.Database
             }
             return foundCategorys;
         }
+        public List<int> GetAllProductsForACategory(Category aCategory)
+        {
+            List<int> productsId;
+           
+
+            string queryString = "select productNo from Product inner join ProductCategory on ProductCategory.productNo_fk = Product.productNo where ProductCategory.category_id_fk  = @CategoryId ";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@CategoryId", aCategory.Id);
+                readCommand.Parameters.Add(idParam);
+                con.Open();
+
+                SqlDataReader categoryReader = readCommand.ExecuteReader();
+
+                productsId = new List<int>();
+                while (categoryReader.Read())
+                {
+                    
+                    productsId.Add(categoryReader.GetInt32(categoryReader.GetOrdinal("productNo")));
+                }
+            }
+            return productsId;
+        }
         private Category GetCategoryFromReader(SqlDataReader categoryReader)
         {
 
