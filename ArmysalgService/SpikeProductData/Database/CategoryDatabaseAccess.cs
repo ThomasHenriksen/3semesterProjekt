@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
 {
@@ -32,65 +33,81 @@ namespace ArmysalgDataAccess.Database
             int insertedId = -1;
 
             string insertString = "insert into category (name, description) OUTPUT INSERTED.id " + " values (@Name, @Description)";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+            using (TransactionScope scope = new TransactionScope())
             {
-                SqlParameter nameParam = new SqlParameter("@Name", aCategory.Name);
-                CreateCommand.Parameters.Add(nameParam);
-                SqlParameter descParam = new SqlParameter("@Description", aCategory.Description);
-                CreateCommand.Parameters.Add(descParam);
-
-                con.Open();
-                insertedId = (int)CreateCommand.ExecuteScalar();
-                foreach (Product inProduct in aCategory.ProductCategory)
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
                 {
-                    CreateProductCategory(insertedId, inProduct);
+
+                    SqlParameter nameParam = new SqlParameter("@Name", aCategory.Name);
+                    CreateCommand.Parameters.Add(nameParam);
+                    SqlParameter descParam = new SqlParameter("@Description", aCategory.Description);
+                    CreateCommand.Parameters.Add(descParam);
+
+                    con.Open();
+                    insertedId = (int)CreateCommand.ExecuteScalar();
+                    foreach (Product inProduct in aCategory.ProductCategory)
+                    {
+                        CreateProductCategory(insertedId, inProduct);
+                    }
                 }
+                scope.Complete();
             }
             return insertedId;
         }
         private void CreateProductCategory(int insertedId, Product aProduct)
         {
             string insertString = "insert into ProductCategory (category_id_fk, productNo_fk) values (@categoryId, @productNo)";
-            if (!CheckProductCategory(insertedId, aProduct))
+            using (TransactionScope scope = new TransactionScope())
             {
-                using (SqlConnection con = new SqlConnection(_connectionString))
-                using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+                if (!CheckProductCategory(insertedId, aProduct))
                 {
-                    SqlParameter nameParam = new SqlParameter("@categoryId", insertedId);
-                    CreateCommand.Parameters.Add(nameParam);
-                    SqlParameter descParam = new SqlParameter("@productNo", aProduct.Id);
-                    CreateCommand.Parameters.Add(descParam);
+                    using (SqlConnection con = new SqlConnection(_connectionString))
+                    using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+                    {
+                        SqlParameter nameParam = new SqlParameter("@categoryId", insertedId);
+                        CreateCommand.Parameters.Add(nameParam);
+                        SqlParameter descParam = new SqlParameter("@productNo", aProduct.Id);
+                        CreateCommand.Parameters.Add(descParam);
 
-                    con.Open();
-                    CreateCommand.ExecuteScalar();
+                        con.Open();
+                        CreateCommand.ExecuteScalar();
 
+                    }
                 }
+                scope.Complete();
             }
         }
         private bool CheckProductCategory(int insertedId, Product aProduct)
         {
             string queryString = "select category_id_fk, productNo_fk from ProductCategory where category_id_fk = @categoryId and productNo_fk = @productNo";
 
-
+            
             bool exiting = false;
 
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            // Create the TransactionScope to execute the commands, guaranteeing
+            // that both commands can commit or roll back as a single unit of work.
+            using (TransactionScope scope = new TransactionScope())
             {
-                SqlParameter idParamCategoryId = new SqlParameter("@categoryId", insertedId);
-                readCommand.Parameters.Add(idParamCategoryId);
-                SqlParameter idParamProductNo = new SqlParameter("@productNo", aProduct.Id);
-                readCommand.Parameters.Add(idParamProductNo);
-                con.Open();
-
-                SqlDataReader reader = readCommand.ExecuteReader();
-                if (reader.HasRows)
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand readCommand = new SqlCommand(queryString, con))
                 {
-                    exiting = true;
+                    SqlParameter idParamCategoryId = new SqlParameter("@categoryId", insertedId);
+                    readCommand.Parameters.Add(idParamCategoryId);
+                    SqlParameter idParamProductNo = new SqlParameter("@productNo", aProduct.Id);
+                    readCommand.Parameters.Add(idParamProductNo);
+                    con.Open();
+
+                    SqlDataReader reader = readCommand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        exiting = true;
+                    }
                 }
+
+                // The Complete method commits the transaction. If an exception has been thrown,
+                // Complete is not called and the transaction is rolled back.
+                scope.Complete();
             }
             return exiting;
         }
