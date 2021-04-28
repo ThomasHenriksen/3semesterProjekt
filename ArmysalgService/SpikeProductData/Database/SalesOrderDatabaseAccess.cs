@@ -38,7 +38,7 @@ namespace ArmysalgDataAccess.Database
                 CreateCommand.Parameters.Add(salesDateParam);
                 SqlParameter paymentAmountParam = new SqlParameter("@PaymentAmount", aSalesOrder.PaymentAmount);
                 CreateCommand.Parameters.Add(paymentAmountParam);
-                SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
+                SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status.ToString());
                 CreateCommand.Parameters.Add(statusParam);
                 //SqlParameter salesLineItemParam = new SqlParameter("@SalesLineItemsId", aSalesOrder.SalesLineItem);
                 //CreateCommand.Parameters.Add(salesLineItemParam);
@@ -109,7 +109,7 @@ namespace ArmysalgDataAccess.Database
             //    tempCustomer = tempCus;
             //}
 
-            foundSalesOrder = new SalesOrder(tempId, tempSalesDate, tempPayMentAmount, tempStatus);           //, tempShipping, tempEmployee, tempCustomer, tempSalesLineItem
+            foundSalesOrder = new SalesOrder(tempId, tempSalesDate, tempPayMentAmount, Enum.Parse<SalesOrderStatus>(tempStatus));           //, tempShipping, tempEmployee, tempCustomer, tempSalesLineItem, tempStatus
 
             return foundSalesOrder;
         }

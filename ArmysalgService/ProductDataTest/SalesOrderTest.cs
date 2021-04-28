@@ -29,12 +29,12 @@ namespace ArmysalgDataTest
         public void TestCreateSalesOrderObject()
         {
             //Arrange
-            SalesOrder testOrder = new SalesOrder(1, DateTime.Today, 100, "Created");
+            SalesOrder testOrder = new SalesOrder(1, DateTime.Today, 200, SalesOrderStatus.Delivered);
             int salesNo = 1;
             DateTime date = DateTime.Today;
-            decimal paymentAmount = 100;
-            string status = "Created";
-            int salesLineItem = 2;
+            decimal paymentAmount = 200;
+            var status = SalesOrderStatus.Delivered;
+            int salesLineItem = 1;
 
             //Act
             SalesOrder newOrder = new SalesOrder(salesNo, date, paymentAmount, status);
@@ -43,7 +43,7 @@ namespace ArmysalgDataTest
             Assert.Equal(testOrder.SalesNo.ToString(), newOrder.SalesNo.ToString());
             Assert.Equal(testOrder.SalesDate.ToString(), newOrder.SalesDate.ToString());
             Assert.Equal(testOrder.PaymentAmount.ToString(), newOrder.PaymentAmount.ToString());
-            Assert.Equal(testOrder.Status, newOrder.Status);
+            Assert.Equal(testOrder.Status.ToString(), newOrder.Status.ToString());
             //Assert.Equal(testOrder.SalesLineItem.ToString(), newOrder.SalesLineItem.ToString());
         }
 
@@ -51,7 +51,7 @@ namespace ArmysalgDataTest
         public void TestInsertCreatedSalesOrderToDatabase()
         {
             //Arrange
-            SalesOrder salesOrderToDatabase = new SalesOrder(DateTime.Today, 100, "Created");
+            SalesOrder salesOrderToDatabase = new SalesOrder(DateTime.Today, 400, SalesOrderStatus.Shipped);
 
             //Act
             int salesOrderNoOnNewSalesOrderInDatabase = _salesOrderAccess.CreateSalesOrder(salesOrderToDatabase);
