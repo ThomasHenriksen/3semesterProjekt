@@ -46,6 +46,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.labelEmail = new System.Windows.Forms.Label();
             this.btnAddSupplier = new System.Windows.Forms.Button();
             this.labelInserted = new System.Windows.Forms.Label();
+            this.labelSupplierIdIs = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelAddSupplier
@@ -188,12 +189,22 @@ namespace ArmysalgClientDesktop.GuiLayer
             this.labelInserted.TabIndex = 16;
             this.labelInserted.Text = "...";
             // 
+            // labelSupplierIdIs
+            // 
+            this.labelSupplierIdIs.AutoSize = true;
+            this.labelSupplierIdIs.Location = new System.Drawing.Point(17, 303);
+            this.labelSupplierIdIs.Name = "labelSupplierIdIs";
+            this.labelSupplierIdIs.Size = new System.Drawing.Size(165, 20);
+            this.labelSupplierIdIs.TabIndex = 17;
+            this.labelSupplierIdIs.Text = "Leverandørens kundenr:";
+            // 
             // Supplier
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(914, 513);
+            this.Controls.Add(this.labelSupplierIdIs);
             this.Controls.Add(this.labelInserted);
             this.Controls.Add(this.btnAddSupplier);
             this.Controls.Add(this.labelEmail);
@@ -239,5 +250,6 @@ namespace ArmysalgClientDesktop.GuiLayer
         private System.Windows.Forms.Label labelEmail;
         private System.Windows.Forms.Button btnAddSupplier;
         private System.Windows.Forms.Label labelInserted;
+        private System.Windows.Forms.Label labelSupplierIdIs;
     }
 }
