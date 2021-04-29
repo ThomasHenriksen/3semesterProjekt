@@ -104,7 +104,8 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    var customer = new Customer { FirstName = Input.FirstName, LastName = Input.LastName, Address = Input.Address, ZipCode = Input.ZipCode, Phone = Input.Phone, Email = Input.Email };
+                    var cart = new Cart();
+                    var customer = new Customer { FirstName = Input.FirstName, LastName = Input.LastName, Address = Input.Address, ZipCode = Input.ZipCode, Phone = Input.Phone, Email = Input.Email, Cart = cart };
                     _customerManager.Create(customer);
 
                     _logger.LogInformation("User created a new account with password.");

@@ -9,8 +9,7 @@ namespace ArmysalgDataAccess.Database
 {
     public interface ICartDatabaseAccess
     {
-        int CreateCart(Cart cartToAdd);
-        Cart GetCartById(int cartId);
+        int CreateCart(Cart cartToAdd, Customer customer);
         bool DeleteCartByCartId(int cartId);
     }
 }

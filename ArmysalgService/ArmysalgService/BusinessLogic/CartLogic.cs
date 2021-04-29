@@ -17,13 +17,13 @@ namespace ArmysalgService.BusinessLogic
             _cartAccess = new CartDatabaseAccess(inConfiguration);
         }
 
-        public int AddCart(Cart cartToAdd)
+        public int AddCart(Cart cartToAdd, Customer customer)
         {
             int insertedId;
 
             try
             {
-                insertedId = _cartAccess.CreateCart(cartToAdd);
+                insertedId = _cartAccess.CreateCart(cartToAdd, customer);
             }
             catch 
             {

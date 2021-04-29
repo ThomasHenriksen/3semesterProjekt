@@ -14,7 +14,7 @@ namespace ArmysalgService.ModelConversion
             Customer aCustomer = null;
             if (inDto != null)
             {
-                aCustomer = new Customer(inDto.FirstName, inDto.LastName, inDto.Address, inDto.ZipCode, inDto.City, inDto.Phone, inDto.Email);
+                aCustomer = new Customer(inDto.FirstName, inDto.LastName, inDto.Address, inDto.ZipCode, inDto.City, inDto.Phone, inDto.Email, inDto.Cart);
             }
             return aCustomer;
         }

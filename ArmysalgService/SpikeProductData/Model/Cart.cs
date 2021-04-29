@@ -10,21 +10,16 @@ namespace ArmysalgDataAccess.Model
     {
         public int Id { get; set; }
         public DateTime LastUpdated { get; set; }
-        public Customer Customer { get; set; }
+        public List<SalesLineItem> SalesLineItems { get; set; }
 
         public Cart()
         {
         }
 
-        public Cart(Customer customer)
-        {
-            LastUpdated = DateTime.Now;
-            Customer = customer;
-        }
-
-        public Cart(DateTime lastUpdated)
+        public Cart(DateTime lastUpdated, List<SalesLineItem> salesLineItems)
         {
             LastUpdated = lastUpdated;
+            SalesLineItems = salesLineItems;
         }
 
         public Cart(int id, DateTime lastUpdated)
