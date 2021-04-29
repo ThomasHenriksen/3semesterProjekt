@@ -11,12 +11,12 @@ namespace ArmysalgService.BusinessLogic
     public class CustomerLogic : ICustomerLogic
     {
         ICustomerDatabaseAccess _customerAccess;
-        ICartDatabaseAccess _cartAccess;
+        ICartLogic _cartLogic;
 
         public CustomerLogic(IConfiguration inConfiguration)
         {
             _customerAccess = new CustomerDatabaseAccess(inConfiguration);
-            _cartAccess = new CartDatabaseAccess(inConfiguration);
+            _cartLogic = new CartLogic(inConfiguration);
         }
 
         /*
@@ -32,12 +32,18 @@ namespace ArmysalgService.BusinessLogic
             try
             {
                 insertedCustomerNo = _customerAccess.CreateCustomer(newCustomer);
+                newCustomer.CustomerNo = insertedCustomerNo;
 
-                //Connect customer to AspNetUser and a new cart if customer has AspNetUser
+                //Add cart to customer
+                if (newCustomer.Cart != null)
+                {
+                    _cartLogic.AddCart(newCustomer.Cart, newCustomer);
+                }
+                
+                //Add customer to AspNetUser
                 if (_customerAccess.CustomerHasAspNetUser(newCustomer))
                 {
-                    newCustomer.CustomerNo = insertedCustomerNo;
-                    AddWebUserPropertiesToCustomer(newCustomer);
+                    _customerAccess.ConnectCustomerToAspNetUser(newCustomer);
                 }
             }
             catch
@@ -45,34 +51,6 @@ namespace ArmysalgService.BusinessLogic
                 insertedCustomerNo = -1;
             }
             return insertedCustomerNo;
-        }
-
-       /*
-        *  Connect customer to AspNetUser and a new cart
-        *  @param customer
-        *  
-        *  @return wasAdded
-        */
-        public bool AddWebUserPropertiesToCustomer(Customer customer)
-        {
-            bool wasAdded;
-
-            try
-            {
-                //Connect customer to AspNetUser
-                _customerAccess.ConnectCustomerToAspNetUser(customer);
-
-                //Create and add new cart to customer
-                Cart newCart = new Cart(customer);
-                _cartAccess.CreateCart(newCart);
-
-                wasAdded = true;
-            }
-            catch
-            {
-                wasAdded = false;
-            }
-            return wasAdded;
         }
 
         /*

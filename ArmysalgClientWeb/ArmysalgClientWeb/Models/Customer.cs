@@ -8,6 +8,7 @@ namespace ArmysalgClientWeb.Models
     public class Customer : Person
     {
         public int CustomerNo { get; set; }
+        public Cart Cart { get; set; }
 
         public Customer()
         {
@@ -24,7 +25,7 @@ namespace ArmysalgClientWeb.Models
             Email = email;
         }
 
-        public Customer(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, int customerNo)
+        public Customer(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, Cart cart)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -33,7 +34,7 @@ namespace ArmysalgClientWeb.Models
             City = city;
             Phone = phone;
             Email = email;
-            CustomerNo = customerNo;
+            Cart = cart;
         }
     }
 }

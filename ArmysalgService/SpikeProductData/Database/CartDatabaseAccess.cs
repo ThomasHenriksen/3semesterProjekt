@@ -20,7 +20,7 @@ namespace ArmysalgDataAccess.Database
         }
 
 
-        public int CreateCart(Cart aCart)
+        public int CreateCart(Cart aCart, Customer customer)
         {
             int insertedId = -1;
 
@@ -31,13 +31,33 @@ namespace ArmysalgDataAccess.Database
             {
                 SqlParameter lastUpdatedParam = new SqlParameter("@LastUpdated", aCart.LastUpdated);
                 CreateCommand.Parameters.Add(lastUpdatedParam);
-                SqlParameter customerNoParam = new SqlParameter("@CustomerNo", aCart.Customer.CustomerNo);
+                SqlParameter customerNoParam = new SqlParameter("@CustomerNo", customer.CustomerNo);
                 CreateCommand.Parameters.Add(customerNoParam);
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
             }
             return insertedId;
+        }
+
+        public bool UpdateCart(Cart aCart)
+        {
+            int numRowsUpdated = 0;
+            string queryString = "UPDATE Cart SET lastUpdated = @inLastUpdated from Cart where id = @inId";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+
+                numRowsUpdated = con.Execute(queryString,
+                                 new
+                                 {
+                                     inLastUpdated = aCart.LastUpdated,
+                                     inId = aCart.Id,
+                                 });
+
+            }
+
+            return (numRowsUpdated == 1);
         }
 
         public bool DeleteCartByCartId(int id)
@@ -57,39 +77,6 @@ namespace ArmysalgDataAccess.Database
             return (numRowsUpdated == 1);
         }
 
-        public Cart GetCartById(int cartId)
-        {
-            Cart foundCart = null;
 
-            string queryString = "select lastUpdated from Cart where id = @Id";
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
-            {
-                SqlParameter idParam = new SqlParameter("@Id", cartId);
-                readCommand.Parameters.Add(idParam);
-
-                con.Open();
-
-                SqlDataReader cartReader = readCommand.ExecuteReader();
-                foundCart = new Cart();
-                while (cartReader.Read())
-                {
-                    foundCart = GetCartFromReader(cartReader);
-                }
-            }
-            return foundCart;
-        }
-
-        private Cart GetCartFromReader(SqlDataReader cartReader)
-        {
-            Cart foundCart;
-            DateTime tempLastUpdated;
-
-            tempLastUpdated = cartReader.GetDateTime(cartReader.GetOrdinal("lastUpdated"));
-
-            foundCart = new Cart(tempLastUpdated);
-
-            return foundCart;
-        }
     }
 }

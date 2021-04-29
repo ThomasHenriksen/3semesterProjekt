@@ -67,7 +67,7 @@ namespace ArmysalgService.Controllers
             int insertedSalesNo = -1;
             if(inSalesOrder != null)
             {
-                SalesOrder dbSalesOrder = ModelConversion.SalesOrderdataWriteDtoConvert.ToSalesOrder(inSalesOrder);
+                SalesOrder dbSalesOrder = SalesOrderdataWriteDtoConvert.ToSalesOrder(inSalesOrder);
                 insertedSalesNo = _sControl.AddSalesOrder(dbSalesOrder);
             }
             if (insertedSalesNo > 0) 

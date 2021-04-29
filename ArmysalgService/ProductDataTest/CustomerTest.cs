@@ -31,9 +31,10 @@ namespace CustomerDataTest
             string city = "Aarhus";
             string phone = "20856640";
             string email = "cardolberg@gmail.com";
+            Cart cart = null;
 
             //Act
-            Customer customerToCreate = new Customer(firstName, lastName, address, zipCode, city, phone, email);
+            Customer customerToCreate = new Customer(firstName, lastName, address, zipCode, city, phone, email, cart);
             int customerNoOfInsertedCustomer = _customerAccess.CreateCustomer(customerToCreate);
             Customer customerToRead = _customerAccess.GetCustomerByCustomerNo(customerNoOfInsertedCustomer);
 

@@ -43,7 +43,7 @@ namespace ArmysalgDataTest
             Assert.Equal(testOrder.SalesNo.ToString(), newOrder.SalesNo.ToString());
             Assert.Equal(testOrder.SalesDate.ToString(), newOrder.SalesDate.ToString());
             Assert.Equal(testOrder.PaymentAmount.ToString(), newOrder.PaymentAmount.ToString());
-            Assert.Equal(testOrder.Status.ToString(), newOrder.Status.ToString());
+            Assert.Equal(testOrder.Status, newOrder.Status);
             //Assert.Equal(testOrder.SalesLineItem.ToString(), newOrder.SalesLineItem.ToString());
         }
 
@@ -51,7 +51,7 @@ namespace ArmysalgDataTest
         public void TestInsertCreatedSalesOrderToDatabase()
         {
             //Arrange
-            SalesOrder salesOrderToDatabase = new SalesOrder(DateTime.Today, 400, SalesOrderStatus.Shipped);
+            SalesOrder salesOrderToDatabase = new SalesOrder(DateTime.Today, 200, SalesOrderStatus.Shipped);
 
             //Act
             int salesOrderNoOnNewSalesOrderInDatabase = _salesOrderAccess.CreateSalesOrder(salesOrderToDatabase);
