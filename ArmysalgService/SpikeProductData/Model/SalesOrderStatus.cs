@@ -7,5 +7,9 @@ using System.Threading.Tasks;
 namespace ArmysalgDataAccess.Model
 {
     public enum SalesOrderStatus
-    { New, Hold, Shipped, Delivered, Closed }
+    { New = 0,
+      Hold = 1,
+      Shipped = 2,
+      Delivered = 3,
+      Closed = 4 }
 }

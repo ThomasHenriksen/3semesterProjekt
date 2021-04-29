@@ -38,7 +38,7 @@ namespace ArmysalgDataAccess.Database
                 CreateCommand.Parameters.Add(salesDateParam);
                 SqlParameter paymentAmountParam = new SqlParameter("@PaymentAmount", aSalesOrder.PaymentAmount);
                 CreateCommand.Parameters.Add(paymentAmountParam);
-                SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status.ToString());
+                SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
                 CreateCommand.Parameters.Add(statusParam);
                 //SqlParameter salesLineItemParam = new SqlParameter("@SalesLineItemsId", aSalesOrder.SalesLineItem);
                 //CreateCommand.Parameters.Add(salesLineItemParam);
