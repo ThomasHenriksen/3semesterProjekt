@@ -36,19 +36,5 @@ namespace ArmysalgService.BusinessLogic
         {
             return _cartAccess.DeleteCartByCartId(id);
         }
-
-        public Cart GetCart(int id)
-        {
-            Cart foundCart;
-            try
-            {
-                foundCart = _cartAccess.GetCartById(id);
-            }
-            catch 
-            {
-                foundCart = null;
-            }
-            return foundCart;
-        }
     }
 }

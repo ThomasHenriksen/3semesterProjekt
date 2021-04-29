@@ -8,7 +8,6 @@ namespace ArmysalgService.BusinessLogic
 {
     public interface ICartLogic
     {
-        Cart GetCart(int id);
         int AddCart(Cart cartToAdd, Customer customer);
         bool DeleteCart(int id);
     }

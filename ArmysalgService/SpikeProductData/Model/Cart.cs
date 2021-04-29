@@ -16,6 +16,11 @@ namespace ArmysalgDataAccess.Model
         {
         }
 
+        public Cart(DateTime lastUpdated)
+        {
+            LastUpdated = lastUpdated;
+        }
+
         public Cart(DateTime lastUpdated, List<SalesLineItem> salesLineItems)
         {
             LastUpdated = lastUpdated;
