@@ -52,8 +52,8 @@ namespace ArmysalgClientDesktop.GuiLayer
 
         private void SetPicture()
         {
-            pictureBox1.Image = Image.FromFile("C:\\Users\\45218\\OneDrive\\Billeder\\Saved Pictures\\jessieGUI.jpg");
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            //pictureBox1.Image = Image.FromFile("C:\\Users\\45218\\OneDrive\\Billeder\\Saved Pictures\\jessieGUI.jpg");
+            //pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void listOfEmployees_SelectedIndexChanged(object sender, EventArgs e)

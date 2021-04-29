@@ -10,5 +10,8 @@
     <Compile Update="GuiLayer\Products.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="GuiLayer\Supplier.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

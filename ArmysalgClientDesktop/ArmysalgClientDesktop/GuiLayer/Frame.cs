@@ -12,7 +12,7 @@ namespace ArmysalgClientDesktop.GuiLayer
 {
     public partial class Frame : Form
     {
-        enum Buttons { Unknown, btnHomeMenu, btn2Menu, btn3Menu }
+        enum Buttons { Unknown, btnHomeMenu, btn2Menu, btn3Menu, btnSupplierMenu }
         public Frame()
         {
             InitializeComponent();
@@ -21,8 +21,7 @@ namespace ArmysalgClientDesktop.GuiLayer
 
         private void btnHomeMenu_Click(object sender, EventArgs e)
         {
-            Products form = new Products();
-            NavigateTo(form, ContentPanel);
+ 
         }
 
         private void btnProductsMenu_Click(object sender, EventArgs e)
@@ -43,6 +42,12 @@ namespace ArmysalgClientDesktop.GuiLayer
         {
             Employee employee = new Employee();
             NavigateTo(employee, ContentPanel);
+        }
+
+        private void btnSupplierMenu_Click(object sender, EventArgs e)
+        {
+            Supplier supplier = new Supplier();
+            NavigateTo(supplier, ContentPanel);
         }
     }
 }

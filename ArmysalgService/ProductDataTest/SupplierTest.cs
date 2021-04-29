@@ -47,8 +47,5 @@ namespace ArmysalgDataTest
             //CleanUp
             _supplierAccess.DeleteSupplierById(supplierIdOfInsertedSupplier);
         }
-
     }
-
-
 }
