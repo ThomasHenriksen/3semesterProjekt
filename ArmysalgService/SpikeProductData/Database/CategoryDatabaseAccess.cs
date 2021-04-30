@@ -14,7 +14,7 @@ namespace ArmysalgDataAccess.Database
     public class CategoryDatabaseAccess : ICategoryDatabaseAccess
     {
         readonly string _connectionString;
-      
+
         public CategoryDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");

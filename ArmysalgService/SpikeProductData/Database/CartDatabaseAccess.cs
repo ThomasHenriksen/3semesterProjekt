@@ -13,10 +13,11 @@ namespace ArmysalgDataAccess.Database
     public class CartDatabaseAccess : ICartDatabaseAccess
     {
         readonly string _connectionString;
-
+        private ISalesLineItemDatabaseAcces _salelineitem;
         public CartDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
+            _salelineitem = new SalesLineItemDatabaseAccess(configuration);
         }
 
 
@@ -39,6 +40,31 @@ namespace ArmysalgDataAccess.Database
             }
             return insertedId;
         }
+        public Cart GetCart(int CustomerNo)
+        {
+            Cart FoundCart = null;
+
+
+            string queryString = "select id, lastUpdated from Cart where customerNo_fk = @CustomerNo";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@CustomerNo", CustomerNo);
+                readCommand.Parameters.Add(idParam);
+
+                con.Open();
+
+                SqlDataReader cartReader = readCommand.ExecuteReader();
+                FoundCart = new Cart();
+                while (cartReader.Read())
+                {
+                    FoundCart = GetCartFromReader(cartReader);
+                }
+            }
+            return FoundCart;
+
+        }
+
 
         public bool UpdateCart(Cart aCart)
         {
@@ -75,6 +101,26 @@ namespace ArmysalgDataAccess.Database
                  });
             }
             return (numRowsUpdated == 1);
+        }
+        private Cart GetCartFromReader(SqlDataReader CartReader)
+        {
+
+            Cart foundCart;
+            int tempId;
+            DateTime tempLastUpdated;
+            List<SalesLineItem> tempSalesLineItem = null;
+
+
+            tempId = CartReader.GetInt32(CartReader.GetOrdinal("id"));
+            tempLastUpdated = CartReader.GetDateTime(CartReader.GetOrdinal("lastUpdated"));
+            if (_salelineitem.GetSalesLineItems(tempId, null) != null)
+            {
+                tempSalesLineItem = _salelineitem.GetSalesLineItems(tempId, null);
+            }
+
+            foundCart = new Cart(tempId, tempLastUpdated, tempSalesLineItem);
+
+            return foundCart;
         }
 
 

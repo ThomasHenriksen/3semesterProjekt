@@ -10,14 +10,20 @@ namespace ArmysalgDataAccess.Model
     {
         public int Id { get; set; }
         public int Quantity { get; set; }
-        public List<Product> Products { get; set; }
+        public Product Products { get; set; }
 
         public SalesLineItem()
         {
         }
 
-        public SalesLineItem(int quantity, List<Product> products)
+        public SalesLineItem(int quantity, Product products)
         {
+            Quantity = quantity;
+            Products = products;
+        }
+        public SalesLineItem(int id, int quantity, Product products)
+        {
+            Id = id;
             Quantity = quantity;
             Products = products;
         }

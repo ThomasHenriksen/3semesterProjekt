@@ -27,10 +27,11 @@ namespace ArmysalgDataAccess.Model
             SalesLineItems = salesLineItems;
         }
 
-        public Cart(int id, DateTime lastUpdated)
+        public Cart(int id, DateTime lastUpdated, List<SalesLineItem> salesLineItem)
         {
             Id = id;
             LastUpdated = lastUpdated;
+            SalesLineItems = salesLineItem;
         }
     }
 }
