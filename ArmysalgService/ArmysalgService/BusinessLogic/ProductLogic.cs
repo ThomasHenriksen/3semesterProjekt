@@ -59,8 +59,7 @@ namespace ArmysalgService.BusinessLogic
             {
                 foundProduct = _productAccess.GetProductById(idToMatch);
                 foundProduct.Price = _priceData.Get(idToMatch);
-                foundProduct.Category = _categoryAccess.GetAllCategorysForAProduct(foundProduct.Id);
-            }
+               }
             catch
             {
                 foundProduct = null;
@@ -86,14 +85,7 @@ namespace ArmysalgService.BusinessLogic
                 {
                     product.Price = null;
                 }
-                if (_categoryAccess.GetAllCategorysForAProduct(product.Id) != null)
-                {
-                    product.Category = _categoryAccess.GetAllCategorysForAProduct(product.Id);
-                }
-                else
-                {
-                    product.Category = null;
-                }
+               
             }
 
 

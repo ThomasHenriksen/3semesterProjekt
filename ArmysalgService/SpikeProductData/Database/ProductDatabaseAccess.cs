@@ -153,30 +153,30 @@ namespace ArmysalgDataAccess.Database
             return foundProducts;
 
         }
-        public List<Product> GetAllProductsForCategory(int categoryId)
+        private List<Category> GetAllCategoryForProduct(int productId)
         {
-            List<Product> foundProducts;
-            Product readProduct;
+            List<Category> foundCategorys;
+            Category readCategory;
 
-            string queryString = "select productNo, name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted from Product inner join ProductCategory on ProductCategory.productNo_fk = Product.productNo where ProductCategory.category_id_fk  = @CategoryId ";
+            string queryString = "select id, name, description from Category inner join ProductCategory on ProductCategory.category_id_fk = Category.id where ProductCategory.productNo_fk = @ProductId ";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                SqlParameter idParam = new SqlParameter("@CategoryId", categoryId);
+                SqlParameter idParam = new SqlParameter("@ProductId", productId);
                 readCommand.Parameters.Add(idParam);
                 con.Open();
 
-                SqlDataReader productReader = readCommand.ExecuteReader();
+                SqlDataReader CategoryReader = readCommand.ExecuteReader();
 
-                foundProducts = new List<Product>();
-                while (productReader.Read())
+                foundCategorys = new List<Category>();
+                while (CategoryReader.Read())
                 {
-                    readProduct = GetProductFromReader(productReader);
-                    foundProducts.Add(readProduct);
+                    readCategory = GetCategoryFromReader(CategoryReader);
+                    foundCategorys.Add(readCategory);
                 }
             }
-            return foundProducts;
+            return foundCategorys;
 
         }
         /* Three possible returns:
@@ -243,7 +243,7 @@ namespace ArmysalgDataAccess.Database
             string tempName, tempDescription, tempStatus;
             decimal tempPurchasePrice;
             bool tempIsDeleted;
-         
+            List<Category> tempCategory = null;
 
             tempId = productReader.GetInt32(productReader.GetOrdinal("productNo"));
             tempName = productReader.GetString(productReader.GetOrdinal("name"));
@@ -254,10 +254,29 @@ namespace ArmysalgDataAccess.Database
             tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
             tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
             tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
-         
-            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted);
+
+            tempCategory = GetAllCategoryForProduct(tempId);
+
+            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, tempCategory);
 
             return foundProduct;
+        }
+        private Category GetCategoryFromReader(SqlDataReader categoryReader)
+        {
+
+            Category foundCateGory;
+            int tempId;
+            string tempName, tempDescription;
+
+
+            tempId = categoryReader.GetInt32(categoryReader.GetOrdinal("id"));
+            tempName = categoryReader.GetString(categoryReader.GetOrdinal("name"));
+            tempDescription = categoryReader.GetString(categoryReader.GetOrdinal("description"));
+
+
+            foundCateGory = new Category(tempId, tempName, tempDescription);
+
+            return foundCateGory;
         }
     }
 }

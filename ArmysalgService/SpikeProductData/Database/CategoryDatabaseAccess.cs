@@ -33,6 +33,9 @@ namespace ArmysalgDataAccess.Database
             int insertedId = -1;
 
             string insertString = "insert into category (name, description) OUTPUT INSERTED.id " + " values (@Name, @Description)";
+
+            // Create the TransactionScope to execute the commands, guaranteeing
+            // that both commands can commit or roll back as a single unit of work.
             using (TransactionScope scope = new TransactionScope())
             {
                 using (SqlConnection con = new SqlConnection(_connectionString))
@@ -51,6 +54,8 @@ namespace ArmysalgDataAccess.Database
                         CreateProductCategory(insertedId, inProduct);
                     }
                 }
+                // The Complete method commits the transaction. If an exception has been thrown,
+                // Complete is not called and the transaction is rolled back.
                 scope.Complete();
             }
             return insertedId;
@@ -58,8 +63,7 @@ namespace ArmysalgDataAccess.Database
         private void CreateProductCategory(int insertedId, Product aProduct)
         {
             string insertString = "insert into ProductCategory (category_id_fk, productNo_fk) values (@categoryId, @productNo)";
-            using (TransactionScope scope = new TransactionScope())
-            {
+          
                 if (!CheckProductCategory(insertedId, aProduct))
                 {
                     using (SqlConnection con = new SqlConnection(_connectionString))
@@ -75,8 +79,7 @@ namespace ArmysalgDataAccess.Database
 
                     }
                 }
-                scope.Complete();
-            }
+           
         }
         private bool CheckProductCategory(int insertedId, Product aProduct)
         {
@@ -85,10 +88,7 @@ namespace ArmysalgDataAccess.Database
 
             bool exiting = false;
 
-            // Create the TransactionScope to execute the commands, guaranteeing
-            // that both commands can commit or roll back as a single unit of work.
-            using (TransactionScope scope = new TransactionScope())
-            {
+          
                 using (SqlConnection con = new SqlConnection(_connectionString))
                 using (SqlCommand readCommand = new SqlCommand(queryString, con))
                 {
@@ -105,10 +105,8 @@ namespace ArmysalgDataAccess.Database
                     }
                 }
 
-                // The Complete method commits the transaction. If an exception has been thrown,
-                // Complete is not called and the transaction is rolled back.
-                scope.Complete();
-            }
+           
+         
             return exiting;
         }
         public List<Category> GetCategorysAll()
@@ -186,55 +184,32 @@ namespace ArmysalgDataAccess.Database
             }
             return (numRowsUpdated == 1);
         }
-        public List<Category> GetAllCategorysForAProduct(int productId)
+       
+        private List<Product> GetAllProductsForACategory(int categoryId)
         {
-            List<Category> foundCategorys;
-            Category readCategory;
+            List<Product> foundProducts;
+            Product readProduct;
 
-            string queryString = "select id, name, description from Category inner join ProductCategory on ProductCategory.category_id_fk = Category.id where ProductCategory.productNo_fk = @ProductId ";
-
+            string queryString = "select productNo, name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted from Product " +
+                "inner join ProductCategory on  ProductCategory.productNo_fk = productNo " +
+                "where ProductCategory.category_id_fk = @id and isDeleted = '0' ";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                SqlParameter idParam = new SqlParameter("@ProductId", productId);
+                SqlParameter idParam = new SqlParameter("@id", categoryId);
                 readCommand.Parameters.Add(idParam);
+
                 con.Open();
 
-                SqlDataReader categoryReader = readCommand.ExecuteReader();
-
-                foundCategorys = new List<Category>();
-                while (categoryReader.Read())
+                SqlDataReader productReader = readCommand.ExecuteReader();
+                foundProducts = new List<Product>();
+                while (productReader.Read())
                 {
-                    readCategory = GetCategoryFromReader(categoryReader);
-                    foundCategorys.Add(readCategory);
+                    readProduct = GetProductFromReader(productReader);
+                    foundProducts.Add(readProduct);
                 }
             }
-            return foundCategorys;
-        }
-        public List<int> GetAllProductsForACategory(Category aCategory)
-        {
-            List<int> productsId;
-           
-
-            string queryString = "select productNo from Product inner join ProductCategory on ProductCategory.productNo_fk = Product.productNo where ProductCategory.category_id_fk  = @CategoryId ";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
-            {
-                SqlParameter idParam = new SqlParameter("@CategoryId", aCategory.Id);
-                readCommand.Parameters.Add(idParam);
-                con.Open();
-
-                SqlDataReader categoryReader = readCommand.ExecuteReader();
-
-                productsId = new List<int>();
-                while (categoryReader.Read())
-                {
-                    
-                    productsId.Add(categoryReader.GetInt32(categoryReader.GetOrdinal("productNo")));
-                }
-            }
-            return productsId;
+            return foundProducts;
         }
         private Category GetCategoryFromReader(SqlDataReader categoryReader)
         {
@@ -242,16 +217,41 @@ namespace ArmysalgDataAccess.Database
             Category foundCateGory;
             int tempId;
             string tempName, tempDescription;
-         
+            List<Product> tempProducts = null;
 
             tempId = categoryReader.GetInt32(categoryReader.GetOrdinal("id"));
             tempName = categoryReader.GetString(categoryReader.GetOrdinal("name"));
             tempDescription = categoryReader.GetString(categoryReader.GetOrdinal("description"));
-      
+            tempProducts = GetAllProductsForACategory(tempId);
 
-            foundCateGory = new Category(tempId, tempName, tempDescription);
+            foundCateGory = new Category(tempId, tempName, tempDescription, tempProducts);
 
             return foundCateGory;
+        }
+
+        private Product GetProductFromReader(SqlDataReader productReader)
+        {
+            Product foundProduct;
+            int tempId, tempStock, tempMinStock, tempMaxStock;
+            string tempName, tempDescription, tempStatus;
+            decimal tempPurchasePrice;
+            bool tempIsDeleted;
+            
+
+            tempId = productReader.GetInt32(productReader.GetOrdinal("productNo"));
+            tempName = productReader.GetString(productReader.GetOrdinal("name"));
+            tempDescription = productReader.GetString(productReader.GetOrdinal("description"));
+            tempPurchasePrice = productReader.GetDecimal(productReader.GetOrdinal("purchasePrice"));
+            tempStatus = productReader.GetString(productReader.GetOrdinal("status"));
+            tempStock = productReader.GetInt32(productReader.GetOrdinal("stock"));
+            tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
+            tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
+            tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
+           
+
+            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted);
+
+            return foundProduct;
         }
     }
 }

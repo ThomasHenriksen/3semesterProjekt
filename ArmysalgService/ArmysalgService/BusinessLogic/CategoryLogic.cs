@@ -11,14 +11,12 @@ namespace ArmysalgService.BusinessLogic
     public class CategoryLogic : ICategoryLogic
     {
         private ICategoryDatabaseAccess _CategoryAccess;
-        private IProductLogic _productAccess;
+        private IPriceLogic _priceData;
 
         public CategoryLogic(IConfiguration inConfiguration)
         {
             _CategoryAccess = new CategoryDatabaseAccess(inConfiguration);
-
-            _productAccess = new ProductLogic(inConfiguration);
-
+            _priceData = new PriceLogic(inConfiguration);
         }
 
         public int Add(Category aCategory)
@@ -41,16 +39,13 @@ namespace ArmysalgService.BusinessLogic
          */
         public Category Get(int idToMatch)
         {
-            Category foundCategory = null;
-            foundCategory = _CategoryAccess.GetCategoryById(idToMatch);
-            
-            List<Product> foundtProducts = new List<Product>();
-            
-            foreach (int productId in _CategoryAccess.GetAllProductsForACategory(foundCategory)) {
-                foundtProducts.Add(_productAccess.Get(productId));
+            Category tempCategory = _CategoryAccess.GetCategoryById(idToMatch);
+            foreach (Product product in tempCategory.ProductCategory)
+            {
+                product.Price = _priceData.Get(product.Id);
+
             }
-            foundCategory.ProductCategory = foundtProducts;
-            return foundCategory;
+            return tempCategory;
         }
         /*
            *  this method is use to find all products in the database where IsDelete is false 
@@ -58,20 +53,16 @@ namespace ArmysalgService.BusinessLogic
          */
         public List<Category> GetAll()
         {
-            List<Category> foundCategory;
-
-            foundCategory = _CategoryAccess.GetCategorysAll();
-
-            foreach (Category category in foundCategory) {
-                List<Product> foundtProducts = new List<Product>();
-                foreach (int productId in _CategoryAccess.GetAllProductsForACategory(category))
+            List<Category> tempCategory = _CategoryAccess.GetCategorysAll();
+            foreach (Category categoies in tempCategory)
+            {
+                foreach (Product product in categoies.ProductCategory)
                 {
-                    foundtProducts.Add(_productAccess.Get(productId));
-                }
-                category.ProductCategory = foundtProducts;
-            }
+                    product.Price = _priceData.Get(product.Id);
 
-            return foundCategory;
+                }
+            }
+            return tempCategory;
         }
 
         /*
