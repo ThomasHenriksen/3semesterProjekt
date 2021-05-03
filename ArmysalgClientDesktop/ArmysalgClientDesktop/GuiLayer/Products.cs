@@ -15,11 +15,14 @@ namespace ArmysalgClientDesktop.GuiLayer
     public partial class Products : Form
     {
         private ProductControl productController;
+        private CategoryControl categoryController;
         public Products()
         {
             InitializeComponent();
             productController = new();
+            categoryController = new();
             GetAllProductsAsync();
+            GetAllCategoriesAsync();
         }
 
         private async void CreateNewProduct()
@@ -53,6 +56,16 @@ namespace ArmysalgClientDesktop.GuiLayer
             listBoxProducts.DataSource = products;
         }
 
+        private async void GetAllCategoriesAsync()
+        {
+            List<Category> categories = await categoryController.GetAllCategories();
+            foreach (var category in categories)
+            {
+                checkedListBoxCategory.Items.Add(category);
+            }
+            
+        }
+
         private void btnCreate_Click(object sender, EventArgs e)
         {
             CreateNewProduct();
@@ -64,5 +77,9 @@ namespace ArmysalgClientDesktop.GuiLayer
             Product test = (Product)listBoxProducts.SelectedItem;
 
         }
+
+
+
+
     }
 }
