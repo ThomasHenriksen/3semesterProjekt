@@ -158,7 +158,7 @@ namespace ArmysalgDataAccess.Database
             }
             return foundSalesLineItems;
         }
-        public bool DeleteSaleLineItemById(SalesLineItem aSalesLineItem)
+        public bool DeleteSaleLineItem(SalesLineItem aSalesLineItem)
         {
             bool deleted = false;
 
