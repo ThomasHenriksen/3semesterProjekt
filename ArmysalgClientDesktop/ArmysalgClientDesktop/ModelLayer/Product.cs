@@ -19,6 +19,7 @@ namespace ArmysalgClientDesktop.ModelLayer
         public bool IsDeleted { get; set; }
         public Price price { get; set; }
         public List<Category> Categories { get; set; }
+        public Supplier Supplier { get; set; }
         public Product()
         {
         }
@@ -48,13 +49,8 @@ namespace ArmysalgClientDesktop.ModelLayer
             IsDeleted = isDeleted;
             this.price = price;
             Categories = categories;
+            
         }
-
-
-        //public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price newPrice) : this(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted)
-        //{
-        //    this.price = newPrice;
-        //}
 
         public override string ToString()
         {

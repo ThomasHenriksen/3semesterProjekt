@@ -52,6 +52,8 @@
             this.lblEndDate = new System.Windows.Forms.Label();
             this.labelChooseCat = new System.Windows.Forms.Label();
             this.checkedListBoxCategory = new System.Windows.Forms.CheckedListBox();
+            this.comboBoxSupplier = new System.Windows.Forms.ComboBox();
+            this.labelSupplier = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBoxProducts
@@ -253,9 +255,9 @@
             this.labelChooseCat.AutoSize = true;
             this.labelChooseCat.Location = new System.Drawing.Point(579, 172);
             this.labelChooseCat.Name = "labelChooseCat";
-            this.labelChooseCat.Size = new System.Drawing.Size(101, 20);
+            this.labelChooseCat.Size = new System.Drawing.Size(104, 20);
             this.labelChooseCat.TabIndex = 22;
-            this.labelChooseCat.Text = "Vælg kategori";
+            this.labelChooseCat.Text = "Vælg kategori:";
             // 
             // checkedListBoxCategory
             // 
@@ -265,6 +267,24 @@
             this.checkedListBoxCategory.Size = new System.Drawing.Size(150, 114);
             this.checkedListBoxCategory.TabIndex = 23;
             // 
+            // comboBoxSupplier
+            // 
+            this.comboBoxSupplier.FormattingEnabled = true;
+            this.comboBoxSupplier.Location = new System.Drawing.Point(579, 351);
+            this.comboBoxSupplier.Name = "comboBoxSupplier";
+            this.comboBoxSupplier.Size = new System.Drawing.Size(151, 28);
+            this.comboBoxSupplier.TabIndex = 24;
+            // 
+            // labelSupplier
+            // 
+            this.labelSupplier.AutoSize = true;
+            this.labelSupplier.Location = new System.Drawing.Point(579, 328);
+            this.labelSupplier.Name = "labelSupplier";
+            this.labelSupplier.Size = new System.Drawing.Size(120, 20);
+            this.labelSupplier.TabIndex = 25;
+            this.labelSupplier.Text = "Vælg leverandør:";
+            this.labelSupplier.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -272,6 +292,8 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(914, 513);
+            this.Controls.Add(this.labelSupplier);
+            this.Controls.Add(this.comboBoxSupplier);
             this.Controls.Add(this.checkedListBoxCategory);
             this.Controls.Add(this.labelChooseCat);
             this.Controls.Add(this.lblEndDate);
@@ -331,5 +353,7 @@
         private System.Windows.Forms.Label lblEndDate;
         private System.Windows.Forms.Label labelChooseCat;
         private System.Windows.Forms.CheckedListBox checkedListBoxCategory;
+        private System.Windows.Forms.ComboBox comboBoxSupplier;
+        private System.Windows.Forms.Label labelSupplier;
     }
 }

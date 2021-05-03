@@ -16,14 +16,16 @@ namespace ArmysalgClientDesktop.GuiLayer
     {
         private ProductControl productController;
         private CategoryControl categoryController;
+        private SupplierControl supplierController;
         public Products()
         {
             InitializeComponent();
             productController = new();
             categoryController = new();
+            supplierController = new();
             GetAllProductsAsync();
-            GetAllCategoriesAsync();
- 
+            ListAllCategoriesInCheckBox();
+            ListSupplierInComboBox();
         }
 
         private async void CreateNewProduct()
@@ -41,13 +43,16 @@ namespace ArmysalgClientDesktop.GuiLayer
             int maxStock = int.Parse(txtBMaxStock.Text);
             bool isDeleted = cbIsDeleted.Checked;
             /*
-             * Add product to category
+             * Add category to product 
              */
             List<Category> categories = new();
             foreach (Category indexCheked in checkedListBoxCategory.CheckedItems)
             {
                 categories.Add(indexCheked);
             }
+            /*
+             * Add supplier to product
+             */
 
 
             /*
@@ -68,7 +73,7 @@ namespace ArmysalgClientDesktop.GuiLayer
 
         }
 
-        private async void GetAllCategoriesAsync()
+        private async void ListAllCategoriesInCheckBox()
         {
             List<Category> categories = await categoryController.GetAllCategories();
             foreach (var category in categories)
@@ -87,6 +92,15 @@ namespace ArmysalgClientDesktop.GuiLayer
         private void listBoxProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
             Product test = (Product)listBoxProducts.SelectedItem;
+        }
+
+        private async void ListSupplierInComboBox()
+        {
+            var listOfSuppliers = await supplierController.GetAllSuppliers();
+            foreach (var supplier in listOfSuppliers)
+            {
+                comboBoxSupplier.Items.Add(supplier);
+            }
         }
     }
 }

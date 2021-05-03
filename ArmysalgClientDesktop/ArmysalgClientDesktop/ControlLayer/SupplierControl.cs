@@ -25,5 +25,11 @@ namespace ArmysalgClientDesktop.ControlLayer
             int insertedid = await _sAccess.SaveSupplier(newSupplier);
             return insertedid;
         }
+
+        public async Task<List<Supplier>> GetAllSuppliers()
+        {
+            List<Supplier> foundSuppliers = await _sAccess.GetAllSuppliers();
+            return foundSuppliers;
+        }
     }
 }
