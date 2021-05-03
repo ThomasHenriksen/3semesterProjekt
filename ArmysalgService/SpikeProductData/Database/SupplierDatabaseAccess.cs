@@ -92,6 +92,34 @@ namespace ArmysalgDataAccess.Database
         }
 
         /*
+         * Get all suppliers from database
+         */
+        public List<Supplier> GetAllSuppliers()
+        {
+            List<Supplier> foundSuppliers;
+            Supplier readSupplier;
+
+            string queryString = "select id, name, address, zipCode, city, country, phone, email from Supplier";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                con.Open();
+
+                SqlDataReader supplierReader = readCommand.ExecuteReader();
+
+                foundSuppliers = new List<Supplier>();
+                while (supplierReader.Read())
+                {
+                    readSupplier = GetSupplierFromReader(supplierReader);
+                    foundSuppliers.Add(readSupplier);
+                }
+            }
+            return foundSuppliers;
+        }
+
+
+        /*
          * Three poosible returns:
          * A supplier object
          * An ampty Supplier object (no match on id)

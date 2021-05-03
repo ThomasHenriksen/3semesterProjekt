@@ -36,5 +36,20 @@ namespace ArmysalgService.BusinessLogic
             }
             return insertedSupplierId;
         }
+
+        public List<Supplier> GetAllSuppliers()
+        {
+            List<Supplier> foundSuppliers;
+
+            try
+            {
+                foundSuppliers = _suppliberAccess.GetAllSuppliers();
+            }
+            catch 
+            {
+                foundSuppliers = null;
+            }
+            return foundSuppliers;
+        }
     }
 }

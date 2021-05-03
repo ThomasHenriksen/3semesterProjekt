@@ -9,5 +9,6 @@ namespace ArmysalgService.BusinessLogic
     public interface ISupplierLogic
     {
         int CreateSupplier(Supplier supplierToCreate);
+        List<Supplier> GetAllSuppliers();
     }
 }
