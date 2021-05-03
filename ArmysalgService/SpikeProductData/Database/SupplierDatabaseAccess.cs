@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
 {
@@ -40,26 +41,30 @@ namespace ArmysalgDataAccess.Database
             string insertString = "insert into Supplier (name, address, zipCode, city, country, phone, email) OUTPUT INSERTED.id " +
                 "values (@Name, @Address, @ZipCode, @City, @Country, @Phone, @Email)";
 
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+            using (TransactionScope scope = new TransactionScope())
             {
-                SqlParameter nameParam = new SqlParameter("@Name", aSupplier.Name);
-                CreateCommand.Parameters.Add(nameParam);
-                SqlParameter addressParam = new SqlParameter("@Address", aSupplier.Address);
-                CreateCommand.Parameters.Add(addressParam);
-                SqlParameter zipCodeParam = new SqlParameter("@ZipCode", aSupplier.ZipCode);
-                CreateCommand.Parameters.Add(zipCodeParam);
-                SqlParameter cityParam = new SqlParameter("@City", aSupplier.City);
-                CreateCommand.Parameters.Add(cityParam);
-                SqlParameter countryParam = new SqlParameter("@Country", aSupplier.Country);
-                CreateCommand.Parameters.Add(countryParam);
-                SqlParameter phoneParam = new SqlParameter("@Phone", aSupplier.Phone);
-                CreateCommand.Parameters.Add(phoneParam);
-                SqlParameter emailParam = new SqlParameter("@Email", aSupplier.Email);
-                CreateCommand.Parameters.Add(emailParam);
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+                {
+                    SqlParameter nameParam = new SqlParameter("@Name", aSupplier.Name);
+                    CreateCommand.Parameters.Add(nameParam);
+                    SqlParameter addressParam = new SqlParameter("@Address", aSupplier.Address);
+                    CreateCommand.Parameters.Add(addressParam);
+                    SqlParameter zipCodeParam = new SqlParameter("@ZipCode", aSupplier.ZipCode);
+                    CreateCommand.Parameters.Add(zipCodeParam);
+                    SqlParameter cityParam = new SqlParameter("@City", aSupplier.City);
+                    CreateCommand.Parameters.Add(cityParam);
+                    SqlParameter countryParam = new SqlParameter("@Country", aSupplier.Country);
+                    CreateCommand.Parameters.Add(countryParam);
+                    SqlParameter phoneParam = new SqlParameter("@Phone", aSupplier.Phone);
+                    CreateCommand.Parameters.Add(phoneParam);
+                    SqlParameter emailParam = new SqlParameter("@Email", aSupplier.Email);
+                    CreateCommand.Parameters.Add(emailParam);
 
-                con.Open();
-                insertedSupplierId = (int)CreateCommand.ExecuteScalar();
+                    con.Open();
+                    insertedSupplierId = (int)CreateCommand.ExecuteScalar();
+                }
+                scope.Complete();
             }
             return insertedSupplierId;
         }
