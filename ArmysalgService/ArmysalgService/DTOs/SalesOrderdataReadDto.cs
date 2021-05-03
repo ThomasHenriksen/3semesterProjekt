@@ -12,12 +12,12 @@ namespace ArmysalgService.DTOs
         public DateTime SalesDate { get; set; }
         public decimal PaymentAmount { get; set; }
         public SalesOrderStatus Status { get; set; }
-        public int SalesLineItem { get; set; }
+        public List<SalesLineItem> SalesLineItem { get; set; }
         public int ShippingId { get; set; }
         public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
 
-        public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, int salesLineItem)
+        public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem)
         {
             SalesNo = salesNo;
             SalesDate = salesDate;
@@ -26,7 +26,7 @@ namespace ArmysalgService.DTOs
             SalesLineItem = salesLineItem;
         }
 
-        public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, int salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status, salesLineItem)
+        public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status, salesLineItem)
         {
             ShippingId = shippingId;
             EmployeeId = employeeId;
