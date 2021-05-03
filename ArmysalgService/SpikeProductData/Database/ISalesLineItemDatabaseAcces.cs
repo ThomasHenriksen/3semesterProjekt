@@ -11,7 +11,7 @@ namespace ArmysalgDataAccess.Database
     {
         int CreateSalesLineItem(SalesLineItem aSalesLineItem, Cart aCart);
         bool UpdateSalesLineItem(SalesLineItem aSalesLineItem, Cart? aCart, SalesOrder? aSalesOrder);
-        SalesLineItem GetSalesLineItem(int? cartId, int? salesNo);
+        SalesLineItem GetSalesLineItem(int saleLineItemId);
         List<SalesLineItem> GetSalesLineItems(int? cartId, int? salesNo);
         bool DeleteSaleLineItemById(SalesLineItem aSalesLineItem);
     }

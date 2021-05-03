@@ -94,33 +94,18 @@ namespace ArmysalgDataAccess.Database
         }
 
 
-        public SalesLineItem GetSalesLineItem(int? cartId, int? salesNo)
+        public SalesLineItem GetSalesLineItem(int saleLineItemId)
         {
             SalesLineItem FoundSalesLineItem = null;
 
 
-            string queryString = "select id, quantity, cart_id_fk, productNo_fk, salesNo_fk from SalesLineItem ";
-            if (cartId != null && salesNo == null)
-            {
-                queryString += " where cart_id_fk = @cartId and salesNo_fk IS NULL ";
-            }
-            else if (salesNo != null && cartId == null)
-            {
-                queryString += " where salesNo_fk = @salesNo ";
-            }
+            string queryString = "select id, quantity, cart_id_fk, productNo_fk, salesNo_fk from SalesLineItem where id = @id ";
+
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                if (cartId != null && salesNo == null)
-                {
-                    SqlParameter idParam = new SqlParameter("@cartId", cartId);
-                    readCommand.Parameters.Add(idParam);
-                }
-                else if (salesNo != null && cartId == null)
-                {
-                    SqlParameter idParam = new SqlParameter("@salesNo", salesNo);
-                    readCommand.Parameters.Add(idParam);
-                }
+                SqlParameter idParam = new SqlParameter("@id", saleLineItemId);
+                readCommand.Parameters.Add(idParam);
                 con.Open();
 
                 SqlDataReader salesLineItemReader = readCommand.ExecuteReader();
