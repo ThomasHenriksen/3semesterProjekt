@@ -40,7 +40,7 @@ namespace ArmysalgDataAccess.Database
             }
             return insertedId;
         }
-        public Cart GetCart(int CustomerNo)
+        public Cart GetCartByCustomerNo(int CustomerNo)
         {
             Cart FoundCart = null;
 
@@ -64,7 +64,30 @@ namespace ArmysalgDataAccess.Database
             return FoundCart;
 
         }
+        public Cart GetCartById(Cart cart)
+        {
+            Cart FoundCart = null;
 
+
+            string queryString = "select id, lastUpdated from Cart where id = @Id";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@Id", cart.Id);
+                readCommand.Parameters.Add(idParam);
+
+                con.Open();
+
+                SqlDataReader cartReader = readCommand.ExecuteReader();
+                FoundCart = new Cart();
+                while (cartReader.Read())
+                {
+                    FoundCart = GetCartFromReader(cartReader);
+                }
+            }
+            return FoundCart;
+
+        }
 
         public bool UpdateCart(Cart aCart)
         {

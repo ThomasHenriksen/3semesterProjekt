@@ -15,7 +15,7 @@ namespace ArmysalgService.Controllers
     [ApiController]
     public class SalesOrderController : ControllerBase
     {
-        private readonly SalesOrderLogic _sControl;
+        private readonly ISalesOrderLogic _sControl;
         private readonly IConfiguration _configuration;
 
         public SalesOrderController(IConfiguration inConfiguration)

@@ -13,6 +13,6 @@ namespace ArmysalgDataAccess.Database
         bool UpdateSalesLineItem(SalesLineItem aSalesLineItem, Cart? aCart, SalesOrder? aSalesOrder);
         SalesLineItem GetSalesLineItem(int saleLineItemId);
         List<SalesLineItem> GetSalesLineItems(int? cartId, int? salesNo);
-        bool DeleteSaleLineItemById(SalesLineItem aSalesLineItem);
+        bool DeleteSaleLineItem(SalesLineItem aSalesLineItem);
     }
 }

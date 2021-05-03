@@ -14,7 +14,7 @@ namespace ArmysalgService.ModelConversion
             CartdataReadDto aCartReadDto = null;
             if (inCart != null)
             {
-                aCartReadDto = new CartdataReadDto(inCart.LastUpdated);
+                aCartReadDto = new CartdataReadDto(inCart.Id, inCart.LastUpdated, inCart.SalesLineItems);
             }
             return aCartReadDto;
         }

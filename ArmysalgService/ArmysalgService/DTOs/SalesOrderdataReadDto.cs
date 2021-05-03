@@ -17,20 +17,38 @@ namespace ArmysalgService.DTOs
         public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
 
-        public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem)
+        public SalesOrderdataReadDto()
+        {
+
+        }
+
+        public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId)
         {
             SalesNo = salesNo;
             SalesDate = salesDate;
             PaymentAmount = paymentAmount;
             Status = status;
             SalesLineItem = salesLineItem;
-        }
-
-        public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status, salesLineItem)
-        {
             ShippingId = shippingId;
             EmployeeId = employeeId;
             CustomerId = customerId;
         }
+
+
+        //public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem)
+        //{
+        //    SalesNo = salesNo;
+        //    SalesDate = salesDate;
+        //    PaymentAmount = paymentAmount;
+        //    Status = status;
+        //    SalesLineItem = salesLineItem;
+        //}
+
+        //public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status, salesLineItem)
+        //{
+        //    ShippingId = shippingId;
+        //    EmployeeId = employeeId;
+        //    CustomerId = customerId;
+        //}
     }
 }
