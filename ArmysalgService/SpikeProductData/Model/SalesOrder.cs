@@ -12,7 +12,7 @@ namespace ArmysalgDataAccess.Model
         public DateTime SalesDate { get; set; }
         public decimal PaymentAmount { get; set; }
         public SalesOrderStatus Status { get; set; }
-        public int SalesLineItem { get; set; }
+        public List<SalesLineItem> SalesLineItem { get; set; }
         public int ShippingId { get; set; }
         public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
@@ -22,15 +22,16 @@ namespace ArmysalgDataAccess.Model
 
         }
 
-        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status) //, int salesLineItem
+        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItems) 
         {
             SalesDate = salesDate;
             PaymentAmount = paymentAmount;
             Status = status;
-            //SalesLineItem = salesLineItem;
+            SalesLineItem = salesLineItems;
+            
         }
 
-        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, int salesLineItem, int shippingId, int employeeId, int customerId)
+        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId)
         {
             SalesDate = salesDate;
             PaymentAmount = paymentAmount;
@@ -43,20 +44,20 @@ namespace ArmysalgDataAccess.Model
 
 
 
-        public SalesOrder(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, int salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status)
+        public SalesOrder(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status)
         {
             ShippingId = shippingId;
             EmployeeId = employeeId;
             CustomerId = customerId;
         }
 
-        public SalesOrder(int salesNo, DateTime date, decimal paymentAmount, SalesOrderStatus status) //, int salesLineItem
+        public SalesOrder(int salesNo, DateTime date, decimal paymentAmount, SalesOrderStatus status) 
         {
             SalesNo = salesNo;
             SalesDate = date;
             PaymentAmount = paymentAmount;
             Status = status;
-            //SalesLineItem = salesLineItem;
+            
         }
     }
 }

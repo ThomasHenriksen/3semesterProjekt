@@ -85,7 +85,7 @@ namespace ArmysalgDataAccess.Database
         private SalesOrder GetSalesOrderFromReader(SqlDataReader salesOrderReader)
         {
             SalesOrder foundSalesOrder;
-            int tempId, tempSalesLineItem, tempShipping, tempCustomer, tempEmployee;
+            int tempId, tempShipping, tempCustomer, tempEmployee;
             string tempStatus;
             decimal tempPayMentAmount;
             DateTime tempSalesDate;
@@ -94,7 +94,6 @@ namespace ArmysalgDataAccess.Database
             tempSalesDate = salesOrderReader.GetDateTime(salesOrderReader.GetOrdinal("salesDate"));
             tempPayMentAmount = salesOrderReader.GetDecimal(salesOrderReader.GetOrdinal("paymentAmount"));
             tempStatus = salesOrderReader.GetString(salesOrderReader.GetOrdinal("status"));
-            //tempSalesLineItem = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("salesLineItem_id_kf"));
             //tempShipping = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("shipping_id_fk"));
             //if (tempShipping.Equals(null))
             //{
