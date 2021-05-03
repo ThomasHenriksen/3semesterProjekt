@@ -12,7 +12,7 @@ namespace ArmysalgService.ModelConversion
 
         public static SalesOrderdataReadDto FromOrderToReadDto(SalesOrder inSalesOrder)
         {
-            SalesOrderdataReadDto foundSales = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem);
+            SalesOrderdataReadDto foundSales = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem, inSalesOrder.ShippingId, inSalesOrder.EmployeeId, inSalesOrder.CustomerId);
             return foundSales;
         }
 
@@ -37,7 +37,7 @@ namespace ArmysalgService.ModelConversion
                 SalesOrderdataReadDto aSalesOrderReadDto = null;
                 if (inSalesOrder != null)
                 {
-                    aSalesOrderReadDto = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem);
+                    aSalesOrderReadDto = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem, inSalesOrder.ShippingId, inSalesOrder.EmployeeId, inSalesOrder.CustomerId);
                 }
                 return aSalesOrderReadDto;
         }
