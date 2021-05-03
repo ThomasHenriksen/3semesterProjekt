@@ -26,7 +26,7 @@ namespace ArmysalgService.BusinessLogic
                 if (price != null)
                 {
                     price.EndDate = newPrice.StartDate;
-                    Put(product.Price);
+                    Put(price);
                     insertedId = _PriceAccess.CreatePriceWithOutEndDate(newPrice, product);
                 }
                 else
