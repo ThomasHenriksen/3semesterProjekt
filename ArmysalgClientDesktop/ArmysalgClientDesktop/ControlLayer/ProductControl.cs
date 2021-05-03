@@ -48,17 +48,17 @@ namespace ArmysalgClientDesktop.ControlLayer
 
 
         public async Task<int> SaveProduct(string name, string description, decimal purchasePrice, string status,
-            int stock, int minStock, int maxStock, bool isDeleted, decimal value, DateTime startDate, DateTime? endDate)
+            int stock, int minStock, int maxStock, bool isDeleted, decimal value, DateTime startDate, DateTime? endDate, List<Category> categories)
         {
-            Price newPrice = null;
+            Price price = null;
             Product newProduct = null;
             TokenState currentState = TokenState.Valid;
             string tokenValue = await GetToken(currentState);
             if (tokenValue != null)
             {
-                newPrice = new Price( value,  startDate, endDate);
-                newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, newPrice);
-                newProduct.price = newPrice;
+                price = new Price( value,  startDate, endDate);
+                newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, price, categories);
+                newProduct.price = price;
                 if (_pAccess.CurrentHttpStatusCode == HttpStatusCode.Unauthorized)
                 {
                     currentState = TokenState.Invalid;
@@ -69,9 +69,9 @@ namespace ArmysalgClientDesktop.ControlLayer
                 tokenValue = await GetToken(currentState);
                 if (tokenValue != null)
                 {
-                    newPrice = new Price(value, startDate, endDate);
-                    newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, newPrice);
-                    newProduct.price = newPrice;
+                    price = new Price(value, startDate, endDate);
+                    newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, price, categories);
+                    newProduct.price = price;
                 }
             }
             return await _pAccess.SaveProduct(newProduct, tokenValue);

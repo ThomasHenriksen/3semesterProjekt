@@ -14,7 +14,7 @@ namespace ArmysalgService.ModelConversion
             Product aProduct = null;
             if (inDto != null)
             {
-                aProduct = new Product(inDto.Name, inDto.Description, inDto.PurchasePrice, inDto.Status, inDto.Stock, inDto.MinStock, inDto.MaxStock, inDto.IsDeleted, inDto.price);
+                aProduct = new Product(inDto.Name, inDto.Description, inDto.PurchasePrice, inDto.Status, inDto.Stock, inDto.MinStock, inDto.MaxStock, inDto.IsDeleted, inDto.price, inDto.Categories);
             }
             return aProduct;
         }

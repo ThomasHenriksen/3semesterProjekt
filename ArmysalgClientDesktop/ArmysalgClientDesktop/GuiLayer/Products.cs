@@ -23,6 +23,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             categoryController = new();
             GetAllProductsAsync();
             GetAllCategoriesAsync();
+ 
         }
 
         private async void CreateNewProduct()
@@ -40,6 +41,16 @@ namespace ArmysalgClientDesktop.GuiLayer
             int maxStock = int.Parse(txtBMaxStock.Text);
             bool isDeleted = cbIsDeleted.Checked;
             /*
+             * Add product to category
+             */
+            List<Category> categories = new();
+            foreach (Category indexCheked in checkedListBoxCategory.CheckedItems)
+            {
+                categories.Add(indexCheked);
+            }
+
+
+            /*
              * New price
              * 
              */
@@ -47,13 +58,14 @@ namespace ArmysalgClientDesktop.GuiLayer
             DateTime startDate = DateTime.Now;
            
             DateTime? endDate = null ;
-            _ = await productController.SaveProduct(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, value, startDate, endDate);
+            _ = await productController.SaveProduct(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, value, startDate, endDate, categories);
         }
 
         private async void GetAllProductsAsync()
         {
             List<Product> products = await productController.GetAllProducts();
             listBoxProducts.DataSource = products;
+
         }
 
         private async void GetAllCategoriesAsync()
@@ -75,11 +87,6 @@ namespace ArmysalgClientDesktop.GuiLayer
         private void listBoxProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
             Product test = (Product)listBoxProducts.SelectedItem;
-
         }
-
-
-
-
     }
 }

@@ -8,8 +8,6 @@ namespace ArmysalgClientDesktop.ModelLayer
 {
     public class Product
     {
-        private Price newPrice;
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -20,6 +18,7 @@ namespace ArmysalgClientDesktop.ModelLayer
         public int MaxStock { get; set; }
         public bool IsDeleted { get; set; }
         public Price price { get; set; }
+        public List<Category> Categories { get; set; }
         public Product()
         {
         }
@@ -36,9 +35,9 @@ namespace ArmysalgClientDesktop.ModelLayer
             IsDeleted = isDeleted;
         }
 
-        public Product(int id, string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price? price)
+        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price? price, List<Category> categories)
         {
-            Id = id;
+           
             Name = name;
             Description = description;
             PurchasePrice = purchasePrice;
@@ -48,12 +47,14 @@ namespace ArmysalgClientDesktop.ModelLayer
             MaxStock = maxStock;
             IsDeleted = isDeleted;
             this.price = price;
+            Categories = categories;
         }
 
-        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price newPrice) : this(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted)
-        {
-            this.newPrice = newPrice;
-        }
+
+        //public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price newPrice) : this(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted)
+        //{
+        //    this.price = newPrice;
+        //}
 
         public override string ToString()
         {
