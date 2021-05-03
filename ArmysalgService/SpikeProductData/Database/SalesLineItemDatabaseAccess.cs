@@ -194,7 +194,7 @@ namespace ArmysalgDataAccess.Database
 
 
             tempId = salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("id"));
-            quantity = salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("lastUpdated"));
+            quantity = salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("quantity"));
             tempProduct = _productDatabase.GetProductById(salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("productNo_fk")));
 
 
