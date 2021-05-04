@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
-{   // brian
+{   
     public class ShippingDatabaseAccess : IShippingDatabaseAccess
     {
         readonly string _connectionString;
 
         public ShippingDatabaseAccess(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("ArmyalgConnection");
+            _connectionString = configuration.GetConnectionString("ArmysalgConnection");
         }
 
         //For test
@@ -62,11 +62,11 @@ namespace ArmysalgDataAccess.Database
             return insertedId;
         }
 
-        public Shipping GetShippingByShippingID(int shippingID)
+        public Shipping GetShippingByShippingID(int? shippingID)
         {
 
             Shipping foundShipping = null;
-            string queryString = "select price, freeShipping, firstName, lastName, address, zipCode_fk, phone, email from Shipping" + " join zipCity zc on shipping.zipCode_fk = zc.zipCode" + " where id = @ShippingID";
+            string queryString = "select price, freeShipping, firstName, lastName, address, zipCode_fk, phone, email from Shipping join zipCity zc on shipping.zipCode_fk = zc.zipCode where id = @ShippingID";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -85,7 +85,7 @@ namespace ArmysalgDataAccess.Database
             return foundShipping;
         }
 
-        public Shipping GetShippingFromReader(SqlDataReader shippingReader)
+        private Shipping GetShippingFromReader(SqlDataReader shippingReader)
         {
             Shipping foundShipping;
             int tempShippingID;
@@ -94,7 +94,7 @@ namespace ArmysalgDataAccess.Database
             string tempFirstName, tempLastName, tempAddress, tempZipCode_fk, tempCity, tempPhone, tempEmail;
 
             //tempShippingID = shippingReader.GetInt32(shippingReader.GetOrdinal("id"));
-            tempPrice = shippingReader.GetDouble(shippingReader.GetOrdinal("price"));
+            tempPrice =  decimal.ToDouble(shippingReader.GetDecimal(shippingReader.GetOrdinal("price")));
             tempFreeShipping = shippingReader.GetBoolean(shippingReader.GetOrdinal("freeShipping"));
             tempFirstName = shippingReader.GetString(shippingReader.GetOrdinal("firstName"));
             tempLastName = shippingReader.GetString(shippingReader.GetOrdinal("lastName"));

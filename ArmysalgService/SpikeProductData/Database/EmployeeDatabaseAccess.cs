@@ -68,7 +68,7 @@ namespace ArmysalgDataAccess.Database
         * An empty Employee object (no match on customerNo)
         * Null - Some error occurred
         */
-        public Employee GetEmployeeByEmployeeNo(int findEmployeeNo)
+        public Employee GetEmployeeByEmployeeNo(int? findEmployeeNo)
         {
             Employee foundEmployee = null;
             string queryString = "select employeeNo, firstName, lastName, address, zipCode, city, phone, email, salary, position from Employee" + " join zipCity zc on employee.zipCode_fk = zc.zipCode" + " where employeeNo = @EmployeeNo";

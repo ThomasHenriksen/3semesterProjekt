@@ -14,7 +14,7 @@ namespace ArmysalgService.ModelConversion
             SalesOrder aSalesOrder = null;
             if(inDto != null)
             {
-                aSalesOrder = new SalesOrder(inDto.SalesDate, inDto.PaymentAmount, inDto.Status, inDto.SalesLineItem, inDto.ShippingId, inDto.EmployeeId, inDto.CustomerId); 
+                aSalesOrder = new SalesOrder(inDto.SalesDate, inDto.PaymentAmount, inDto.Status, inDto.SalesLineItem, inDto.Shipping, inDto.Employee, inDto.Customer); 
             }
             return aSalesOrder;
         }
