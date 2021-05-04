@@ -20,6 +20,10 @@ namespace ArmysalgDataAccess.Database
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
             _productDatabase = new ProductDatabaseAccess(configuration);
         }
+        public SalesLineItemDatabaseAccess(string inConnectionString)
+        {
+            _connectionString = inConnectionString;
+        }
         public int CreateSalesLineItem(SalesLineItem aSalesLineItem, Cart aCart)
         {
             int insertedId = -1;
