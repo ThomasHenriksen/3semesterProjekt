@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ArmysalgClientWeb.Models;
 
 namespace ArmysalgClientWeb.Data
 {
@@ -12,5 +13,6 @@ namespace ArmysalgClientWeb.Data
             : base(options)
         {
         }
+        public DbSet<ArmysalgClientWeb.Models.Product> Product { get; set; }
     }
 }
