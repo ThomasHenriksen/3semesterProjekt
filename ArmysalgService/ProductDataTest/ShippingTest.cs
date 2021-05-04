@@ -27,7 +27,6 @@ namespace ArmysalgDataTest
         {
             //Arrange
             double price = 150;
-            bool freeShipping = false;
             string firstName = "Ryan";
             string lastName = "Engelbrecht";
             string address = "Brosundet 69";
@@ -36,10 +35,9 @@ namespace ArmysalgDataTest
             string phone = "35353535";
             string email = "livefastdiemiddleage@onlyfans.com";
             //Act
-            Shipping shippingToCreate = new(price, freeShipping, firstName, lastName, address, zipCode, city, phone, email);
-            Shipping shippingToCompare = null;
+            Shipping shippingToCreate = new(price, firstName, lastName, address, zipCode, city, phone, email);
             int shippingID = _shippingAccess.CreateShipping(shippingToCreate);
-            shippingToCompare = _shippingAccess.GetShippingByShippingID(shippingID);
+            Shipping shippingToCompare = _shippingAccess.GetShippingByShippingID(shippingID);
             //Assert
             Assert.Equal(shippingToCreate.LastName, shippingToCompare.LastName);
         }       
