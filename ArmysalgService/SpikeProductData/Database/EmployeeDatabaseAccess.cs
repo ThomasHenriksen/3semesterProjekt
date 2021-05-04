@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
 {
@@ -31,28 +32,32 @@ namespace ArmysalgDataAccess.Database
             string insertString = "insert into employee (firstName, lastName, address, zipCode_fk, phone, email, salary, position) OUTPUT INSERTED.employeeNo " +
                 "values (@FirstName, @LastName, @Address, @ZipCode, @Phone, @Email, @Salary, @Position)";
 
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+            using (TransactionScope scope = new TransactionScope())
             {
-                SqlParameter firstNameParam = new SqlParameter("@FirstName", aEmployee.FirstName);
-                CreateCommand.Parameters.Add(firstNameParam);
-                SqlParameter lastNameParam = new SqlParameter("@LastName", aEmployee.LastName);
-                CreateCommand.Parameters.Add(lastNameParam);
-                SqlParameter address = new SqlParameter("@Address", aEmployee.Address);
-                CreateCommand.Parameters.Add(address);
-                SqlParameter zipCode = new SqlParameter("@ZipCode", aEmployee.ZipCode);
-                CreateCommand.Parameters.Add(zipCode);
-                SqlParameter phone = new SqlParameter("@Phone", aEmployee.Phone);
-                CreateCommand.Parameters.Add(phone);
-                SqlParameter email = new SqlParameter("@Email", aEmployee.Email);
-                CreateCommand.Parameters.Add(email);
-                SqlParameter salary = new SqlParameter("@Salary", aEmployee.Salary);
-                CreateCommand.Parameters.Add(salary);
-                SqlParameter position = new SqlParameter("@Position", aEmployee.Position);
-                CreateCommand.Parameters.Add(position);
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+                {
+                    SqlParameter firstNameParam = new SqlParameter("@FirstName", aEmployee.FirstName);
+                    CreateCommand.Parameters.Add(firstNameParam);
+                    SqlParameter lastNameParam = new SqlParameter("@LastName", aEmployee.LastName);
+                    CreateCommand.Parameters.Add(lastNameParam);
+                    SqlParameter address = new SqlParameter("@Address", aEmployee.Address);
+                    CreateCommand.Parameters.Add(address);
+                    SqlParameter zipCode = new SqlParameter("@ZipCode", aEmployee.ZipCode);
+                    CreateCommand.Parameters.Add(zipCode);
+                    SqlParameter phone = new SqlParameter("@Phone", aEmployee.Phone);
+                    CreateCommand.Parameters.Add(phone);
+                    SqlParameter email = new SqlParameter("@Email", aEmployee.Email);
+                    CreateCommand.Parameters.Add(email);
+                    SqlParameter salary = new SqlParameter("@Salary", aEmployee.Salary);
+                    CreateCommand.Parameters.Add(salary);
+                    SqlParameter position = new SqlParameter("@Position", aEmployee.Position);
+                    CreateCommand.Parameters.Add(position);
 
-                con.Open();
-                insertedId = (int)CreateCommand.ExecuteScalar();
+                    con.Open();
+                    insertedId = (int)CreateCommand.ExecuteScalar();
+                }
+                scope.Complete();
             }
             return insertedId;
         }
@@ -136,15 +141,18 @@ namespace ArmysalgDataAccess.Database
         {
             int numRowsUpdated = 0;
             string queryString = "UPDATE Product SET  isDeleted = @inIsDelete from Product where productNo = @Id";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (TransactionScope scope = new TransactionScope())
             {
-                numRowsUpdated = con.Execute(queryString,
-                 new
-                 {
-                     inIsDelete = 1,
-                     Id = id
-                 });
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    numRowsUpdated = con.Execute(queryString,
+                     new
+                     {
+                         inIsDelete = 1,
+                         Id = id
+                     });
+                }
+                scope.Complete();
             }
             return (numRowsUpdated == 1);
         }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Dapper;
+using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
 {
@@ -37,26 +38,29 @@ namespace ArmysalgDataAccess.Database
 
             string insertString = "insert into Customer (firstName, lastName, address, zipCode_fk, phone, email) OUTPUT INSERTED.customerNo " +
                 "values (@FirstName, @LastName, @Address, @ZipCode, @Phone, @Email)";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+            using (TransactionScope scope = new TransactionScope())
             {
-                SqlParameter firstNameParam = new SqlParameter("@FirstName", aCustomer.FirstName);
-                CreateCommand.Parameters.Add(firstNameParam);
-                SqlParameter lastNameParam = new SqlParameter("@LastName", aCustomer.LastName);
-                CreateCommand.Parameters.Add(lastNameParam);
-                SqlParameter address = new SqlParameter("@Address", aCustomer.Address);
-                CreateCommand.Parameters.Add(address);
-                SqlParameter zipCode = new SqlParameter("@ZipCode", aCustomer.ZipCode);
-                CreateCommand.Parameters.Add(zipCode);
-                SqlParameter phone = new SqlParameter("@Phone", aCustomer.Phone);
-                CreateCommand.Parameters.Add(phone);
-                SqlParameter email = new SqlParameter("@Email", aCustomer.Email);
-                CreateCommand.Parameters.Add(email);
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+                {
+                    SqlParameter firstNameParam = new SqlParameter("@FirstName", aCustomer.FirstName);
+                    CreateCommand.Parameters.Add(firstNameParam);
+                    SqlParameter lastNameParam = new SqlParameter("@LastName", aCustomer.LastName);
+                    CreateCommand.Parameters.Add(lastNameParam);
+                    SqlParameter address = new SqlParameter("@Address", aCustomer.Address);
+                    CreateCommand.Parameters.Add(address);
+                    SqlParameter zipCode = new SqlParameter("@ZipCode", aCustomer.ZipCode);
+                    CreateCommand.Parameters.Add(zipCode);
+                    SqlParameter phone = new SqlParameter("@Phone", aCustomer.Phone);
+                    CreateCommand.Parameters.Add(phone);
+                    SqlParameter email = new SqlParameter("@Email", aCustomer.Email);
+                    CreateCommand.Parameters.Add(email);
 
-                con.Open();
-                insertedCustomerNo = (int)CreateCommand.ExecuteScalar();
+                    con.Open();
+                    insertedCustomerNo = (int)CreateCommand.ExecuteScalar();
 
+                }
+                scope.Complete();
             }
             return insertedCustomerNo;
         }
