@@ -28,7 +28,7 @@ namespace CustomerDataTest
             string lastName = "Dolberg";
             string address = "Vestrebro 45, 3. tv.";
             string zipCode = "8000";
-            string city = "AarhusC";
+            string city = "Aarhus";
             string phone = "20856640";
             string email = "cardolberg@gmail.com";
             Cart cart = null;
