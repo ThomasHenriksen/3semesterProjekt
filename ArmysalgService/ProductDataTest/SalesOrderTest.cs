@@ -51,8 +51,9 @@ namespace ArmysalgDataTest
         public void TestInsertCreatedSalesOrderToDatabase()
         {
             //Arrange
-
-            SalesOrder salesOrderToDatabase = new SalesOrder(DateTime.Today, 200, SalesOrderStatus.Shipped, null);
+            SalesLineItem salesLineItemToTest = new();
+            List<SalesLineItem> listOfSalesLineItemToTest = new();
+            SalesOrder salesOrderToDatabase = new SalesOrder(DateTime.Today, 200, SalesOrderStatus.Shipped, listOfSalesLineItemToTest, null, null, null);
 
             //Act
             int salesOrderNoOnNewSalesOrderInDatabase = _salesOrderAccess.CreateSalesOrder(salesOrderToDatabase);

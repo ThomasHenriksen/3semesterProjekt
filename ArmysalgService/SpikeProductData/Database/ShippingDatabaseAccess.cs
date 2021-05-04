@@ -89,7 +89,7 @@ namespace ArmysalgDataAccess.Database
 
             string tempFirstName, tempLastName, tempAddress, tempZipCode_fk, tempCity, tempPhone, tempEmail;
 
-            //tempShippingID = shippingReader.GetInt32(shippingReader.GetOrdinal("id"));
+            tempShippingID = shippingReader.GetInt32(shippingReader.GetOrdinal("id"));
             tempPrice = decimal.ToDouble(shippingReader.GetDecimal(shippingReader.GetOrdinal("price")));
             tempFirstName = shippingReader.GetString(shippingReader.GetOrdinal("firstName"));
             tempLastName = shippingReader.GetString(shippingReader.GetOrdinal("lastName"));
@@ -99,7 +99,7 @@ namespace ArmysalgDataAccess.Database
             tempPhone = shippingReader.GetString(shippingReader.GetOrdinal("phone"));
             tempEmail = shippingReader.GetString(shippingReader.GetOrdinal("email"));
 
-            foundShipping = new(tempPrice, tempFirstName, tempLastName, tempAddress, tempZipCode_fk, tempCity, tempPhone, tempEmail);
+            foundShipping = new(tempShippingID, tempPrice, tempFirstName, tempLastName, tempAddress, tempZipCode_fk, tempCity, tempPhone, tempEmail);
 
             return foundShipping;
 
