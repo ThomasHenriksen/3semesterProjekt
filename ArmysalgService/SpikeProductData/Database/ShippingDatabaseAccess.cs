@@ -28,16 +28,14 @@ namespace ArmysalgDataAccess.Database
         {
             int insertedId = -1;
 
-            string insertString = "insert into Shipping (price, freeShipping, firstName, lastName, address, zipCode_fk, phone, email) OUTPUT INSERTED.id " +
-                "values (@Price, @FreeShipping, @FirstName, @LastName, @Address, @ZipCode, @Phone, @Email)";
+            string insertString = "insert into Shipping (price, firstName, lastName, address, zipCode_fk, phone, email) OUTPUT INSERTED.id " +
+                "values (@Price, @FirstName, @LastName, @Address, @ZipCode, @Phone, @Email)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
                 SqlParameter price = new SqlParameter("@Price", aShipping.Price);
                 CreateCommand.Parameters.Add(price);
-                SqlParameter freeShipping = new SqlParameter("@FreeShipping", aShipping.FreeShipping);
-                CreateCommand.Parameters.Add(freeShipping);
                 SqlParameter firstNameParam = new SqlParameter("@FirstName", aShipping.FirstName);
                 CreateCommand.Parameters.Add(firstNameParam);
                 SqlParameter lastNameParam = new SqlParameter("@LastName", aShipping.LastName);
@@ -62,7 +60,7 @@ namespace ArmysalgDataAccess.Database
         {
 
             Shipping foundShipping = null;
-            string queryString = "select price, freeShipping, firstName, lastName, address, zipCode_fk, phone, email from Shipping join zipCity zc on shipping.zipCode_fk = zc.zipCode where id = @ShippingID";
+            string queryString = "select price, firstName, lastName, address, zipCode_fk, phone, email from Shipping join zipCity zc on shipping.zipCode_fk = zc.zipCode where id = @ShippingID";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -86,12 +84,11 @@ namespace ArmysalgDataAccess.Database
             Shipping foundShipping;
             int tempShippingID;
             double tempPrice;
-            bool tempFreeShipping;
+
             string tempFirstName, tempLastName, tempAddress, tempZipCode_fk, tempCity, tempPhone, tempEmail;
 
             //tempShippingID = shippingReader.GetInt32(shippingReader.GetOrdinal("id"));
             tempPrice =  decimal.ToDouble(shippingReader.GetDecimal(shippingReader.GetOrdinal("price")));
-            tempFreeShipping = shippingReader.GetBoolean(shippingReader.GetOrdinal("freeShipping"));
             tempFirstName = shippingReader.GetString(shippingReader.GetOrdinal("firstName"));
             tempLastName = shippingReader.GetString(shippingReader.GetOrdinal("lastName"));
             tempAddress = shippingReader.GetString(shippingReader.GetOrdinal("address"));
@@ -100,7 +97,7 @@ namespace ArmysalgDataAccess.Database
             tempPhone = shippingReader.GetString(shippingReader.GetOrdinal("phone"));
             tempEmail = shippingReader.GetString(shippingReader.GetOrdinal("email"));
 
-            foundShipping = new(tempPrice, tempFreeShipping, tempFirstName, tempLastName, tempAddress, tempZipCode_fk, tempCity, tempPhone, tempEmail);
+            foundShipping = new(tempPrice, tempFirstName, tempLastName, tempAddress, tempZipCode_fk, tempCity, tempPhone, tempEmail);
 
             return foundShipping;
 

@@ -9,7 +9,6 @@ namespace ArmysalgDataAccess.Model
     public class Shipping
     {
         public double Price { get; set; }
-        public bool FreeShipping { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
@@ -21,11 +20,11 @@ namespace ArmysalgDataAccess.Model
         public Shipping()
         {
         }
-        public Shipping (double price, bool freeShipping, string firstName, string lastName, string address, string zipCode,
+        public Shipping (double price, string firstName, string lastName, string address, string zipCode,
             string city, string phone, string email)
         {
             Price = price;
-            FreeShipping = freeShipping;
+
             FirstName = firstName;
             LastName = lastName;
             Address = address;

@@ -14,7 +14,7 @@ namespace ArmysalgService.ModelConversion
             Shipping aShipping = null;
             if (inDto != null)
             {
-                aShipping = new Shipping(inDto.Price, inDto.FreeShipping, inDto.FirstName, inDto.LastName, inDto.Address, inDto.ZipCode, inDto.City, inDto.Phone, inDto.Email); //, inDto.Shipping
+                aShipping = new Shipping(inDto.Price, inDto.FirstName, inDto.LastName, inDto.Address, inDto.ZipCode, inDto.City, inDto.Phone, inDto.Email); //, inDto.Shipping
             }
             return aShipping;
         }

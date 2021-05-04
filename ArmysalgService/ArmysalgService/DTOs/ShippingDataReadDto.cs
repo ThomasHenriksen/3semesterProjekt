@@ -8,7 +8,6 @@ namespace ArmysalgService.DTOs
     public class ShippingDataReadDto
     {
         private double Price { get; set; }
-        private bool FreeShipping { get; set; }
         private string FirstName { get; set; }
         private string LastName { get; set; }
         private string Address { get; set; }
@@ -20,11 +19,10 @@ namespace ArmysalgService.DTOs
         public ShippingDataReadDto()
         {
         }
-        public ShippingDataReadDto(double price, bool freeShipping, string firstName, string lastName, string address, string zipCode,
+        public ShippingDataReadDto(double price, string firstName, string lastName, string address, string zipCode,
             string city, string phone, string email)
         {
             Price = price;
-            FreeShipping = freeShipping;
             FirstName = firstName;
             LastName = lastName;
             Address = address;

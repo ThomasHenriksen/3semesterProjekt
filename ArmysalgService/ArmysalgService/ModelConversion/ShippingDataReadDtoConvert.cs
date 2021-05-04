@@ -14,7 +14,7 @@ namespace ArmysalgService.ModelConversion
             ShippingDataReadDto aShippingReadDto = null;
             if (inShipping != null)
             {
-                aShippingReadDto = new ShippingDataReadDto(inShipping.Price, inShipping.FreeShipping, inShipping.FirstName, inShipping.LastName, inShipping.Address, inShipping.ZipCode, inShipping.City, inShipping.Phone, inShipping.Email);
+                aShippingReadDto = new ShippingDataReadDto(inShipping.Price, inShipping.FirstName, inShipping.LastName, inShipping.Address, inShipping.ZipCode, inShipping.City, inShipping.Phone, inShipping.Email);
             }
             return aShippingReadDto;
         }
