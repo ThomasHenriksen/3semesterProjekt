@@ -26,10 +26,7 @@ namespace ArmysalgDataAccess.Database
 
             string insertString = "insert into SalesLineItem (quantity, cart_id_fk, productNo_fk) OUTPUT INSERTED.id " + " values (@Quantity, @CartId @ProductId)";
 
-            // Create the TransactionScope to execute the commands, guaranteeing
-            // that both commands can commit or roll back as a single unit of work.
-            using (TransactionScope scope = new TransactionScope())
-            {
+           
                 using (SqlConnection con = new SqlConnection(_connectionString))
                 using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
                 {
@@ -45,10 +42,8 @@ namespace ArmysalgDataAccess.Database
                     insertedId = (int)CreateCommand.ExecuteScalar();
 
                 }
-                // The Complete method commits the transaction. If an exception has been thrown,
-                // Complete is not called and the transaction is rolled back.
-                scope.Complete();
-            }
+                
+              
             return insertedId;
         }
         public bool UpdateSalesLineItem(SalesLineItem aSalesLineItem, Cart? aCart, SalesOrder? aSalesOrder)
@@ -164,10 +159,7 @@ namespace ArmysalgDataAccess.Database
 
             string insertString = "DELETE FROM SalesLineItem where id = @Id";
 
-            // Create the TransactionScope to execute the commands, guaranteeing
-            // that both commands can commit or roll back as a single unit of work.
-            using (TransactionScope scope = new TransactionScope())
-            {
+          
                 using (SqlConnection con = new SqlConnection(_connectionString))
                 using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
                 {
@@ -182,7 +174,7 @@ namespace ArmysalgDataAccess.Database
                 }
 
                 return deleted;
-            }
+          
         }
         private SalesLineItem GetSalesLineItemFromReader(SqlDataReader salesLineItemReader)
         {
