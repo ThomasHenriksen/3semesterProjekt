@@ -7,26 +7,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Dapper;
+using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
 {
     public class ProductDatabaseAccess : IProductDatabaseAccess
     {
         readonly string _connectionString;
-    
-   
+
+
         public ProductDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
-         
-        
+
+
         }
 
         //For Test 
         public ProductDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
-      
+
         }
 
         public int CreateProduct(Product aProduct)
@@ -35,31 +36,36 @@ namespace ArmysalgDataAccess.Database
 
             string insertString = "insert into product (name, description, purchasePrice, stock, minStock, maxStock) OUTPUT INSERTED.productNo " +
                 "values (@Name, @Description, @PurchasePrice, @Stock, @MinStock, @MaxStock)";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+            using (TransactionScope scope = new TransactionScope())
             {
-                SqlParameter nameParam = new SqlParameter("@Name", aProduct.Name);
-                CreateCommand.Parameters.Add(nameParam);
-                SqlParameter descParam = new SqlParameter("@Description", aProduct.Description);
-                CreateCommand.Parameters.Add(descParam);
-                SqlParameter purPriceParam = new SqlParameter("@PurchasePrice", aProduct.PurchasePrice);
-                CreateCommand.Parameters.Add(purPriceParam);
-                SqlParameter stockParam = new SqlParameter("@Stock", aProduct.Stock);
-                CreateCommand.Parameters.Add(stockParam);
-                SqlParameter minStockParam = new SqlParameter("@MinStock", aProduct.MinStock);
-                CreateCommand.Parameters.Add(minStockParam);
-                SqlParameter maxStockParam = new SqlParameter("@MaxStock", aProduct.MaxStock);
-                CreateCommand.Parameters.Add(maxStockParam);
-
-                con.Open();
-                insertedId = (int)CreateCommand.ExecuteScalar();
-                foreach (Category inCategory in aProduct.Category)
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
                 {
-                    CreateProductCategory(insertedId, inCategory);
+                    SqlParameter nameParam = new SqlParameter("@Name", aProduct.Name);
+                    CreateCommand.Parameters.Add(nameParam);
+                    SqlParameter descParam = new SqlParameter("@Description", aProduct.Description);
+                    CreateCommand.Parameters.Add(descParam);
+                    SqlParameter purPriceParam = new SqlParameter("@PurchasePrice", aProduct.PurchasePrice);
+                    CreateCommand.Parameters.Add(purPriceParam);
+                    SqlParameter stockParam = new SqlParameter("@Stock", aProduct.Stock);
+                    CreateCommand.Parameters.Add(stockParam);
+                    SqlParameter minStockParam = new SqlParameter("@MinStock", aProduct.MinStock);
+                    CreateCommand.Parameters.Add(minStockParam);
+                    SqlParameter maxStockParam = new SqlParameter("@MaxStock", aProduct.MaxStock);
+                    CreateCommand.Parameters.Add(maxStockParam);
+
+                    con.Open();
+                    insertedId = (int)CreateCommand.ExecuteScalar();
+                    foreach (Category inCategory in aProduct.Category)
+                    {
+                        CreateProductCategory(insertedId, inCategory);
+                    }
+                    // The Complete method commits the transaction. If an exception has been thrown,
+                    // Complete is not called and the transaction is rolled back.
+                    scope.Complete();
                 }
+                return insertedId;
             }
-            return insertedId;
         }
         private void CreateProductCategory(int insertedId, Category aCategory)
         {
@@ -216,7 +222,7 @@ namespace ArmysalgDataAccess.Database
                                      inName = productToUpdate.Name,
                                      inDescription = productToUpdate.Description,
                                      inPurchasePrice = productToUpdate.PurchasePrice,
- 
+
                                      inStock = productToUpdate.Stock,
                                      inMinStock = productToUpdate.MinStock,
                                      inMaxStock = productToUpdate.MaxStock,
@@ -273,4 +279,5 @@ namespace ArmysalgDataAccess.Database
             return foundCateGory;
         }
     }
+}
 }

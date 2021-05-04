@@ -9,11 +9,12 @@ namespace ArmysalgDataAccess.Database
 {
     public interface IProductDatabaseAccess
     {
-        Product GetProductById(int id);
+        Product GetProductById(int findId);
         List<Product> GetProductAll();
-        int CreateProduct(Product productToAdd);
+        int CreateProduct(Product aProduct);
         bool UpdateProduct(Product productToUpdate);
         bool DeleteProductById(int id);
-     
+
+
     }
 }
