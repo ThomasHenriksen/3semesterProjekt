@@ -37,7 +37,6 @@ namespace ArmysalgClientDesktop.GuiLayer
             string name = txtBName.Text;
             string description = txtBDescription.Text;
             decimal purchasePrice = decimal.Parse(txtBPurchasePrice.Text);
-            string status = txtBStatus.Text;
             int stock = int.Parse(txtBStock.Text);
             int minStock = int.Parse(txtBMinStock.Text);
             int maxStock = int.Parse(txtBMaxStock.Text);
@@ -63,7 +62,8 @@ namespace ArmysalgClientDesktop.GuiLayer
             DateTime startDate = DateTime.Now;
            
             DateTime? endDate = null ;
-            _ = await productController.SaveProduct(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, value, startDate, endDate, categories);
+            _ = await productController.SaveProduct(name, description, purchasePrice,  stock, minStock, maxStock, isDeleted, value, startDate, endDate, categories);
+            GetAllProductsAsync();
         }
 
         private async void GetAllProductsAsync()

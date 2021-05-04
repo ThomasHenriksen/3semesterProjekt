@@ -190,7 +190,7 @@ namespace ArmysalgDataAccess.Database
             List<Product> foundProducts;
             Product readProduct;
 
-            string queryString = "select productNo, name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted from Product " +
+            string queryString = "select productNo, name, description, purchasePrice,  stock, minStock, maxStock, isDeleted from Product " +
                 "inner join ProductCategory on  ProductCategory.productNo_fk = productNo " +
                 "where ProductCategory.category_id_fk = @id and isDeleted = '0' ";
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -233,7 +233,7 @@ namespace ArmysalgDataAccess.Database
         {
             Product foundProduct;
             int tempId, tempStock, tempMinStock, tempMaxStock;
-            string tempName, tempDescription, tempStatus;
+            string tempName, tempDescription;
             decimal tempPurchasePrice;
             bool tempIsDeleted;
             
@@ -242,14 +242,13 @@ namespace ArmysalgDataAccess.Database
             tempName = productReader.GetString(productReader.GetOrdinal("name"));
             tempDescription = productReader.GetString(productReader.GetOrdinal("description"));
             tempPurchasePrice = productReader.GetDecimal(productReader.GetOrdinal("purchasePrice"));
-            tempStatus = productReader.GetString(productReader.GetOrdinal("status"));
             tempStock = productReader.GetInt32(productReader.GetOrdinal("stock"));
             tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
             tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
             tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
            
 
-            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted);
+            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice,  tempStock, tempMinStock, tempMaxStock, tempIsDeleted);
 
             return foundProduct;
         }

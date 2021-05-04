@@ -47,7 +47,7 @@ namespace ArmysalgClientDesktop.ControlLayer
 
 
 
-        public async Task<int> SaveProduct(string name, string description, decimal purchasePrice, string status,
+        public async Task<int> SaveProduct(string name, string description, decimal purchasePrice, 
             int stock, int minStock, int maxStock, bool isDeleted, decimal value, DateTime startDate, DateTime? endDate, List<Category> categories)
         {
             Price price = null;
@@ -57,7 +57,7 @@ namespace ArmysalgClientDesktop.ControlLayer
             if (tokenValue != null)
             {
                 price = new Price( value,  startDate, endDate);
-                newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, price, categories);
+                newProduct = new Product(name, description, purchasePrice,  stock, minStock, maxStock, isDeleted, price, categories);
                 newProduct.price = price;
                 if (_pAccess.CurrentHttpStatusCode == HttpStatusCode.Unauthorized)
                 {
@@ -70,7 +70,7 @@ namespace ArmysalgClientDesktop.ControlLayer
                 if (tokenValue != null)
                 {
                     price = new Price(value, startDate, endDate);
-                    newProduct = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted, price, categories);
+                    newProduct = new Product(name, description, purchasePrice,  stock, minStock, maxStock, isDeleted, price, categories);
                     newProduct.price = price;
                 }
             }

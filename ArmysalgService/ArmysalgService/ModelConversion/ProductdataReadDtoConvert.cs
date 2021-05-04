@@ -30,7 +30,7 @@ namespace ArmysalgService.ModelConversion
             ProductdataReadDto aProductReadDto = null;
             if (inProduct != null)
             {
-                aProductReadDto = new ProductdataReadDto(inProduct.Id ,inProduct.Name, inProduct.Description, inProduct.PurchasePrice, inProduct.Status, inProduct.Stock, inProduct.MinStock, inProduct.MaxStock, inProduct.IsDeleted, inProduct.Price, inProduct.Category);
+                aProductReadDto = new ProductdataReadDto(inProduct.Id ,inProduct.Name, inProduct.Description, inProduct.PurchasePrice, inProduct.Stock, inProduct.MinStock, inProduct.MaxStock, inProduct.IsDeleted, inProduct.Price, inProduct.Category);
             }
             return aProductReadDto;
         }

@@ -33,7 +33,7 @@ namespace ArmysalgService.Controllers
             ActionResult<List<ProductdataReadDto>> foundReturn;
             // retrieve and convert data
             List<Product> foundProducts = _pControl.Get();
-            List<ProductdataReadDto> foundDts = ModelConversion.ProductdataReadDtoConvert.FromProductCollection(foundProducts);
+           List<ProductdataReadDto> foundDts = ModelConversion.ProductdataReadDtoConvert.FromProductCollection(foundProducts);
             // evaluate
             if (foundDts != null)
             {

@@ -12,7 +12,7 @@ namespace ArmysalgClientDesktop.ModelLayer
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal PurchasePrice { get; set; }
-        public string Status { get; set; }
+
         public int Stock { get; set; }
         public int MinStock { get; set; }
         public int MaxStock { get; set; }
@@ -24,25 +24,23 @@ namespace ArmysalgClientDesktop.ModelLayer
         {
         }
 
-        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted)
+        public Product(string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted)
         {
             Name = name;
             Description = description;
             PurchasePrice = purchasePrice;
-            Status = status;
             Stock = stock;
             MinStock = minStock;
             MaxStock = maxStock;
             IsDeleted = isDeleted;
         }
 
-        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price? price, List<Category> categories)
+        public Product(string name, string description, decimal purchasePrice,  int stock, int minStock, int maxStock, bool isDeleted, Price? price, List<Category> categories)
         {
            
             Name = name;
             Description = description;
             PurchasePrice = purchasePrice;
-            Status = status;
             Stock = stock;
             MinStock = minStock;
             MaxStock = maxStock;

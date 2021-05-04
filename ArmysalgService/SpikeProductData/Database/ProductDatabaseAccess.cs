@@ -33,8 +33,8 @@ namespace ArmysalgDataAccess.Database
         {
             int insertedId = -1;
 
-            string insertString = "insert into product (name, description, purchasePrice, status, stock, minStock, maxStock) OUTPUT INSERTED.productNo " +
-                "values (@Name, @Description, @PurchasePrice, @Status, @Stock, @MinStock, @MaxStock)";
+            string insertString = "insert into product (name, description, purchasePrice, stock, minStock, maxStock) OUTPUT INSERTED.productNo " +
+                "values (@Name, @Description, @PurchasePrice, @Stock, @MinStock, @MaxStock)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
@@ -45,8 +45,6 @@ namespace ArmysalgDataAccess.Database
                 CreateCommand.Parameters.Add(descParam);
                 SqlParameter purPriceParam = new SqlParameter("@PurchasePrice", aProduct.PurchasePrice);
                 CreateCommand.Parameters.Add(purPriceParam);
-                SqlParameter statusParam = new SqlParameter("@Status", aProduct.Status);
-                CreateCommand.Parameters.Add(statusParam);
                 SqlParameter stockParam = new SqlParameter("@Stock", aProduct.Stock);
                 CreateCommand.Parameters.Add(stockParam);
                 SqlParameter minStockParam = new SqlParameter("@MinStock", aProduct.MinStock);
@@ -131,7 +129,7 @@ namespace ArmysalgDataAccess.Database
             List<Product> foundProducts;
             Product readProduct;
 
-            string queryString = "select productNo, name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted from Product Where isDeleted = 0";
+            string queryString = "select productNo, name, description, purchasePrice, stock, minStock, maxStock, isDeleted from Product Where isDeleted = 0";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
@@ -185,7 +183,7 @@ namespace ArmysalgDataAccess.Database
         {
             Product foundProduct = null;
 
-            string queryString = "select productNo, name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted from Product where productNo = @Id";
+            string queryString = "select productNo, name, description, purchasePrice, stock, minStock, maxStock, isDeleted from Product where productNo = @Id";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -207,7 +205,7 @@ namespace ArmysalgDataAccess.Database
         public bool UpdateProduct(Product productToUpdate)
         {
             int numRowsUpdated = 0;
-            string queryString = "UPDATE Product SET name = @inName, description = @inDescription, purchasePrice = @inPurchasePrice, status = @inStatus, stock = @inStock, minStock = @inMinStock, maxStock = @inMaxStock, isDeleted = @inIsDelete from Product where productNo = @Id";
+            string queryString = "UPDATE Product SET name = @inName, description = @inDescription, purchasePrice = @inPurchasePrice, stock = @inStock, minStock = @inMinStock, maxStock = @inMaxStock, isDeleted = @inIsDelete from Product where productNo = @Id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -218,7 +216,7 @@ namespace ArmysalgDataAccess.Database
                                      inName = productToUpdate.Name,
                                      inDescription = productToUpdate.Description,
                                      inPurchasePrice = productToUpdate.PurchasePrice,
-                                     inStatus = productToUpdate.Status,
+ 
                                      inStock = productToUpdate.Stock,
                                      inMinStock = productToUpdate.MinStock,
                                      inMaxStock = productToUpdate.MaxStock,
@@ -237,7 +235,7 @@ namespace ArmysalgDataAccess.Database
         {
             Product foundProduct;
             int tempId, tempStock, tempMinStock, tempMaxStock;
-            string tempName, tempDescription, tempStatus;
+            string tempName, tempDescription;
             decimal tempPurchasePrice;
             bool tempIsDeleted;
             List<Category> tempCategory = null;
@@ -246,7 +244,6 @@ namespace ArmysalgDataAccess.Database
             tempName = productReader.GetString(productReader.GetOrdinal("name"));
             tempDescription = productReader.GetString(productReader.GetOrdinal("description"));
             tempPurchasePrice = productReader.GetDecimal(productReader.GetOrdinal("purchasePrice"));
-            tempStatus = productReader.GetString(productReader.GetOrdinal("status"));
             tempStock = productReader.GetInt32(productReader.GetOrdinal("stock"));
             tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
             tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
@@ -254,7 +251,7 @@ namespace ArmysalgDataAccess.Database
 
             tempCategory = GetAllCategoryForProduct(tempId);
 
-            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStatus, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, tempCategory);
+            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, tempCategory);
 
             return foundProduct;
         }
