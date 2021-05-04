@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ArmysalgDataAccess.Database
-{   
+{
     public class ShippingDatabaseAccess : IShippingDatabaseAccess
     {
         readonly string _connectionString;
@@ -60,7 +60,9 @@ namespace ArmysalgDataAccess.Database
         {
 
             Shipping foundShipping = null;
-            string queryString = "select price, firstName, lastName, address, zipCode_fk, phone, email from Shipping join zipCity zc on shipping.zipCode_fk = zc.zipCode where id = @ShippingID";
+            string queryString = "SELECT dbo.Shipping.id, dbo.Shipping.price, dbo.Shipping.firstName, dbo.Shipping.lastName, dbo.Shipping.address, dbo.Shipping.zipCode_fk, dbo.Shipping.phone, dbo.Shipping.email, dbo.ZipCity.zipCode, dbo.ZipCity.city " +
+                "FROM dbo.Shipping INNER JOIN dbo.ZipCity ON dbo.Shipping.zipCode_fk = dbo.ZipCity.zipCode" +
+                " WHERE(dbo.Shipping.id = @ShippingID) ";
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
@@ -88,7 +90,7 @@ namespace ArmysalgDataAccess.Database
             string tempFirstName, tempLastName, tempAddress, tempZipCode_fk, tempCity, tempPhone, tempEmail;
 
             //tempShippingID = shippingReader.GetInt32(shippingReader.GetOrdinal("id"));
-            tempPrice =  decimal.ToDouble(shippingReader.GetDecimal(shippingReader.GetOrdinal("price")));
+            tempPrice = decimal.ToDouble(shippingReader.GetDecimal(shippingReader.GetOrdinal("price")));
             tempFirstName = shippingReader.GetString(shippingReader.GetOrdinal("firstName"));
             tempLastName = shippingReader.GetString(shippingReader.GetOrdinal("lastName"));
             tempAddress = shippingReader.GetString(shippingReader.GetOrdinal("address"));
