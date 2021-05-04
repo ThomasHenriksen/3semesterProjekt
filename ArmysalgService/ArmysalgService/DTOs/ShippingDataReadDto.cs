@@ -7,14 +7,14 @@ namespace ArmysalgService.DTOs
 {
     public class ShippingDataReadDto
     {
-        private double Price { get; set; }
-        private string FirstName { get; set; }
-        private string LastName { get; set; }
-        private string Address { get; set; }
-        private string ZipCode { get; set; }
-        private string City { get; set; }
-        private string Phone { get; set; }
-        private string Email { get; set; }
+        public double Price { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string ZipCode { get; set; }
+        public string City { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
 
         public ShippingDataReadDto()
         {
