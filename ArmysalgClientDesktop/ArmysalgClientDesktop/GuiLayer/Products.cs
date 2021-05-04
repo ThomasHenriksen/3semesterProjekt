@@ -40,7 +40,7 @@ namespace ArmysalgClientDesktop.GuiLayer
             int stock = int.Parse(txtBStock.Text);
             int minStock = int.Parse(txtBMinStock.Text);
             int maxStock = int.Parse(txtBMaxStock.Text);
-            bool isDeleted = cbIsDeleted.Checked;
+            bool isDeleted = false;
             /*
              * Add category to product 
              */

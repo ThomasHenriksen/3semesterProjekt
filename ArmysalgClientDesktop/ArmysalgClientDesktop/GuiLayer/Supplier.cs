@@ -33,8 +33,6 @@ namespace ArmysalgClientDesktop.GuiLayer
             string phone = textBoxPhone.Text;
             string email = textBoxEmail.Text;
             int insertedId = await supplierController.SaveSupplier(name, address, zipCode, city, country, phone, email);
-
-            labelInserted.Text = insertedId.ToString();
         }
 
         private void btnAddSupplier_Click(object sender, EventArgs e)
