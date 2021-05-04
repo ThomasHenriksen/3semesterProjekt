@@ -49,5 +49,15 @@ namespace ArmysalgClientDesktop.GuiLayer
             Supplier supplier = new Supplier();
             NavigateTo(supplier, ContentPanel);
         }
+
+        private void labelHeadLine_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelLogin_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
