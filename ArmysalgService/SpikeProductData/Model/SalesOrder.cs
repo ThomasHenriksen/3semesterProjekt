@@ -31,7 +31,7 @@ namespace ArmysalgDataAccess.Model
             
         }
 
-        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping shippingId, Employee employeeId, Customer customerId)
+        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping? shippingId, Employee? employeeId, Customer? customerId)
         {
             SalesDate = salesDate;
             PaymentAmount = paymentAmount;
