@@ -57,13 +57,15 @@ namespace ProductDataTest
             string name = "bukser";
             string description = "sort";
             decimal purchasePrice = 340;
-            string status = "Indorder";
             int stock = 10;
             int minStock = 3;
             int maxStock = 10;
             bool isDeleted = false;
+            Price priceForTest = new Price();
+            List<Category> listForTest = new List<Category>();
+
             //Act
-            Product productToCreate = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
+            Product productToCreate = new Product(name, description, purchasePrice, stock, minStock, maxStock, isDeleted, priceForTest, listForTest);
             int productToReadByID = _productAccess.CreateProduct(productToCreate);
             Product productToRead = _productAccess.GetProductById(productToReadByID);
 
@@ -81,7 +83,6 @@ namespace ProductDataTest
             string name = "bukser";
             string description = "blå";
             decimal purchasePrice = 3220;
-            string status = "Indorder";
             int stock = 10;
             int minStock = 3;
             int maxStock = 10;
@@ -90,7 +91,6 @@ namespace ProductDataTest
             findProductToUpdate.Name = name;
             findProductToUpdate.Description = description;
             findProductToUpdate.PurchasePrice = purchasePrice;
-            findProductToUpdate.Status = status;
             findProductToUpdate.Stock = stock;
             findProductToUpdate.MinStock = minStock;
             findProductToUpdate.MaxStock = maxStock;
@@ -110,8 +110,10 @@ namespace ProductDataTest
             int minStock = 3;
             int maxStock = 10;
             bool isDeleted = false;
+            Price priceForTest = new Price();
+            List<Category> listForTest = new List<Category>();
             //Act
-            Product productToCreate = new Product(name, description, purchasePrice, status, stock, minStock, maxStock, isDeleted);
+            Product productToCreate = new Product(name, description, purchasePrice, stock, minStock, maxStock, isDeleted, priceForTest, listForTest);
             int productToReadByID = _productAccess.CreateProduct(productToCreate);
             bool productToUpdateByID = _productAccess.DeleteProductById(productToReadByID);
             //Assert
