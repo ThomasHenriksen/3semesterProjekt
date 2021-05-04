@@ -41,5 +41,10 @@ namespace ArmysalgClientWeb.Models
             }
 
         }
+        public override string ToString()
+        {
+
+            return Value.ToString();
+        }
     }
 }
