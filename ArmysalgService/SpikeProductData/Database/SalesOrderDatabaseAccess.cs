@@ -31,14 +31,18 @@ namespace ArmysalgDataAccess.Database
         public SalesOrderDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
+            _salelineitem = new SalesLineItemDatabaseAccess(inConnectionString);
+            _shipping = new ShippingDatabaseAccess(inConnectionString);
+            _employee = new EmployeeDatabaseAccess(inConnectionString);
+            _customer = new CustomerDatabaseAccess(inConnectionString);
         }
 
         public int CreateSalesOrder(SalesOrder aSalesOrder)
         {
             int insertedSalesOrderId = -1;
 
-            string insertSalesOrderString = "insert into SalesOrder (salesDate, paymentAmount, status, shipping_id_fk, employeeNo_fk, customerNo_fk) " +
-            "OUTPUT INSERTED.salesNo values(@SalesDate, @PaymentAmount, @Status, @ShippingId, @EmployeeId, @CustomerId)";
+            string insertSalesOrderString = "insert into SalesOrder (salesDate, paymentAmount, status) " +
+            "OUTPUT INSERTED.salesNo values(@SalesDate, @PaymentAmount, @Status)"; // @ShippingId, @EmployeeId, @CustomerId - , shipping_id_fk, employeeNo_fk, customerNo_fk
             using (TransactionScope scope = new TransactionScope())
             {
                 using (SqlConnection con = new SqlConnection(_connectionString))
@@ -50,12 +54,12 @@ namespace ArmysalgDataAccess.Database
                     CreateCommand.Parameters.Add(paymentAmountParam);
                     SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
                     CreateCommand.Parameters.Add(statusParam);
-                    SqlParameter shippingParam = new SqlParameter("@ShippingId", aSalesOrder.Shipping.Id);
+               /*     SqlParameter shippingParam = new SqlParameter("@ShippingId", aSalesOrder.Shipping.Id);
                     CreateCommand.Parameters.Add(shippingParam);
                     SqlParameter employeeParam = new SqlParameter("@EmployeeId", aSalesOrder.Employee.EmployeeNo);
                     CreateCommand.Parameters.Add(employeeParam);
                     SqlParameter customerParam = new SqlParameter("@CustomerId", aSalesOrder.Customer.CustomerNo);
-                    CreateCommand.Parameters.Add(customerParam);
+                    CreateCommand.Parameters.Add(customerParam);*/
 
                     con.Open();
                     insertedSalesOrderId = (int)CreateCommand.ExecuteScalar();
