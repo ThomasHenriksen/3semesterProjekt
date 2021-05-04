@@ -13,9 +13,9 @@ namespace ArmysalgService.DTOs
         public decimal PaymentAmount { get; set; }
         public SalesOrderStatus Status { get; set; }
         public List<SalesLineItem> SalesLineItem { get; set; }
-        public int ShippingId { get; set; }
-        public int EmployeeId { get; set; }
-        public int CustomerId { get; set; }
+        public Shipping? Shipping { get; set; }
+        public Employee? Employee { get; set; }
+        public Customer? Customer { get; set; }
 
         public SalesOrderdataWriteDto()
         {
@@ -30,11 +30,11 @@ namespace ArmysalgService.DTOs
             SalesLineItem = salesLineItem;
         }
 
-        public SalesOrderdataWriteDto(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId) : this(salesDate, paymentAmount, status, salesLineItem)
+        public SalesOrderdataWriteDto(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping shippingId, Employee employeeId, Customer customerId) : this(salesDate, paymentAmount, status, salesLineItem)
         {
-            ShippingId = shippingId;
-            EmployeeId = employeeId;
-            CustomerId = customerId;
+            Shipping = shippingId;
+            Employee = employeeId;
+            Customer = customerId;
         }
     }
 }

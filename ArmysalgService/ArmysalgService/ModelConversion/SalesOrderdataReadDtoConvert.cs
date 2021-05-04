@@ -37,7 +37,7 @@ namespace ArmysalgService.ModelConversion
                 SalesOrderdataReadDto aSalesOrderReadDto = null;
                 if (inSalesOrder != null)
                 {
-                    aSalesOrderReadDto = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem, inSalesOrder.ShippingId, inSalesOrder.EmployeeId, inSalesOrder.CustomerId);
+                    aSalesOrderReadDto = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem, inSalesOrder.Shipping, inSalesOrder.Employee, inSalesOrder.Customer);
                 }
                 return aSalesOrderReadDto;
         }

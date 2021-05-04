@@ -13,9 +13,9 @@ namespace ArmysalgDataAccess.Model
         public decimal PaymentAmount { get; set; }
         public SalesOrderStatus Status { get; set; }
         public List<SalesLineItem> SalesLineItem { get; set; }
-        public int ShippingId { get; set; }
-        public int EmployeeId { get; set; }
-        public int CustomerId { get; set; }
+        public Shipping? Shipping { get; set; }
+        public Employee? Employee { get; set; }
+        public Customer? Customer { get; set; }
 
         public SalesOrder()
         {
@@ -31,24 +31,25 @@ namespace ArmysalgDataAccess.Model
             
         }
 
-        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId)
+        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping shippingId, Employee employeeId, Customer customerId)
         {
             SalesDate = salesDate;
             PaymentAmount = paymentAmount;
             Status = status;
             SalesLineItem = salesLineItem;
-            ShippingId = shippingId;
-            EmployeeId = employeeId;
-            CustomerId = customerId;
+            Shipping = shippingId;
+            Employee = employeeId;
+            Customer = customerId;
         }
 
 
 
-        public SalesOrder(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status)
+        public SalesOrder(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping? shippingId, Employee? employeeId, Customer? customerId) : this(salesNo, salesDate, paymentAmount, status)
         {
-            ShippingId = shippingId;
-            EmployeeId = employeeId;
-            CustomerId = customerId;
+            SalesLineItem = salesLineItem;
+            Shipping = shippingId;
+            Employee = employeeId;
+            Customer = customerId;
         }
 
         public SalesOrder(int salesNo, DateTime date, decimal paymentAmount, SalesOrderStatus status) 

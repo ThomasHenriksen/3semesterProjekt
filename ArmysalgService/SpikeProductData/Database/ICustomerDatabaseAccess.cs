@@ -9,7 +9,7 @@ namespace ArmysalgDataAccess.Database
 {
     public interface ICustomerDatabaseAccess
     {
-        Customer GetCustomerByCustomerNo(int customerNo);
+        Customer GetCustomerByCustomerNo(int? customerNo);
         int CreateCustomer(Customer customerToAdd);
         bool DeleteCustomerByCustomerNo(int customerNo);
         bool CustomerHasAspNetUser(Customer aCustomer);

@@ -9,7 +9,7 @@ namespace ArmysalgDataAccess.Database
 {   // brian
     public interface IShippingDatabaseAccess
     {
-        Shipping GetShippingByShippingID(int shippingID);
+        Shipping GetShippingByShippingID(int? shippingID);
         List<Shipping> GetAllShippings();
         int CreateShipping(Shipping shippingToAdd);
         bool DeleteShippingByshippingID(int shippingID);

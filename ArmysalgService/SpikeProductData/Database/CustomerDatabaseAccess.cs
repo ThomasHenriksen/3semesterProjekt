@@ -122,7 +122,7 @@ namespace ArmysalgDataAccess.Database
         * An empty Customer object (no match on customerNo)
         * Null - Some error occurred
         */
-        public Customer GetCustomerByCustomerNo(int findCustomerNo)
+        public Customer GetCustomerByCustomerNo(int? findCustomerNo)
         {
             Customer foundCustomer = null;
 

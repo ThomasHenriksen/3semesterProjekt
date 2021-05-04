@@ -14,11 +14,17 @@ namespace ArmysalgDataAccess.Database
     {
         readonly string _connectionString;
         private ISalesLineItemDatabaseAcces _salelineitem;
+        private IShippingDatabaseAccess _shipping;
+        private IEmployeeDatabaseAccess _employee;
+        private ICustomerDatabaseAccess _customer;
 
         public SalesOrderDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
             _salelineitem = new SalesLineItemDatabaseAccess(configuration);
+            _shipping = new ShippingDatabaseAccess(configuration);
+            _employee = new EmployeeDatabaseAccess(configuration);
+            _customer = new CustomerDatabaseAccess(configuration);
         }
 
         // For test
@@ -44,11 +50,11 @@ namespace ArmysalgDataAccess.Database
                     CreateCommand.Parameters.Add(paymentAmountParam);
                     SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
                     CreateCommand.Parameters.Add(statusParam);
-                    SqlParameter shippingParam = new SqlParameter("@ShippingId", aSalesOrder.ShippingId);
+                    SqlParameter shippingParam = new SqlParameter("@ShippingId", aSalesOrder.Shipping);
                     CreateCommand.Parameters.Add(shippingParam);
-                    SqlParameter employeeParam = new SqlParameter("@EmployeeId", aSalesOrder.EmployeeId);
+                    SqlParameter employeeParam = new SqlParameter("@EmployeeId", aSalesOrder.Employee);
                     CreateCommand.Parameters.Add(employeeParam);
-                    SqlParameter customerParam = new SqlParameter("@CustomerId", aSalesOrder.CustomerId);
+                    SqlParameter customerParam = new SqlParameter("@CustomerId", aSalesOrder.Customer);
                     CreateCommand.Parameters.Add(customerParam);
 
                     con.Open();
@@ -83,37 +89,45 @@ namespace ArmysalgDataAccess.Database
         private SalesOrder GetSalesOrderFromReader(SqlDataReader salesOrderReader)
         {
             SalesOrder foundSalesOrder;
-            int tempId, tempShipping, tempCustomer, tempEmployee;
+            int tempId;
+            Shipping tempShipping = null;
+            Customer tempCustomer = null; 
+            Employee tempEmployee = null;
             string tempStatus;
             decimal tempPayMentAmount;
             DateTime tempSalesDate;
             List<SalesLineItem> tempSalesItem = null;
+            int? tempShipId;
+            int? tempEmpId;
+            int? tempCusId;
+
 
             tempId = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("salesNo"));
             tempSalesDate = salesOrderReader.GetDateTime(salesOrderReader.GetOrdinal("salesDate"));
             tempPayMentAmount = salesOrderReader.GetDecimal(salesOrderReader.GetOrdinal("paymentAmount"));
             tempStatus = salesOrderReader.GetString(salesOrderReader.GetOrdinal("status"));
-            tempSalesItem = _salelineitem.GetSalesLineItems(null, tempId);
-            tempShipping = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("shipping_id_fk"));
-            //if (tempShipping.Equals(null))
-            //{
-            //    int tempShip = 0;
-            //    tempShipping = tempShip;
-            //}
-            tempEmployee = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("employeeNo_fk"));
-            //if (tempEmployee.Equals(null))
-            //{
-            //    int tempEmp = 0;
-            //    tempEmployee = tempEmp;
-            //}
-            tempCustomer = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("customerNo_fk"));
-            //if (tempCustomer.Equals(null))
-            //{
-            //    int tempCus = 0;
-            //    tempCustomer = tempCus;
-            //}
 
             
+            if (!salesOrderReader.IsDBNull(salesOrderReader.GetOrdinal("shipping_id_fk")))
+            {
+                tempShipId = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("shipping_id_fk"));
+                tempShipping = _shipping.GetShippingByShippingID(tempShipId);
+            }
+          
+            if (!salesOrderReader.IsDBNull(salesOrderReader.GetOrdinal("employeeNo_fk")))
+            {
+                tempEmpId = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("employeeNo_fk"));
+                tempEmployee = _employee.GetEmployeeByEmployeeNo(tempEmpId);
+            }
+
+            if (!salesOrderReader.IsDBNull(salesOrderReader.GetOrdinal("customerNo_fk")))
+            {
+                tempCusId = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("customerNo_fk"));
+                tempCustomer = _customer.GetCustomerByCustomerNo(tempCusId);
+            }
+
+            tempSalesItem = _salelineitem.GetSalesLineItems(null, tempId);
+
 
             foundSalesOrder = new SalesOrder(tempId, tempSalesDate, tempPayMentAmount, Enum.Parse<SalesOrderStatus>(tempStatus), tempSalesItem, tempShipping, tempEmployee, tempCustomer);          
 
