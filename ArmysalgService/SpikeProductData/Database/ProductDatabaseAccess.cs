@@ -26,10 +26,7 @@ namespace ArmysalgDataAccess.Database
         public ProductDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
-          
-               
-           
-         
+      
         }
 
         public int CreateProduct(Product aProduct)

@@ -62,7 +62,8 @@ namespace ArmysalgDataAccess.Model
             Price = price;
             Category = categories;
         }
-        public Product(int id, string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, Price? price)
+
+        public Product(int id, string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, List<Category> categories)
         {
             Id = id;
             Name = name;
@@ -73,32 +74,7 @@ namespace ArmysalgDataAccess.Model
             MinStock = minStock;
             MaxStock = maxStock;
             IsDeleted = isDeleted;
-            Price = price;
-        }
-        public Product(string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted, List<Category> category)
-        {
-            Name = name;
-            Description = description;
-            PurchasePrice = purchasePrice;
-            Status = status;
-            Stock = stock;
-            MinStock = minStock;
-            MaxStock = maxStock;
-            IsDeleted = isDeleted;
-            Category = category;
-        }
-        public Product(int id ,string name, string description, decimal purchasePrice, string status, int stock, int minStock, int maxStock, bool isDeleted,  List<Category> category)
-        {
-            Id = id;
-            Name = name;
-            Description = description;
-            PurchasePrice = purchasePrice;
-            Status = status;
-            Stock = stock;
-            MinStock = minStock;
-            MaxStock = maxStock;
-            IsDeleted = isDeleted;
-            Category = category;
+            Category = categories;
         }
     }
 }
