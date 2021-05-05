@@ -19,11 +19,6 @@ namespace ProductDataTest
             this.extraOutput = output;
             _PriceAccess = new PriceDatabaseAccess(_connectionString);
             _productAccess = new ProductDatabaseAccess(_connectionString);
-        }
-      
-      
-
-
-        
+        }   
     }
 }
