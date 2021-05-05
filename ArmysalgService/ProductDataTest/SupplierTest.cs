@@ -22,6 +22,9 @@ namespace ArmysalgDataTest
             _supplierAccess = new SupplierDatabaseAccess(_connectionString);
         }
 
+        /*
+         * Tests CreateSupplier method on databaselayer.
+         */
         [Fact]
         public void CreateSupplierTest()
         {
@@ -33,10 +36,10 @@ namespace ArmysalgDataTest
             string country = "Sverige";
             string phone = "900400600";
             string email = "vileverer@tiden.se";
-
+            Supplier supplierToCreateToDatabase = new Supplier(name, address, zipCode, city, country, phone, email);
+            
             //Act
-            Supplier supplierToCreate = new Supplier(name, address, zipCode, city, country, phone, email);
-            int supplierIdOfInsertedSupplier = _supplierAccess.CreateSupplier(supplierToCreate);
+            int supplierIdOfInsertedSupplier = _supplierAccess.CreateSupplier(supplierToCreateToDatabase);
             Supplier supplierToRead = _supplierAccess.GetSupplierById(supplierIdOfInsertedSupplier);
 
             extraOutput.WriteLine("Supplier ID: " + supplierToRead.Id);
