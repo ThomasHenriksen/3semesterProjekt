@@ -2,8 +2,8 @@ using System;
 using Xunit;
 using System.Collections.Generic;
 using Xunit.Abstractions;
-using SpikeProductData.DatabaseLayer;
-using SpikeProductData.ModelLayer;
+using ArmysalgDataAccess.Database;
+using ArmysalgDataAccess.Model;
 
 namespace ProductDataTest
 {
@@ -11,7 +11,7 @@ namespace ProductDataTest
     {
         private readonly ITestOutputHelper extraOutput;
 
-        readonly private IProductAccess _productAccess;
+        readonly private IProductDatabaseAccess _productAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
 
         public TestProductDataAccess(ITestOutputHelper output)
@@ -48,6 +48,76 @@ namespace ProductDataTest
 
             //Assert
             Assert.True(product1wasFound);
+        }
+
+        [Fact]
+        public void TestCreateProduct()
+        {
+            //Arrange
+            string name = "bukser";
+            string description = "sort";
+            decimal purchasePrice = 340;
+            int stock = 10;
+            int minStock = 3;
+            int maxStock = 10;
+            bool isDeleted = false;
+            Price priceForTest = new Price();
+            List<Category> listForTest = new List<Category>();
+
+            //Act
+            Product productToCreate = new Product(name, description, purchasePrice, stock, minStock, maxStock, isDeleted, priceForTest, listForTest);
+            int productToReadByID = _productAccess.CreateProduct(productToCreate);
+            Product productToRead = _productAccess.GetProductById(productToReadByID);
+
+            bool product1wasFound = (productToRead.Id == 1);
+            extraOutput.WriteLine("Product name: " + productToRead.Name + " Product ID: " + productToRead.Id);
+
+            //Assert
+            Assert.True(productToCreate.Name.Equals(productToRead.Name));
+        }
+        [Fact]
+        public void TestUpdateProduct()
+        {
+            //Arrange
+            int targetId = 8;
+            string name = "bukser";
+            string description = "blå";
+            decimal purchasePrice = 3220;
+            int stock = 10;
+            int minStock = 3;
+            int maxStock = 10;
+            //Act
+            Product findProductToUpdate = _productAccess.GetProductById(targetId);
+            findProductToUpdate.Name = name;
+            findProductToUpdate.Description = description;
+            findProductToUpdate.PurchasePrice = purchasePrice;
+            findProductToUpdate.Stock = stock;
+            findProductToUpdate.MinStock = minStock;
+            findProductToUpdate.MaxStock = maxStock;
+            bool productToUpdateByID = _productAccess.UpdateProduct(findProductToUpdate);
+            //Assert
+            Assert.True(productToUpdateByID);
+        }
+        [Fact]
+        public void TestDeleteProduct()
+        {
+            //Arrange
+            string name = "bukser";
+            string description = "sort";
+            decimal purchasePrice = 340;
+            string status = "Indorder";
+            int stock = 10;
+            int minStock = 3;
+            int maxStock = 10;
+            bool isDeleted = false;
+            Price priceForTest = new Price();
+            List<Category> listForTest = new List<Category>();
+            //Act
+            Product productToCreate = new Product(name, description, purchasePrice, stock, minStock, maxStock, isDeleted, priceForTest, listForTest);
+            int productToReadByID = _productAccess.CreateProduct(productToCreate);
+            bool productToUpdateByID = _productAccess.DeleteProductById(productToReadByID);
+            //Assert
+            Assert.True(_productAccess.GetProductById(productToReadByID).IsDeleted);
         }
     }
 }

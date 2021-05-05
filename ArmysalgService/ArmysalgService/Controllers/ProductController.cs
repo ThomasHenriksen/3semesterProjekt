@@ -1,27 +1,26 @@
-﻿using ArmysalgService.BusinesslogicLayer;
+﻿using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using SpikeProductData.ModelLayer;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ArmysalgDataAccess.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArmysalgService.Controllers
 {
     [Route("api/products")]
     [ApiController]
+   // [Authorize]
     public class ProductController : ControllerBase
     {
-        private readonly IProductdata _pControl;
+        private readonly IProductLogic _pControl;
         private readonly IConfiguration _configuration;
 
         public ProductController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _pControl = new ProductdataControl(_configuration);
+            _pControl = new ProductLogic(_configuration);
         }
 
 
@@ -34,7 +33,7 @@ namespace ArmysalgService.Controllers
             ActionResult<List<ProductdataReadDto>> foundReturn;
             // retrieve and convert data
             List<Product> foundProducts = _pControl.Get();
-            List<ProductdataReadDto> foundDts = ModelConversion.ProductdataReadDtoConvert.FromProductCollection(foundProducts);
+           List<ProductdataReadDto> foundDts = ModelConversion.ProductdataReadDtoConvert.FromProductCollection(foundProducts);
             // evaluate
             if (foundDts != null)
             {
@@ -59,29 +58,95 @@ namespace ArmysalgService.Controllers
         [HttpGet, Route("{id}")]
         public ActionResult<ProductdataReadDto> Get(int id)
         {
-            return null;
+            ActionResult<ProductdataReadDto> foundReturn;
+            // retrieve and convert data
+            Product foundProducts = _pControl.Get(id);
+
+            ProductdataReadDto foundDts = ModelConversion.ProductdataReadDtoConvert.FromProduct(foundProducts);
+            // evaluate
+            if (foundDts != null)
+            {
+                if (foundDts != null)
+                {
+                    foundReturn = Ok(foundDts);         //Statuscode 200
+                }
+                else
+                {
+                    foundReturn = new StatusCodeResult(204);    //Ok, but no content
+                }
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);        //Server error
+            }
+            // send response back to client
+            return foundReturn;
         }
 
-        // URL: api/persons
+        // URL: api/Product
         [HttpPost]
-        public ActionResult<int> PostNewProduct(ProductdataCreateDto inProduct)
+        public ActionResult<int> PostNewProduct(ProductdataWriteDto inProduct)
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
             if (inProduct != null)
             {
-                Product dbProduct = ProductdataCreateDtoConvert.ToProduct(inProduct);
+                Product dbProduct = ProductdataWriteDtoConvert.ToProduct(inProduct);
                 insertedId = _pControl.Add(dbProduct);
             }
             if (insertedId > 0)
             {
                 foundReturn = Ok(insertedId);
-            } else
+            }
+            else
             {
                 foundReturn = new StatusCodeResult(500);
             }
-            return foundReturn; 
+            return foundReturn;
         }
+        // URL: api/Product/2
+        [HttpPut, Route("{id}")]
+        public ActionResult<int> PutUpdateProduct(int id, ProductdataWriteDto inProduct)
+        {
 
+            ActionResult<int> foundReturn;
+            int insertedId = -1;
+            if (inProduct != null)
+            {
+                Product dbProduct = ProductdataWriteDtoConvert.ToProduct(inProduct);
+                _pControl.Put(dbProduct, id);
+                insertedId = dbProduct.Id;
+            }
+            if (insertedId > 0)
+            {
+                foundReturn = Ok(insertedId);
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);
+            }
+            return foundReturn;
+        }
+        // URL: api/Product/2
+        [HttpDelete, Route("{id}")]
+        public ActionResult<bool> DeleteProduct(int id)
+        {
+            ActionResult<bool> foundReturn;
+            bool insertedId = false;
+            Product findProduct = _pControl.Get(id);
+            if (findProduct != null)
+            {
+                insertedId = _pControl.Delete(findProduct.Id);
+            }
+            if (insertedId == true)
+            {
+                foundReturn = Ok(insertedId);
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);
+            }
+            return foundReturn;
+        }
     }
 }

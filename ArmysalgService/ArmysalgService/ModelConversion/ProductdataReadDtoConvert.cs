@@ -1,5 +1,5 @@
 ﻿using ArmysalgService.DTOs;
-using SpikeProductData.ModelLayer;
+using ArmysalgDataAccess.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +25,12 @@ namespace ArmysalgService.ModelConversion
             return aProductReadDtoList;
         }
 
-        private static ProductdataReadDto FromProduct(Product inProduct)
+        public static ProductdataReadDto FromProduct(Product inProduct)
         {
             ProductdataReadDto aProductReadDto = null;
             if (inProduct != null)
             {
-                aProductReadDto = new ProductdataReadDto(inProduct.Name, inProduct.Description, inProduct.PurchasePrice, inProduct.Status, inProduct.Stock, inProduct.MinStock, inProduct.MaxStock, inProduct.IsDeleted);
+                aProductReadDto = new ProductdataReadDto(inProduct.Id ,inProduct.Name, inProduct.Description, inProduct.PurchasePrice, inProduct.Stock, inProduct.MinStock, inProduct.MaxStock, inProduct.IsDeleted, inProduct.Price, inProduct.Category);
             }
             return aProductReadDto;
         }

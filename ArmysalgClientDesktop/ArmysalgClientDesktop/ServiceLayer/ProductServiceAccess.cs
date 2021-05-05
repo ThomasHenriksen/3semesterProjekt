@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
     public class ProductServiceAccess
     {
         static readonly string restUrl = "http://localhost:50902/api/products";
+        static readonly string authenType = "Bearer";
         readonly HttpClient _httpClient;
 
         public ProductServiceAccess()
@@ -19,9 +21,11 @@ namespace ArmysalgClientDesktop.ServiceLayer
             _httpClient = new HttpClient();
         }
 
+        public HttpStatusCode CurrentHttpStatusCode { get; set; }
+
         /* Method to retrieve Products 
          */
-        public async Task<List<Product>> GetProducts(int id = -1)
+        public async Task<List<Product>> GetProducts(string tokenToUse, int id = -1)
         {
             List<Product> productFromService = null;
 
@@ -33,10 +37,17 @@ namespace ArmysalgClientDesktop.ServiceLayer
                 useRestUrl += id;
             }
             var uri = new Uri(String.Format(useRestUrl));
+
+            // Must add Bearer token to request header
+            string bearerTokenValue = authenType + " " + tokenToUse;
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");          // To avoid more Authorization headers
+            _httpClient.DefaultRequestHeaders.Add("Authorization", bearerTokenValue);
+
             try
             {
                 var response = await _httpClient.GetAsync(uri);
-                if(response.IsSuccessStatusCode)
+                CurrentHttpStatusCode = response.StatusCode;
+                if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     if(hasValidId)
@@ -71,12 +82,17 @@ namespace ArmysalgClientDesktop.ServiceLayer
             return productFromService;
         }
 
-        public async Task<int> SaveProduct(Product productToSave)
+        public async Task<int> SaveProduct(Product productToSave, string tokenToUse)
         {
             int insertedProductId;
 
             string useRestUrl = restUrl;
             var uri = new Uri(String.Format(useRestUrl, string.Empty));
+
+            // Must add Bearer token to request header
+            string bearerTokenValue = authenType + " " + tokenToUse;
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", bearerTokenValue);
 
             try
             {
@@ -85,6 +101,8 @@ namespace ArmysalgClientDesktop.ServiceLayer
 
                 HttpResponseMessage response = null;
                 response = await _httpClient.PostAsync(uri, content);
+
+                CurrentHttpStatusCode = response.StatusCode;
                 string resultingIdString = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
