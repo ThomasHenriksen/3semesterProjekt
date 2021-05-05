@@ -56,6 +56,7 @@ namespace ArmysalgDataAccess.Database
 
                     con.Open();
                     insertedId = (int)CreateCommand.ExecuteScalar();
+                    con.Close();
                     foreach (Category inCategory in aProduct.Category)
                     {
                         CreateProductCategory(insertedId, inCategory);
