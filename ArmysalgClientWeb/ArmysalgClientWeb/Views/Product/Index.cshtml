@@ -21,6 +21,7 @@
                 @Html.DisplayNameFor(model => model.Stock)
             </th>
             <th>
+                [DisplayName("Pris")]
                 @Html.DisplayNameFor(model => model.price.Value)
             </th>
             <th></th>
@@ -39,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.Stock)
             </td>
             <th>
-                @Html.DisplayNameFor(model => model.price.Value)
+                @Html.DisplayFor(modelItem => item.price.Value)
             </th>
 
             <td>
