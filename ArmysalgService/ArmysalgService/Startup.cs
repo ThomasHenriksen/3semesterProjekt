@@ -17,7 +17,6 @@ using ArmysalgDataAccess.Security;
 
 namespace ArmysalgService
 {
-    // her er brians ting
     public class Startup
     {
         public Startup(IConfiguration configuration)

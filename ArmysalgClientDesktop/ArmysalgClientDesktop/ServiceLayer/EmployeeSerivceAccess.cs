@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
     public class EmployeeServiceAccess
     {
         static readonly string restUrl = "http://localhost:50902/api/employees";
+        static readonly string authenType = "Bearer";
         readonly HttpClient _httpClient;
 
         public EmployeeServiceAccess()
@@ -19,9 +21,11 @@ namespace ArmysalgClientDesktop.ServiceLayer
             _httpClient = new HttpClient();
         }
 
+        public HttpStatusCode CurrentHttpStatusCode { get; set; }
+
         /* Method to retrieve an Employee
          */
-        public async Task<Employee> GetEmployee(int id)
+        public async Task<Employee> GetEmployee(string tokenToUse, int id)
         {
             Employee employeeFromService = null;
 
@@ -33,9 +37,16 @@ namespace ArmysalgClientDesktop.ServiceLayer
                 useRestUrl += "/" + id;
             }
             var uri = new Uri(String.Format(useRestUrl));
+
+            // Must add Bearer token to request header
+            string bearerTokenValue = authenType + " " + tokenToUse;
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");          // To avoid more Authorization headers
+            _httpClient.DefaultRequestHeaders.Add("Authorization", bearerTokenValue);
+
             try
             {
                 var response = await _httpClient.GetAsync(uri);
+                CurrentHttpStatusCode = response.StatusCode;
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -59,7 +70,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
             return employeeFromService;
         }
 
-        public async Task<List<Employee>> GetAllEmployees()
+        public async Task<List<Employee>> GetAllEmployees(string tokenToUse)
         {
             List<Employee> employeesFromService = null;
 
@@ -67,9 +78,16 @@ namespace ArmysalgClientDesktop.ServiceLayer
             string useRestUrl = restUrl;
 
             var uri = new Uri(String.Format(useRestUrl));
+
+            // Must add Bearer token to request header
+            string bearerTokenValue = authenType + " " + tokenToUse;
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");          // To avoid more Authorization headers
+            _httpClient.DefaultRequestHeaders.Add("Authorization", bearerTokenValue);
+
             try
             {
                 var response = await _httpClient.GetAsync(uri);
+                CurrentHttpStatusCode = response.StatusCode;
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -91,12 +109,17 @@ namespace ArmysalgClientDesktop.ServiceLayer
             return employeesFromService;
         }
 
-        public async Task<int> SaveEmployee(Employee employeeToSave)
+        public async Task<int> SaveEmployee(Employee employeeToSave, string tokenToUse)
         {
             int insertedEmployeeId;
 
             string useRestUrl = restUrl;
             var uri = new Uri(String.Format(useRestUrl, string.Empty));
+
+            // Must add Bearer token to request header
+            string bearerTokenValue = authenType + " " + tokenToUse;
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", bearerTokenValue);
 
             try
             {
