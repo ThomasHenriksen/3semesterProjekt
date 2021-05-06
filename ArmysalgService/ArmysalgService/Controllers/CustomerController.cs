@@ -25,7 +25,7 @@ namespace ArmysalgService.Controllers
         }
 
         // URL: api/customer/{customerNo}
-        [HttpGet, Route("{customerNo}")]
+   /*     [HttpGet, Route("{customerNo}")]
         public ActionResult<CustomerdataReadDto> Get(int customerNo)
         {
             ActionResult<CustomerdataReadDto> foundReturn;
@@ -51,8 +51,34 @@ namespace ArmysalgService.Controllers
             }
             // send response back to client
             return foundReturn;
-        }
+        }*/
+        [HttpGet, Route("{customerEmail}")]
+        public ActionResult<CustomerdataReadDto> Get(string customerEmail)
+        {
+            ActionResult<CustomerdataReadDto> foundReturn;
+            // retrieve and convert data
+            Customer foundCustomer = _customerControl.GetCustomer(customerEmail);
 
+            CustomerdataReadDto foundDts = ModelConversion.CustomerdataReadDtoConvert.FromCustomer(foundCustomer);
+            // evaluate
+            if (foundDts != null)
+            {
+                if (foundDts != null)
+                {
+                    foundReturn = Ok(foundDts);         //Statuscode 200
+                }
+                else
+                {
+                    foundReturn = new StatusCodeResult(204);    //Ok, but no content
+                }
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);        //Server error
+            }
+            // send response back to client
+            return foundReturn;
+        }
         // URL: api/customer
         [HttpPost]
         public ActionResult<int> PostNewCustomer(CustomerdataWriteDto inCustomer)

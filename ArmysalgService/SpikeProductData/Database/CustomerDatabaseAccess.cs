@@ -144,7 +144,28 @@ namespace ArmysalgDataAccess.Database
             }
             return foundCustomer;
         }
+        public Customer GetCustomerByCustomerEmail(string findCustomerEmail)
+        {
+            Customer foundCustomer = null;
 
+            string queryString = "SELECT Customer.customerNo, Customer.firstName, Customer.lastName, Customer.address, Customer.phone, Customer.email, ZipCity.zipCode, ZipCity.city FROM Customer INNER JOIN ZipCity ON Customer.zipCode_fk = ZipCity.zipCode WHERE(dbo.Customer.email = @email)";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter emailParam = new SqlParameter("@email", findCustomerEmail);
+                readCommand.Parameters.Add(emailParam);
+
+                con.Open();
+
+                SqlDataReader customerReader = readCommand.ExecuteReader();
+                foundCustomer = new Customer();
+                while (customerReader.Read())
+                {
+                    foundCustomer = GetCustomerFromReader(customerReader);
+                }
+            }
+            return foundCustomer;
+        }
         private Customer GetCustomerFromReader(SqlDataReader customerReader)
         {
             Customer foundCustomer;

@@ -72,5 +72,19 @@ namespace ArmysalgService.BusinessLogic
             }
             return foundCustomer;
         }
+        public Customer GetCustomer(string customerEmailToMatch)
+        {
+            Customer foundCustomer;
+            try
+            {
+                foundCustomer = _customerAccess.GetCustomerByCustomerEmail(customerEmailToMatch);
+            }
+            catch(Exception e)
+            {
+                string test = e.ToString();
+                foundCustomer = null;
+            }
+            return foundCustomer;
+        }
     }
 }
