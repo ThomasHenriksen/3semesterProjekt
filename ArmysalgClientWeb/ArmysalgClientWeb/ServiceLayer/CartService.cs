@@ -18,5 +18,41 @@ namespace ArmysalgClientWeb.ServiceLayer
         {
             _httpClient = new HttpClient();
         }
+
+        /* Method to retrieve all Products in customers cart
+         */
+        public async Task<Cart> GetCartByCustomerNo(int CustomerNo)
+        {
+            Cart cartFromService = null;
+
+            string useRestUrl = restUrl;
+            bool hasValidId = (CustomerNo > 0);
+            if (hasValidId)
+            {
+                useRestUrl += CustomerNo;
+            }
+            var uri = new Uri(String.Format(useRestUrl));
+            try
+            {
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    if (hasValidId)
+                    {
+                        cartFromService = JsonConvert.DeserializeObject<Cart>(content);
+                    }
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    cartFromService = null;
+                }
+            }
+            catch
+            {
+                cartFromService = null;
+            }
+            return cartFromService;
+        }
     }
 }

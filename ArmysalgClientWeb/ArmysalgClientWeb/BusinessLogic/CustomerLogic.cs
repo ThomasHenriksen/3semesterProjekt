@@ -23,5 +23,11 @@ namespace ArmysalgClientWeb.BusinessLogicLayer
         {
             return await _cAccess.SaveCustomer(newCustomer);
         }
+
+        public async Task<Customer> GetCustomerByEmail(string customerEmail)
+        {
+            Customer foundCustomer = await _cAccess.GetCustomerByEmail(customerEmail);
+            return foundCustomer;
+        }
     }
 }

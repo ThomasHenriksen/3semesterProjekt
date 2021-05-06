@@ -66,6 +66,41 @@ namespace ArmysalgClientWeb.ServiceLayer
             }
             return customerFromService;
         }
+
+        public async Task<Customer> GetCustomerByEmail(string customerEmail)
+        {
+            Customer customerFromService = null;
+
+            string useRestUrl = restUrl;
+            bool isValid = (customerEmail != null);
+            if (isValid)
+            {
+                useRestUrl += customerEmail;
+            }
+            var uri = new Uri(String.Format(useRestUrl));
+            try
+            {
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    if (isValid)
+                    {
+                        customerFromService = JsonConvert.DeserializeObject<Customer>(content);
+                    }
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    customerFromService = null;
+                }
+            }
+            catch
+            {
+                customerFromService = null;
+            }
+            return customerFromService;
+        }
+
         public async Task<int> SaveCustomer(Customer customerToSave)
         {
             int insertedCustomerNo;
