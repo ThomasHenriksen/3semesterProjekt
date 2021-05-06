@@ -56,15 +56,16 @@ namespace ArmysalgDataAccess.Database
 
                     con.Open();
                     insertedId = (int)CreateCommand.ExecuteScalar();
-                    con.Close();
-                    foreach (Category inCategory in aProduct.Category)
-                    {
-                        CreateProductCategory(insertedId, inCategory);
-                    }
-                    // The Complete method commits the transaction. If an exception has been thrown,
-                    // Complete is not called and the transaction is rolled back.
-                    scope.Complete();
+                   
+               
                 }
+                foreach (Category inCategory in aProduct.Category)
+                {
+                    CreateProductCategory(insertedId, inCategory);
+                }
+                // The Complete method commits the transaction. If an exception has been thrown,
+                // Complete is not called and the transaction is rolled back.
+                scope.Complete();
                 return insertedId;
             }
         }

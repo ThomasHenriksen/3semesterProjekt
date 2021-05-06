@@ -35,7 +35,7 @@ namespace ArmysalgService.BusinessLogic
                 newProduct.Id = insertedId;
                 _priceData.Add(newProduct.Price, newProduct);
             }
-            catch
+            catch(Exception e)
             {
                 insertedId = -1;
             }
