@@ -18,23 +18,28 @@ namespace ArmysalgClientDesktop.ServiceLayer
             _client = new HttpClient();
         }
 
+        //Retive a new Token from Api Service
         public async Task<string> GetNewToken(ApiAccount accountToUse)
         {
             string retrievedToken;
+            /* Create elements for HTTP request */
             string useRestUrl = restUrl + "/" + "token";
             var uriToken = new Uri(string.Format(useRestUrl));
+            /* Provide username, password and grant_type for the authentication. Content (body data) are posted in */
             HttpContent appAdminLogin = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grantType", accountToUse.GrantType),
                 new KeyValuePair<string, string>("username", accountToUse.Username),
                 new KeyValuePair<string, string>("password", accountToUse.Password)
                 });
+            /* Assemble HTTP request */
             HttpRequestMessage request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
                 RequestUri = uriToken,
                 Content = appAdminLogin
             };
+            /* Call service */
             try
             {
                 var response = await _client.SendAsync(request);

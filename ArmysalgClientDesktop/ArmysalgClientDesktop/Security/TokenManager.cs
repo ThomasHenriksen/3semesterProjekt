@@ -12,14 +12,15 @@ namespace ArmysalgClientDesktop.Security
 {
     public class TokenManager
     {
-        private readonly NameValueCollection _tokenAdminValues;                 // To hold AppSettings
+        // To hold AppSettings
+        private readonly NameValueCollection _tokenAdminValues;                 
 
         public TokenManager()
         {
             _tokenAdminValues = ConfigurationManager.AppSettings;
         }
 
-        // Relay for calling appropriate method according to TokenState
+        /* Relay for calling appropriate method according to TokenState */
         public async Task<string> GetToken(TokenState currentState)
         {
             string foundToken = null;
@@ -34,7 +35,7 @@ namespace ArmysalgClientDesktop.Security
             return foundToken;
         }
 
-        // Get existing JWT token from configuration (AppSettings)
+        /* Get existing JWT token from configuration (AppSettings) */
         private string GetTokenExisting()
         {
             string foundToken = null;
@@ -45,14 +46,14 @@ namespace ArmysalgClientDesktop.Security
             return foundToken;
         }
 
-        // Manage retrieval and persistense of new token value
+        /* Manage retrieval and persistense of new token value */
         private async Task<string> GetTokenNew()
         {
             string foundToken = null;
 
-            // Get AccountData
+            /* Get AccountData */
             ApiAccount accountdata = GetApiAccountCredentials();
-            // Access a new Token from service (Web API)
+            /* Access a new Token from service (Web API) */
             TokenServiceAccess tokenServiceAccess = new TokenServiceAccess();
             foundToken = await tokenServiceAccess.GetNewToken(accountdata);
 
@@ -64,7 +65,7 @@ namespace ArmysalgClientDesktop.Security
             return foundToken;
         }
 
-        // Get application credentials from configuration (AppSettings)
+        /* Get application credentials from configuration (AppSettings) */
         private ApiAccount GetApiAccountCredentials()
         {
             ApiAccount foundData = new ApiAccount();
@@ -79,14 +80,14 @@ namespace ArmysalgClientDesktop.Security
             return foundData;
         }
 
-        // Get the process (project) assembly name (applied as application username) 
+        /* Get the process (project) assembly name (applied as application username) */
         private string GetApplicationAssemblyName()
         {
             string assemblyName = System.Reflection.Assembly.GetCallingAssembly().GetName().Name;
             return assemblyName;
         }
 
-        // Store new token value for use in successive request to the service
+        /* Store new token value for use in successive request to the service */
         void AddUpdateAppSettings(string key, string value)
         {
             try

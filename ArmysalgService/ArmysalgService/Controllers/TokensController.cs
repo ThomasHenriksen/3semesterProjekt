@@ -22,7 +22,7 @@ namespace ArmysalgService.Controllers
 
         [Route("/token")]
         [HttpPost]
-
+        // Generate and return JWT token
         public IActionResult Create([FromForm] string username, string password, string grantType)
         {
             bool hasInput = ((!String.IsNullOrWhiteSpace(username)) && (!String.IsNullOrWhiteSpace(password)));
@@ -37,7 +37,7 @@ namespace ArmysalgService.Controllers
                 return BadRequest();
             }
         }
-
+        // Generate a JWT token with a lifespan on 10 min
         private string GenerateToken(string username, string grantType)
         {
             string tokenString = null;

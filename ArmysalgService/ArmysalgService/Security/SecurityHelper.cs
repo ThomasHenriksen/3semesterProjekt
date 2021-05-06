@@ -26,6 +26,7 @@ namespace ArmysalgDataAccess.Security
             return SIGNING_KEY;
         }
 
+        // Validet the username and password from app setting
         public bool IsValidUsernameAndPassword(string username, string password)
         {
             string allowedUsername = _configuration["AllowDesktopApp:Username"];
