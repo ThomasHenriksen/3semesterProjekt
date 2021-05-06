@@ -61,3 +61,4 @@ namespace ArmysalgClientWeb.Models
 
         }
     }
+}

@@ -41,9 +41,9 @@
             <th>
                 @Html.DisplayFor(modelItem => item.price.Value)
             </th>
-
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a asp-action="Details" asp-route-id="@item.">Læg i kurv</a>
+                @*@Html.ActionLink("Add", "Add", new { Product = item })*@
             </td>
         </tr>
 }

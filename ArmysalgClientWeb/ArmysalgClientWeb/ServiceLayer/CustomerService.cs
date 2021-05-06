@@ -75,7 +75,7 @@ namespace ArmysalgClientWeb.ServiceLayer
             bool isValid = (customerEmail != null);
             if (isValid)
             {
-                useRestUrl += customerEmail;
+                useRestUrl += "/" + customerEmail;
             }
             var uri = new Uri(String.Format(useRestUrl));
             try

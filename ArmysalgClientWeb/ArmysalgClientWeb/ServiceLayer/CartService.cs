@@ -12,7 +12,7 @@ namespace ArmysalgClientWeb.ServiceLayer
     public class CartService
     {
 
-        static readonly string restUrl = "http://localhost:50902/api/carts";
+        static readonly string restUrl = "http://localhost:50902/api/cart";
         readonly HttpClient _httpClient;
         public CartService()
         {
@@ -29,7 +29,7 @@ namespace ArmysalgClientWeb.ServiceLayer
             bool hasValidId = (CustomerNo > 0);
             if (hasValidId)
             {
-                useRestUrl += CustomerNo;
+                useRestUrl += "/" + CustomerNo;
             }
             var uri = new Uri(String.Format(useRestUrl));
             try
