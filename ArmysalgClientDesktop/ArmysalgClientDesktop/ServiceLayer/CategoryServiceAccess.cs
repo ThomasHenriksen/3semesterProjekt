@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
     class CategoryServiceAccess
     {
         static readonly string restUrl = "http://localhost:50902/api/category";
+        static readonly string authenType = "Bearer";
         readonly HttpClient _httpClient;
 
         public CategoryServiceAccess()
@@ -19,13 +21,21 @@ namespace ArmysalgClientDesktop.ServiceLayer
             _httpClient = new HttpClient();
         }
 
-        public async Task<List<Category>> GetAllCategories()
+        public HttpStatusCode CurrentHttpStatusCode { get; set; }
+
+        public async Task<List<Category>> GetAllCategories(string tokenToUse)
         {
             List<Category> categoriesFromService = null;
             //api/categories
             string useRestUrl = restUrl;
 
             var uri = new Uri(String.Format(useRestUrl));
+
+            // Must add Bearer token to request header
+            string bearerTokenValue = authenType + " " + tokenToUse;
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");          // To avoid more Authorization headers
+            _httpClient.DefaultRequestHeaders.Add("Authorization", bearerTokenValue);
+
             try
             {
                 var response = await _httpClient.GetAsync(uri);
