@@ -48,7 +48,7 @@ namespace ArmysalgClientDesktop.Security
         // Manage retrieval and persistense of new token value
         private async Task<string> GetTokenNew()
         {
-            string foundToken;
+            string foundToken = null;
 
             // Get AccountData
             ApiAccount accountdata = GetApiAccountCredentials();
