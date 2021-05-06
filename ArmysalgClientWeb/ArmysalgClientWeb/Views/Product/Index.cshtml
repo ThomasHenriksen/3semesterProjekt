@@ -12,16 +12,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Navn
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Beskrivelse
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Stock)
+                Lager antal
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.price.Value)
+                Pris
             </th>
             <th></th>
         </tr>
@@ -43,9 +43,7 @@
             </th>
 
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
             </td>
         </tr>
 }
