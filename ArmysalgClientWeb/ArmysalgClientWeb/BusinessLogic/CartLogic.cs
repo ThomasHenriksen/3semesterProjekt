@@ -14,5 +14,10 @@ namespace ArmysalgClientWeb.BusinessLogicLayer
         {
             _cAccess = new CartService();
         }
+        public async Task<Cart> GetCartByCustomerNo(int CustomerNo)
+        {
+            Cart foundCart = await _cAccess.GetCartByCustomerNo(CustomerNo);
+            return foundCart;
+        }
     }
 }

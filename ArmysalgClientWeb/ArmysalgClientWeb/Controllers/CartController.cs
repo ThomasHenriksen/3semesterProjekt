@@ -6,19 +6,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace ArmysalgClientWeb.Controllers
 {
     public class CartController : Controller
     {
 
-        private CartLogic _cmdAcces;
+        private CartLogic _cmdAccess;
+        private CustomerLogic _customerLogic;
+
+        public CartController()
+        {
+            _cmdAccess = new CartLogic();
+            _customerLogic = new CustomerLogic();
+        }
 
         // GET: CartController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            _cmdAcces = new CartLogic();
-            return View();
+            string customerEmail = User.Identity.Name;
+            Task<Customer> customer = _customerLogic.GetCustomerByEmail(customerEmail);
+
+            Cart foundCart = (Cart)await _cmdAccess.GetCartByCustomerNo(customer.Result.CustomerNo);
+            return View(foundCart);
         }
 
         // GET: CartController/Details/5
@@ -40,7 +51,6 @@ namespace ArmysalgClientWeb.Controllers
         {
             try
             {
-                _cmdAcces = new CartLogic();
                 return RedirectToAction();
             }
             catch
