@@ -65,5 +65,27 @@ namespace ArmysalgClientDesktop.GuiLayer
         {
 
         }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            
+            string firstNameOfEmployee = textBox2.Text;
+            string lastNameOfEmployee = textBox3.Text;
+            string addressOfEmployee = textBox4.Text;
+            string zipCodeOfEmployee = textBox5.Text;
+            string CityOfEmployee = textBox6.Text;
+            string phoneOfEmployee = textBox7.Text;
+            string emailOfEmployee = textBox8.Text;
+            double salaryOfEmployee = double.Parse(textBox9.Text);
+            string positionOfEmployee = textBox10.Text;
+
+            await employeeControl.SaveEmployee(firstNameOfEmployee, lastNameOfEmployee, addressOfEmployee, zipCodeOfEmployee, CityOfEmployee,
+                phoneOfEmployee, emailOfEmployee, salaryOfEmployee, positionOfEmployee);
+        }
     }
 }

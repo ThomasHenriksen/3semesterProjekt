@@ -14,7 +14,7 @@ namespace ArmysalgService.Controllers
 {
     [Route("api/employees")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeLogic _employeeControl;

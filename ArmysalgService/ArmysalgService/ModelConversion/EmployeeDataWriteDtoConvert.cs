@@ -14,7 +14,7 @@ namespace ArmysalgService.ModelConversion
             Employee aEmployee = null;
             if (inDto != null)
             {
-                aEmployee = new Employee(inDto.FirstName, inDto.LastName, inDto.Address, inDto.ZipCode, inDto.City, inDto.Phone, inDto.Email, inDto.EmployeeNo, inDto.Salary, inDto.Position);
+                aEmployee = new Employee(inDto.FirstName, inDto.LastName, inDto.Address, inDto.ZipCode, inDto.City, inDto.Phone, inDto.Email, inDto.Salary, inDto.Position);
             }
             return aEmployee;
         }

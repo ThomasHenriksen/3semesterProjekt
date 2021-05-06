@@ -69,16 +69,15 @@ namespace ArmysalgClientDesktop.ControlLayer
             return foundEmployees;
         }
 
-        public async Task<int> SaveEmployee(string firstName, string lastName, string address, string zipCode,
-            string city, string phone, string email, double salary, string position)
+        public async Task<int> SaveEmployee(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, double salary, string position)
         {
             Employee newEmployee = null;
             TokenState currentState = TokenState.Valid;
             string tokenValue = await GetToken(currentState);
             if (tokenValue != null)
             {
-                newEmployee = new Employee(salary, position, firstName, lastName,
-                address, zipCode, city, phone, email);
+                newEmployee = new Employee(firstName, lastName, address, zipCode, city,
+                phone, email, salary, position);
                 if (_eAccess.CurrentHttpStatusCode == HttpStatusCode.Unauthorized)
                 {
                     currentState = TokenState.Invalid;
@@ -89,8 +88,8 @@ namespace ArmysalgClientDesktop.ControlLayer
                 tokenValue = await GetToken(currentState);
                 if(tokenValue != null)
                 {
-                    newEmployee = new Employee(salary, position, firstName, lastName,
-                address, zipCode, city, phone, email);
+                    newEmployee = new Employee(firstName, lastName, address, zipCode, city,
+                phone, email, salary, position);
                 }
             }            
 
