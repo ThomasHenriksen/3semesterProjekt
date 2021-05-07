@@ -70,7 +70,7 @@ namespace ArmysalgClientWeb.ServiceLayer
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = null;
-                response = await _httpClient.PostAsync(uri, content);
+                response = await _httpClient.PutAsync(uri, content);
 
                 if (response.IsSuccessStatusCode)
                 {

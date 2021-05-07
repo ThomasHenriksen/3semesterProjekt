@@ -64,7 +64,7 @@ namespace ArmysalgDataAccess.Database
             return FoundCart;
 
         }
-        public Cart GetCartById(Cart cart)
+        public Cart GetCartById(int id)
         {
             Cart FoundCart = null;
 
@@ -73,7 +73,7 @@ namespace ArmysalgDataAccess.Database
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                SqlParameter idParam = new SqlParameter("@Id", cart.Id);
+                SqlParameter idParam = new SqlParameter("@Id", id);
                 readCommand.Parameters.Add(idParam);
 
                 con.Open();

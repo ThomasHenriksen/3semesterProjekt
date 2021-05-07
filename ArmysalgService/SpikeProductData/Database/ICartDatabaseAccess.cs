@@ -11,7 +11,7 @@ namespace ArmysalgDataAccess.Database
     {
         int CreateCart(Cart cartToAdd, Customer customer);
         Cart GetCartByCustomerNo(int CustomerNo);
-        Cart GetCartById(Cart cart);
+        Cart GetCartById(int id);
         bool UpdateCart(Cart aCart);
         bool DeleteCartByCartId(int cartId);
     }

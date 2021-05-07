@@ -79,8 +79,8 @@ namespace ArmysalgService.Controllers
             return foundReturn;
         }
         // URL: api/Product/2
-        [HttpPut]
-        public ActionResult<int> PutUpdateProduct(CartdataWriteDto inCart)
+        [HttpPut, Route("{id}")]
+        public ActionResult<int> PutUpdateProduct(int id, CartdataWriteDto inCart)
         {
 
             ActionResult<int> foundReturn;
@@ -88,6 +88,7 @@ namespace ArmysalgService.Controllers
             if (inCart != null)
             {
                 Cart dbCart = CartdataWriteDtoConvert.ToCart(inCart);
+                dbCart.Id = id;
                 _cartControl.UpdateCart(dbCart);
                 insertedId = dbCart.Id;
             }

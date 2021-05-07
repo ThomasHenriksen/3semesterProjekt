@@ -18,7 +18,8 @@ namespace ArmysalgService.BusinessLogic
             _cartAccess = new CartDatabaseAccess(inConfiguration);
             _salesLineItemAcces = new SalesLineItemDatabaseAccess(inConfiguration);
         }
-        public Cart Get(Customer customer) {
+        public Cart Get(Customer customer)
+        {
             return _cartAccess.GetCartByCustomerNo(customer.CustomerNo);
         }
         public int AddCart(Cart cartToAdd, Customer customer)
@@ -37,32 +38,35 @@ namespace ArmysalgService.BusinessLogic
         }
         public Cart UpdateCart(Cart aCurrCart)
         {
-
-            List<SalesLineItem> CartListFromDatabase = _cartAccess.GetCartById(aCurrCart).SalesLineItems;
+            Cart DbCart = _cartAccess.GetCartById(aCurrCart.Id);
+            List<SalesLineItem> CartListFromDatabase = DbCart.SalesLineItems;
             Cart currCart = aCurrCart;
             SalesLineItem aSalesLineItem = null;
             bool exiting = false;
-            foreach (SalesLineItem dataCart in CartListFromDatabase)
+            foreach (SalesLineItem salesLineItem in currCart.SalesLineItems)
             {
-                foreach (SalesLineItem salesLineItem in currCart.SalesLineItems)
+                if (CartListFromDatabase.Count > 0)
                 {
-                    if (salesLineItem.Products.Id == dataCart.Products.Id)
+                    foreach (SalesLineItem dataCart in CartListFromDatabase)
                     {
-                        if (salesLineItem.Quantity == 0)
+                        if (salesLineItem.Products.Id == dataCart.Products.Id)
                         {
-                            RemoveSalesLineItem(salesLineItem);
-                            currCart.SalesLineItems.Remove(salesLineItem);
+                            if (salesLineItem.Quantity == 0)
+                            {
+                                RemoveSalesLineItem(salesLineItem);
+                                currCart.SalesLineItems.Remove(salesLineItem);
+                            }
+                            else
+                            {
+                                _salesLineItemAcces.UpdateSalesLineItem(salesLineItem, aCurrCart, null);
+                            }
+
+                            exiting = true;
                         }
                         else
                         {
-                            _salesLineItemAcces.UpdateSalesLineItem(salesLineItem, aCurrCart, null);
+                            aSalesLineItem = salesLineItem;
                         }
-
-                        exiting = true;
-                    }
-                    else
-                    {
-                        aSalesLineItem = salesLineItem;
                     }
                 }
             }

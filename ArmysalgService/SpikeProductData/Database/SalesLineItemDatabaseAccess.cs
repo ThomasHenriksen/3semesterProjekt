@@ -53,17 +53,18 @@ namespace ArmysalgDataAccess.Database
         public bool UpdateSalesLineItem(SalesLineItem aSalesLineItem, Cart? aCart, SalesOrder? aSalesOrder)
         {
             int numRowsUpdated = 0;
-            string queryString = "UPDATE category SET quantity = @inQuantity ";
+            string queryString = "UPDATE category SET quantity = @inQuantity from category where id = @Id ";
+
             if (aCart != null)
             {
-                queryString += " cart_id_fk = @inCartId ";
+                queryString += " and cart_id_fk = @inCartId ";
             }
             else if (aSalesOrder != null)
             {
-                queryString += " salesNo_fk = @inSaleId ";
+                queryString += " and salesNo_fk = @inSaleId ";
             }
 
-            queryString += " from category where id = @Id";
+           
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
