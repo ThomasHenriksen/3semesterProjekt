@@ -19,5 +19,11 @@ namespace ArmysalgClientWeb.BusinessLogic
             IEnumerable<Product> foundProducts = await _pAccess.GetProducts();
             return foundProducts;
         }
+
+        public async Task<Product> GetProductById(int id)
+        {
+            Product foundProduct = await _pAccess.GetProduct(id);
+            return foundProduct;
+        }
     }
 }

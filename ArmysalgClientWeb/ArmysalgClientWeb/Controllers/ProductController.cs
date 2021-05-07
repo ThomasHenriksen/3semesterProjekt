@@ -8,25 +8,31 @@ using Microsoft.EntityFrameworkCore;
 using ArmysalgClientWeb.Data;
 using ArmysalgClientWeb.Models;
 using ArmysalgClientWeb.BusinessLogic;
+using ArmysalgClientWeb.BusinessLogicLayer;
+using Microsoft.AspNetCore.Identity;
 
 namespace ArmysalgClientWeb.Controllers
 {
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private ProductLogic _cmdAccess;
+        private ProductLogic _productLogic;
+        private CartLogic _cartLogic;
+        private CustomerLogic _customerLogic;
 
         public ProductController(ApplicationDbContext context)
         {
             _context = context;
-            _cmdAccess = new ProductLogic();
+            _productLogic = new ProductLogic();
+            _cartLogic = new CartLogic();
+            _customerLogic = new CustomerLogic();
         }
 
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            List<Product> foundProducts = (List<Product>)await _cmdAccess.GetAllProducts();
-           // IEnumerable<Product> allProducts = (IEnumerable<Product>)_cmdAccess.GetAllProducts();
+            List<Product> foundProducts = (List<Product>)await _productLogic.GetAllProducts();
+            // IEnumerable<Product> allProducts = (IEnumerable<Product>)_cmdAccess.GetAllProducts();
             return View(foundProducts);
         }
 
@@ -69,6 +75,34 @@ namespace ArmysalgClientWeb.Controllers
             }
             return View(product);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> AddToCart(int id)
+        {
+            try
+            {
+                Product productToAdd = await _productLogic.GetProductById(id);
+
+                SalesLineItem salesLineItemToAdd = new SalesLineItem(productToAdd);
+
+                string customerEmail = User.Identity.Name;
+                Task<Customer> customer = _customerLogic.GetCustomerByEmail(customerEmail);
+
+                Cart cart = (Cart)await _cartLogic.GetCartByCustomerNo(customer.Result.CustomerNo);
+
+                cart.SalesLineItems.Add(salesLineItemToAdd);
+
+                bool ok = await _cartLogic.UpdateCart(cart);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            catch
+            {
+                return View();
+            }
+        }
+
 
         // GET: Product/Edit/5
         public async Task<IActionResult> Edit(int? id)

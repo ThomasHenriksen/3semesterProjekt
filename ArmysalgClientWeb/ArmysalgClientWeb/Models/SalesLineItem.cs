@@ -20,6 +20,12 @@ namespace ArmysalgClientWeb.Models
             Quantity = quantity;
             Products = products;
         }
+
+        public SalesLineItem(Product products)
+        {
+            Quantity = 1;
+            Products = products;
+        }
         public SalesLineItem(int id, int quantity, Product products)
         {
             Id = id;
