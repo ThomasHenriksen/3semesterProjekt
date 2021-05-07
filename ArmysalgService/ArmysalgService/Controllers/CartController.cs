@@ -79,8 +79,8 @@ namespace ArmysalgService.Controllers
             return foundReturn;
         }
         // URL: api/Product/2
-        [HttpPut, Route("{id}")]
-        public ActionResult<int> PutUpdateProduct(int id, CartdataWriteDto inCart)
+        [HttpPut]
+        public ActionResult<int> PutUpdateProduct(CartdataWriteDto inCart)
         {
 
             ActionResult<int> foundReturn;
