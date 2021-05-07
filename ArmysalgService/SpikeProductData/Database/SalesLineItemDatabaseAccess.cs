@@ -96,7 +96,7 @@ namespace ArmysalgDataAccess.Database
         private bool UpdateSalesLineItemCart(SalesLineItem aSalesLineItem, Cart? aCart)
         {
             int numRowsUpdated = 0;
-            string queryString = "UPDATE SalesLineItem SET quantity = @inQuantity from SalesLineItem where id = @Id";
+            string queryString = "UPDATE SalesLineItem SET quantity = @inQuantity from SalesLineItem where cart_id_fk = @inCartId and productNo_fk = @inProductNo";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -104,7 +104,8 @@ namespace ArmysalgDataAccess.Database
                 numRowsUpdated = con.Execute(queryString, new
                 {
                     inQuantity = aSalesLineItem.Quantity,
-                    Id = aSalesLineItem.Id
+                    inCartId = aCart.Id,
+                    inProductNo = aSalesLineItem.Products.Id
                 });
             }
 

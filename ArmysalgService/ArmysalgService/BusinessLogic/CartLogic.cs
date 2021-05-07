@@ -46,7 +46,7 @@ namespace ArmysalgService.BusinessLogic
                 if (_salesLineItemAcces.CheckSalesLineItem(salesLineItem, aCurrCart))
                 {
                     if (i == 1) {
-                        salesLineItem.Quantity += i;
+                        salesLineItem.Quantity = i + salesLineItem.Quantity;
                     }
                     _salesLineItemAcces.UpdateSalesLineItem(salesLineItem, aCurrCart, null);
                     _cartAccess.UpdateCart(aCurrCart);
