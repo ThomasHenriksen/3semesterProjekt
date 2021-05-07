@@ -11,5 +11,6 @@ namespace ArmysalgDataAccess.Database
     {
         int CreateSalesOrder(SalesOrder salesOrderToAdd);
         SalesOrder GetSalesOrderById(int salesOrderId);
+      
     }
 }

@@ -38,43 +38,27 @@ namespace ArmysalgService.BusinessLogic
         }
         public Cart UpdateCart(Cart aCurrCart)
         {
-            Cart DbCart = _cartAccess.GetCartById(aCurrCart.Id);
-            List<SalesLineItem> CartListFromDatabase = DbCart.SalesLineItems;
-            Cart currCart = aCurrCart;
-            SalesLineItem aSalesLineItem = null;
-            bool exiting = false;
-            foreach (SalesLineItem salesLineItem in currCart.SalesLineItems)
+            int i = 0;
+            foreach (SalesLineItem salesLineItem in aCurrCart.SalesLineItems)
             {
-                if (CartListFromDatabase.Count > 0)
+               
+                bool exiting = false;
+                if (_salesLineItemAcces.CheckSalesLineItem(salesLineItem, aCurrCart))
                 {
-                    foreach (SalesLineItem dataCart in CartListFromDatabase)
-                    {
-                        if (salesLineItem.Products.Id == dataCart.Products.Id)
-                        {
-                            if (salesLineItem.Quantity == 0)
-                            {
-                                RemoveSalesLineItem(salesLineItem);
-                                currCart.SalesLineItems.Remove(salesLineItem);
-                            }
-                            else
-                            {
-                                _salesLineItemAcces.UpdateSalesLineItem(salesLineItem, aCurrCart, null);
-                            }
-
-                            exiting = true;
-                        }
-                        else
-                        {
-                            aSalesLineItem = salesLineItem;
-                        }
+                    if (i == 1) {
+                        salesLineItem.Quantity += i;
                     }
+                    _salesLineItemAcces.UpdateSalesLineItem(salesLineItem, aCurrCart, null);
+                    _cartAccess.UpdateCart(aCurrCart);
+                    exiting = true;
+                    i++;
+                }
+                if (!exiting)
+                {
+                    _salesLineItemAcces.CreateSalesLineItem(salesLineItem, aCurrCart);
                 }
             }
-            if (!exiting)
-            {
-                _salesLineItemAcces.CreateSalesLineItem(aSalesLineItem, aCurrCart);
-            }
-            return currCart;
+            return aCurrCart;
         }
         private bool RemoveSalesLineItem(SalesLineItem aSalesLineItem)
         {
