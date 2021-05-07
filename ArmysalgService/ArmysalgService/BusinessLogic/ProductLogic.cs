@@ -72,24 +72,7 @@ namespace ArmysalgService.BusinessLogic
          */
         public List<Product> Get()
         {
-            List<Product> foundProducts;
-
-            foundProducts = _productAccess.GetProductAll();
-            foreach (Product product in foundProducts)
-            {
-                if (_priceData.Get(product.Id) != null)
-                {
-                    product.Price = _priceData.Get(product.Id);
-                }
-                else
-                {
-                    product.Price = null;
-                }
-               
-            }
-
-
-            return foundProducts;
+                     return _productAccess.GetProductAll();
         }
         /*
            *  this method is use to update a product where ID is use to find product 

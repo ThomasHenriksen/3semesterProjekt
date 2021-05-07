@@ -58,5 +58,30 @@ namespace ArmysalgDataAccess.Model
             IsDeleted = isDeleted;
             Category = categories;
         }
+        public Product(int id, string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price price)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            PurchasePrice = purchasePrice;
+            Stock = stock;
+            MinStock = minStock;
+            MaxStock = maxStock;
+            IsDeleted = isDeleted;
+            Price = price;
+        }
+        public Product(int id, string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price price, List<Category> categories)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            PurchasePrice = purchasePrice;
+            Stock = stock;
+            MinStock = minStock;
+            MaxStock = maxStock;
+            IsDeleted = isDeleted;
+            Price = price;
+            Category = categories;
+        }
     }
 }

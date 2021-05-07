@@ -39,13 +39,8 @@ namespace ArmysalgService.BusinessLogic
          */
         public Category Get(int idToMatch)
         {
-            Category tempCategory = _CategoryAccess.GetCategoryById(idToMatch);
-            foreach (Product product in tempCategory.ProductCategory)
-            {
-                product.Price = _priceData.Get(product.Id);
-
-            }
-            return tempCategory;
+        
+            return _CategoryAccess.GetCategoryById(idToMatch);
         }
         /*
            *  this method is use to find all products in the database where IsDelete is false 
@@ -53,16 +48,8 @@ namespace ArmysalgService.BusinessLogic
          */
         public List<Category> GetAll()
         {
-            List<Category> tempCategory = _CategoryAccess.GetCategorysAll();
-            foreach (Category categoies in tempCategory)
-            {
-                foreach (Product product in categoies.ProductCategory)
-                {
-                    product.Price = _priceData.Get(product.Id);
 
-                }
-            }
-            return tempCategory;
+            return _CategoryAccess.GetCategorysAll(); ;
         }
 
         /*

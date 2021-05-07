@@ -56,8 +56,8 @@ namespace ArmysalgDataAccess.Database
 
                     con.Open();
                     insertedId = (int)CreateCommand.ExecuteScalar();
-                   
-               
+
+
                 }
                 foreach (Category inCategory in aProduct.Category)
                 {
@@ -137,11 +137,16 @@ namespace ArmysalgDataAccess.Database
             List<Product> foundProducts;
             Product readProduct;
 
-            string queryString = "select productNo, name, description, purchasePrice, stock, minStock, maxStock, isDeleted from Product Where isDeleted = 0";
-
+            DateTime currDate = DateTime.Now;
+            string querySelectString = "select ProductNo, ProductName, ProductDescription, purchasePrice, stock, maxStock, minStock, PriceID, price, startDate, endDate, isDeleted ";
+            string queryFromString = "from ProductPrice ";
+            string queryWhereString = "where isDeleted = 0 and startDate >= @CurrDate and @CurrDate <= endDate or endDate is null ";
+            string queryString = querySelectString + queryFromString + queryWhereString;
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
+                SqlParameter idParam = new SqlParameter("@CurrDate", currDate);
+                readCommand.Parameters.Add(idParam);
                 con.Open();
 
                 SqlDataReader productReader = readCommand.ExecuteReader();
@@ -191,10 +196,17 @@ namespace ArmysalgDataAccess.Database
         {
             Product foundProduct = null;
 
-            string queryString = "select productNo, name, description, purchasePrice, stock, minStock, maxStock, isDeleted from Product where productNo = @Id";
+            DateTime currDate = DateTime.Now;
+            string querySelectString = "select ProductNo, ProductName, ProductDescription, purchasePrice, stock, maxStock, minStock, PriceID, price, startDate, endDate, isDeleted ";
+            string queryFromString = "from ProductPrice ";
+            string queryWhereString = "where isDeleted = 0 and startDate >= @CurrDate and @CurrDate <= endDate or endDate is null and productNo = @Id ";
+            string queryString = querySelectString + queryFromString + queryWhereString;
+
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
+                SqlParameter DateParam = new SqlParameter("@CurrDate", currDate);
+                readCommand.Parameters.Add(DateParam);
                 SqlParameter idParam = new SqlParameter("@Id", findId);
                 readCommand.Parameters.Add(idParam);
 
@@ -246,20 +258,39 @@ namespace ArmysalgDataAccess.Database
             string tempName, tempDescription;
             decimal tempPurchasePrice;
             bool tempIsDeleted;
+            Price foundPrice;
+            int tempPriceId;
+            decimal tempValue;
+            DateTime tempStartDate;
+            DateTime? tempEndDate = null;
             List<Category> tempCategory = null;
 
             tempId = productReader.GetInt32(productReader.GetOrdinal("productNo"));
-            tempName = productReader.GetString(productReader.GetOrdinal("name"));
-            tempDescription = productReader.GetString(productReader.GetOrdinal("description"));
+            tempName = productReader.GetString(productReader.GetOrdinal("ProductName"));
+            tempDescription = productReader.GetString(productReader.GetOrdinal("ProductDescription"));
             tempPurchasePrice = productReader.GetDecimal(productReader.GetOrdinal("purchasePrice"));
             tempStock = productReader.GetInt32(productReader.GetOrdinal("stock"));
             tempMinStock = productReader.GetInt32(productReader.GetOrdinal("minStock"));
             tempMaxStock = productReader.GetInt32(productReader.GetOrdinal("maxStock"));
-            tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
+            if (!productReader.IsDBNull(productReader.GetOrdinal("isDeleted")))
+            {
+                tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
+            }
+            else {
+                tempIsDeleted = false;
+            }
+
+            tempPriceId = productReader.GetInt32(productReader.GetOrdinal("PriceID"));
+            tempValue = productReader.GetDecimal(productReader.GetOrdinal("price"));
+            tempStartDate = productReader.GetDateTime(productReader.GetOrdinal("startDate"));
+            if (!productReader.IsDBNull(productReader.GetOrdinal("endDate")))
+            {
+                tempEndDate = productReader.GetDateTime(productReader.GetOrdinal("endDate"));
+            }
 
             tempCategory = GetAllCategoryForProduct(tempId);
-
-            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, tempCategory);
+            foundPrice = new Price(tempPriceId, tempValue, tempStartDate, tempEndDate);
+            foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, foundPrice, tempCategory);
 
             return foundProduct;
         }
