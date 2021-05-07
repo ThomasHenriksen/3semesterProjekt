@@ -1,7 +1,40 @@
 ﻿@model ArmysalgClientWeb.Models.Cart
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Index";
 }
 
 <h1>VELKOMMEN TIL ARMYSALG</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Navn
+            </th>
+            <th>
+                Antal
+            </th>
+            <th>
+                Pris
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SalesLineItems)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Products.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Products.price.Value)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
