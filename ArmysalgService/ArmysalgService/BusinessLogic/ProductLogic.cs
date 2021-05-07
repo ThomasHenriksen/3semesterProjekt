@@ -35,7 +35,7 @@ namespace ArmysalgService.BusinessLogic
                 newProduct.Id = insertedId;
                 _priceData.Add(newProduct.Price, newProduct);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 insertedId = -1;
             }
@@ -54,17 +54,7 @@ namespace ArmysalgService.BusinessLogic
          */
         public Product Get(int idToMatch)
         {
-            Product foundProduct;
-            try
-            {
-                foundProduct = _productAccess.GetProductById(idToMatch);
-                foundProduct.Price = _priceData.Get(idToMatch);
-               }
-            catch
-            {
-                foundProduct = null;
-            }
-            return foundProduct;
+            return _productAccess.GetProductById(idToMatch); 
         }
         /*
            *  this method is use to find all products in the database where IsDelete is false 
@@ -72,7 +62,7 @@ namespace ArmysalgService.BusinessLogic
          */
         public List<Product> Get()
         {
-                     return _productAccess.GetProductAll();
+            return _productAccess.GetProductAll();
         }
         /*
            *  this method is use to update a product where ID is use to find product 
