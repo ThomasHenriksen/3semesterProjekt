@@ -19,16 +19,16 @@ namespace ArmysalgClientWeb.Models
 
         public SalesOrder()
         {
-
+           
         }
 
-        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItems)
+        public SalesOrder(decimal paymentAmount, List<SalesLineItem> salesLineItems, Customer customer)
         {
-            SalesDate = salesDate;
+            SalesDate = DateTime.Now;
             PaymentAmount = paymentAmount;
-            Status = status;
+            Status = 0;
             SalesLineItem = salesLineItems;
-
+            Customer = customer;
         }
 
         public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping? shippingId, Employee? employeeId, Customer? customerId)
