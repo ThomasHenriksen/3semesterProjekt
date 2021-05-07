@@ -82,8 +82,16 @@ namespace ArmysalgDataAccess.Database
                 CreateCommand.Parameters.Add(statusParam);
                 SqlParameter shippingParam = new SqlParameter("@ShippingId", aSalesOrder.Shipping.Id);
                 CreateCommand.Parameters.Add(shippingParam);
-                SqlParameter employeeParam = new SqlParameter("@EmployeeId", aSalesOrder.Employee.EmployeeNo);
-                CreateCommand.Parameters.Add(employeeParam);
+                if (aSalesOrder.Employee != null)
+                {
+                    SqlParameter employeeParam = new SqlParameter("@EmployeeId", aSalesOrder.Employee.EmployeeNo);
+                    CreateCommand.Parameters.Add(employeeParam);
+                }
+                else
+                {
+                    SqlParameter employeeParam = new SqlParameter("@EmployeeId", null);
+                    CreateCommand.Parameters.Add(employeeParam);
+                }
                 SqlParameter customerParam = new SqlParameter("@CustomerId", aSalesOrder.Customer.CustomerNo);
                 CreateCommand.Parameters.Add(customerParam);
 
