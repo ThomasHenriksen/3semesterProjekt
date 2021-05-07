@@ -54,5 +54,39 @@ namespace ArmysalgClientWeb.ServiceLayer
             }
             return cartFromService;
         }
+
+        public async Task<bool> UpdateCart(Cart cartToUpdate)
+        {
+            bool updatedOk;
+
+            string useRestUrl = restUrl;
+            useRestUrl += "/" + cartToUpdate.Id;
+
+            var uri = new Uri(string.Format(useRestUrl, string.Empty));
+
+            try
+            {
+                var json = JsonConvert.SerializeObject(cartToUpdate);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+                response = await _httpClient.PostAsync(uri, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    updatedOk = true;
+                }
+                else
+                {
+                    updatedOk = false;
+                }
+            }
+            catch
+            {
+                updatedOk = false;
+            }
+
+            return updatedOk;
+        }
     }
 }

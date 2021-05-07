@@ -69,5 +69,38 @@ namespace ArmysalgClientWeb.ServiceLayer
             return productFromService;
         }
 
+        public async Task<Product> GetProduct(int id)
+        {
+            Product productFromService = null;
+
+            string useRestUrl = restUrl;
+            bool hasValidId = (id > 0);
+            if (hasValidId)
+            {
+                useRestUrl += "/" + id;
+            }
+            var uri = new Uri(String.Format(useRestUrl));
+            try
+            {
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    if (hasValidId)
+                    {
+                        productFromService = JsonConvert.DeserializeObject<Product>(content);
+                    }
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    productFromService = null;
+                }
+            }
+            catch
+            {
+                productFromService = null;
+            }
+            return productFromService;
+        }
     }
 }
