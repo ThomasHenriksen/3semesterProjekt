@@ -38,19 +38,16 @@ namespace ArmysalgService.BusinessLogic
         }
         public Cart UpdateCart(Cart aCurrCart)
         {
-            int i = 0;
+
             foreach (SalesLineItem salesLineItem in aCurrCart.SalesLineItems)
             {
-
-                bool exiting = false;
                 if (_salesLineItemAcces.CheckSalesLineItem(salesLineItem, aCurrCart))
                 {
                     _salesLineItemAcces.UpdateSalesLineItem(salesLineItem, aCurrCart, null);
                     _cartAccess.UpdateCart(aCurrCart);
-                    exiting = true;
-                    i++;
+
                 }
-                if (!exiting)
+                else
                 {
                     _salesLineItemAcces.CreateSalesLineItem(salesLineItem, aCurrCart);
                 }

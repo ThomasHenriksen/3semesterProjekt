@@ -82,15 +82,36 @@ namespace ArmysalgClientWeb.Controllers
             try
             {
                 Product productToAdd = await _productLogic.GetProductById(id);
-
-                SalesLineItem salesLineItemToAdd = new SalesLineItem(productToAdd);
-
                 string customerEmail = User.Identity.Name;
                 Task<Customer> customer = _customerLogic.GetCustomerByEmail(customerEmail);
-
                 Cart cart = (Cart)await _cartLogic.GetCartByCustomerNo(customer.Result.CustomerNo);
+                int size = cart.SalesLineItems.Count;
+                int i = 0;
+                SalesLineItem salesLineItemToAdd = null;
+                bool foundt = false;
+                if (size > 0)
+                {
+                    while (!foundt && size > i)
+                    {
+                        SalesLineItem tempSale = cart.SalesLineItems.ElementAt(i);
+                        Product temp = cart.SalesLineItems.ElementAt(i).Products;
+                        if (temp.Id == id)
+                        {
+                            if (productToAdd.Stock > tempSale.Quantity)
+                            {
+                                tempSale.Quantity++;
+                            }
+                            foundt = true;
+                        }
+                        i++;
+                    }
+                }
+                if (!foundt)
+                {
+                    salesLineItemToAdd = new SalesLineItem(productToAdd);
+                    cart.SalesLineItems.Add(salesLineItemToAdd);
+                }
 
-                cart.SalesLineItems.Add(salesLineItemToAdd);
 
                 bool ok = await _cartLogic.UpdateCart(cart);
 

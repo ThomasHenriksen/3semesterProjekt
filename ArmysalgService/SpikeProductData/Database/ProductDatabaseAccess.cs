@@ -288,7 +288,7 @@ namespace ArmysalgDataAccess.Database
                 tempEndDate = productReader.GetDateTime(productReader.GetOrdinal("endDate"));
             }
 
-            tempCategory = GetAllCategoryForProduct(tempId);
+          //  tempCategory = GetAllCategoryForProduct(tempId);
             foundPrice = new Price(tempPriceId, tempValue, tempStartDate, tempEndDate);
             foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, foundPrice, tempCategory);
 
