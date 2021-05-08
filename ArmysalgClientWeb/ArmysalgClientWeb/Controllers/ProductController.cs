@@ -108,7 +108,7 @@ namespace ArmysalgClientWeb.Controllers
                         i++;
                     }
                 }
-                else if (!found)
+                if(!found)
                 {
                     salesLineItemToAdd = new SalesLineItem(quantity, productToAdd);
                     cart.SalesLineItems.Add(salesLineItemToAdd);

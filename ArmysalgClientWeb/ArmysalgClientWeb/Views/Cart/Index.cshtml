@@ -4,10 +4,9 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>VELKOMMEN TIL ARMYSALG</h1>
+<h1>KURV</h1>
 
 <table class="table">
-    <thead>
         <tr>
             <th>
                 Navn
@@ -19,8 +18,6 @@
                 Pris
             </th>
         </tr>
-    </thead>
-    <tbody>
         @foreach (var item in Model.SalesLineItems)
         {
             <tr>
@@ -35,8 +32,7 @@
                 </td>
             </tr>
         }
-    </tbody>
 </table>
 <form asp-action="CompleteOrder">
-    <input type="submit" value="Gennemfør Ordre" class="btn btn-success" />
+    <input type="submit" value="Gennemfør Ordre" class="btn btn-primary" />
 </form>

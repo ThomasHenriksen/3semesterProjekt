@@ -13,13 +13,13 @@ a {
 }
 
 .btn-primary {
-    color: #fff;
+    color: #000000;
     background-color: #6e8b3d;
     border-color: #556b2f;
 }
 
     .btn-primary:hover {
-        color: #fff;
+        color: #000000;
         background-color: #a2cd5a;
         border-color: #6e8b3d;
     }
@@ -72,6 +72,7 @@ body {
 }
 
 .footer {
+    background-color: #ffffff;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -79,6 +80,9 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
+
+/* Random custom styles
+-------------------------------------------------- */
 body {
     background-image: url("../pics/camouflage.jpg");
 }
@@ -91,8 +95,29 @@ input[type="number"] {
     cursor: crosshair;
 }
 
-.table thead th, th, td {
-    border: 1px solid #556b2f;
-    background-color: #6e8b3d;
+.table td, .table th {
+    border: 1px solid #000000;
+    background-color: rgba(255,255,255,0.7);
     padding: 8px;
+    vertical-align: middle;
+}
+
+h1 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: black;
+    opacity: 0.8;
+    border-radius: 15px;
+    padding: 10px;
+    width: min-content;
+    height: auto;
+    text-align: center;
+    font-family: "Stencil", Stencil;
+}
+
+h2 {
+    font-family: "Stencil", Stencil;
+    text-align: center;
 }
