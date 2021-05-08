@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using ArmysalgClientWeb.BusinessLogic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArmysalgClientWeb.Controllers
 {
@@ -26,6 +27,7 @@ namespace ArmysalgClientWeb.Controllers
         }
 
         // GET: CartController
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             string customerEmail = User.Identity.Name;
@@ -36,6 +38,7 @@ namespace ArmysalgClientWeb.Controllers
         }
 
         // GET: CartController
+        [Authorize]
         public async Task<IActionResult> CompleteOrder()
         {
             List<SalesLineItem> saleLineItems = new List<SalesLineItem>();

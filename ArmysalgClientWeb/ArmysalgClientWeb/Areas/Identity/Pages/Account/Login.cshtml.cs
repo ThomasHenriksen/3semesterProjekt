@@ -47,10 +47,11 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            [Display(Name = "Kodeord")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Husk mig")]
             public bool RememberMe { get; set; }
         }
 
@@ -98,7 +99,7 @@ namespace ArmysalgClientWeb.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Ugyldigt login forsøg.");
                     return Page();
                 }
             }

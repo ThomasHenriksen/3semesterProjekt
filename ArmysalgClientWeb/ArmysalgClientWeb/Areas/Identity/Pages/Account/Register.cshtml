@@ -1,15 +1,15 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "ENLIST";
 }
 
 <h1>@ViewData["Title"]</h1>
 
+
 <div class="row">
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -55,9 +55,16 @@
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
-
+    <div class="center">
+        <br />
+        <br />
+        <img src="~/pics/enlist.jpg">
+    </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+
+
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

@@ -10,6 +10,7 @@ using ArmysalgClientWeb.Models;
 using ArmysalgClientWeb.BusinessLogic;
 using ArmysalgClientWeb.BusinessLogicLayer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArmysalgClientWeb.Controllers
 {
@@ -77,6 +78,7 @@ namespace ArmysalgClientWeb.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> AddToCart(int id, int quantity)
         {
             try
