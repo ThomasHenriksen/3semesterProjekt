@@ -10,6 +10,11 @@ namespace ArmysalgClientWeb.Models
         public int Id { get; set; }
         public int Quantity { get; set; }
         public Product Products { get; set; }
+        public decimal TotalPrice
+        {
+            get { return Products.price.Value * Quantity; }
+        }
+
 
         public SalesLineItem()
         {

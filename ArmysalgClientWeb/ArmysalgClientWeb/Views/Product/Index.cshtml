@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Produkter</h1>
+<h1><center>Produkter</center></h1>
 
 
 <table class="table">
@@ -24,9 +24,8 @@
                 Pris
             </th>
             <th>
-                Antal
+                <center>Antal</center>
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -47,9 +46,11 @@
             <td>
                 <div class="form-group">
                     <form asp-action="AddToCart">
-                        <input hidden="hidden" id="id" name="id" value="@item.Id" />
-                        <input type="number" id="quantity" name="quantity" min="1" max=@item.Stock>
-                        <input type="submit" value="Læg i kurv" class="btn btn-primary" />
+                        <center>
+                            <input hidden="hidden" id="id" name="id" value="@item.Id" />
+                            <input type="number" id="quantity" name="quantity" min="1" max=@item.Stock>
+                            <input type="submit" value="Læg i kurv" class="btn btn-primary" />
+                        </center>
                     </form>
                 </div>
             </td>
