@@ -85,6 +85,8 @@ namespace ArmysalgClientWeb.Controllers
                 string customerEmail = User.Identity.Name;
                 Task<Customer> customer = _customerLogic.GetCustomerByEmail(customerEmail);
                 Cart cart = (Cart)await _cartLogic.GetCartByCustomerNo(customer.Result.CustomerNo);
+
+                //
                 int size = cart.SalesLineItems.Count;
                 int i = 0;
                 SalesLineItem salesLineItemToAdd = null;
@@ -106,12 +108,12 @@ namespace ArmysalgClientWeb.Controllers
                         i++;
                     }
                 }
-                if (!foundt)
+                else if (!foundt)
                 {
                     salesLineItemToAdd = new SalesLineItem(productToAdd);
                     cart.SalesLineItems.Add(salesLineItemToAdd);
                 }
-
+                //
 
                 bool ok = await _cartLogic.UpdateCart(cart);
 
