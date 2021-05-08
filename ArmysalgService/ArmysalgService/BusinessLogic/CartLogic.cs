@@ -41,13 +41,10 @@ namespace ArmysalgService.BusinessLogic
             int i = 0;
             foreach (SalesLineItem salesLineItem in aCurrCart.SalesLineItems)
             {
-               
+
                 bool exiting = false;
                 if (_salesLineItemAcces.CheckSalesLineItem(salesLineItem, aCurrCart))
                 {
-                    if (i == 1) {
-                        salesLineItem.Quantity = i + salesLineItem.Quantity;
-                    }
                     _salesLineItemAcces.UpdateSalesLineItem(salesLineItem, aCurrCart, null);
                     _cartAccess.UpdateCart(aCurrCart);
                     exiting = true;
