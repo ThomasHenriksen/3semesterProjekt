@@ -23,6 +23,9 @@
             <th>
                 Pris
             </th>
+            <th>
+                Antal
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -40,6 +43,9 @@
             </td>
             <th>
                 @Html.DisplayFor(modelItem => item.price.Value)
+            </th>
+            <th>
+                <input type="number" id="quantity" name="quantity" min="1" max= @item.Stock>
             </th>
             <td>
                 <form asp-action="AddToCart">

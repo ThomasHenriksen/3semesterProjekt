@@ -77,42 +77,47 @@ namespace ArmysalgClientWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddToCart(int id)
+        public async Task<ActionResult> AddToCart(int id, int quantity)
         {
             try
             {
                 Product productToAdd = await _productLogic.GetProductById(id);
+                SalesLineItem salesLineItemToAdd = new SalesLineItem(quantity, productToAdd);
+
                 string customerEmail = User.Identity.Name;
                 Task<Customer> customer = _customerLogic.GetCustomerByEmail(customerEmail);
                 Cart cart = (Cart)await _cartLogic.GetCartByCustomerNo(customer.Result.CustomerNo);
 
+                cart.SalesLineItems.Add(salesLineItemToAdd);
+
+
                 //
-                int size = cart.SalesLineItems.Count;
-                int i = 0;
-                SalesLineItem salesLineItemToAdd = null;
-                bool foundt = false;
-                if (size > 0)
-                {
-                    while (!foundt && size > i)
-                    {
-                        SalesLineItem tempSale = cart.SalesLineItems.ElementAt(i);
-                        Product temp = cart.SalesLineItems.ElementAt(i).Products;
-                        if (temp.Id == id)
-                        {
-                            if (productToAdd.Stock > tempSale.Quantity)
-                            {
-                                tempSale.Quantity++;
-                            }
-                            foundt = true;
-                        }
-                        i++;
-                    }
-                }
-                else if (!foundt)
-                {
-                    salesLineItemToAdd = new SalesLineItem(productToAdd);
-                    cart.SalesLineItems.Add(salesLineItemToAdd);
-                }
+                //int size = cart.SalesLineItems.Count;
+                //int i = 0;
+                //SalesLineItem salesLineItemToAdd = null;
+                //bool foundt = false;
+                //if (size > 0)
+                //{
+                //    while (!foundt && size > i)
+                //    {
+                //        SalesLineItem tempSale = cart.SalesLineItems.ElementAt(i);
+                //        Product temp = cart.SalesLineItems.ElementAt(i).Products;
+                //        if (temp.Id == id)
+                //        {
+                //            if (productToAdd.Stock > tempSale.Quantity)
+                //            {
+                //                tempSale.Quantity++;
+                //            }
+                //            foundt = true;
+                //        }
+                //        i++;
+                //    }
+                //}
+                //else if (!foundt)
+                //{
+                //    salesLineItemToAdd = new SalesLineItem(productToAdd);
+                //    cart.SalesLineItems.Add(salesLineItemToAdd);
+                //}
                 //
 
                 bool ok = await _cartLogic.UpdateCart(cart);

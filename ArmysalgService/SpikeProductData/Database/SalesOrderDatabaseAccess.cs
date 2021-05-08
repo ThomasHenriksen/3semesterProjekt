@@ -112,7 +112,6 @@ namespace ArmysalgDataAccess.Database
                     Id = aSalesLineItem.Id
                 });
             }
-
             return (numRowsUpdated == 1);
         }
 
