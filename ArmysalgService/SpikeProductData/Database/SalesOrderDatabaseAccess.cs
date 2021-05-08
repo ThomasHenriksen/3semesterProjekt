@@ -1,4 +1,5 @@
 ﻿using ArmysalgDataAccess.Model;
+using Dapper;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -36,149 +37,85 @@ namespace ArmysalgDataAccess.Database
             _employee = new EmployeeDatabaseAccess(inConnectionString);
             _customer = new CustomerDatabaseAccess(inConnectionString);
         }
+
         public int CreateSalesOrder(SalesOrder aSalesOrder)
-        {
-            int insertedSalesOrderId = -1;
-            if (aSalesOrder.Shipping != null && aSalesOrder.Employee != null && aSalesOrder.Customer != null)
-            {
-                insertedSalesOrderId = CreateSalesOrderWithAllData(aSalesOrder);
-            }
-            else if (aSalesOrder.Shipping != null && aSalesOrder.Customer != null)
-            {
-                insertedSalesOrderId = CreateSalesOrderWithoutEmployee(aSalesOrder);
-            }
-            else if (aSalesOrder.Employee != null && aSalesOrder.Customer != null)
-            {
-                insertedSalesOrderId = CreateSalesOrderWithoutShipping(aSalesOrder);
-            }
-            else
-            {
-                insertedSalesOrderId = CreateSalesOrderWithoutShippingCustomerEmployee(aSalesOrder);
-            }
-            if (insertedSalesOrderId > 0)
-            {
-                foreach (SalesLineItem salesLine in aSalesOrder.SalesLineItem)
-                {
-                    _salelineitem.UpdateSalesLineItem(salesLine, null, aSalesOrder);
-                }
-            }
-            return insertedSalesOrderId;
-        }
-        private int CreateSalesOrderWithAllData(SalesOrder aSalesOrder)
         {
             int insertedSalesOrderId = -1;
 
             string insertSalesOrderString = "insert into SalesOrder (salesDate, paymentAmount, status, shipping_id_fk, employeeNo_fk, customerNo_fk) " +
             "OUTPUT INSERTED.salesNo values(@SalesDate, @PaymentAmount, @Status, @ShippingId, @EmployeeId, @CustomerId )";
 
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertSalesOrderString, con))
+            using (TransactionScope scope = new TransactionScope())
             {
-                SqlParameter salesDateParam = new SqlParameter("@SalesDate", aSalesOrder.SalesDate);
-                CreateCommand.Parameters.Add(salesDateParam);
-                SqlParameter paymentAmountParam = new SqlParameter("@PaymentAmount", aSalesOrder.PaymentAmount);
-                CreateCommand.Parameters.Add(paymentAmountParam);
-                SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
-                CreateCommand.Parameters.Add(statusParam);
-                SqlParameter shippingParam = new SqlParameter("@ShippingId", aSalesOrder.Shipping.Id);
-                CreateCommand.Parameters.Add(shippingParam);
-                if (aSalesOrder.Employee != null)
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand CreateCommand = new SqlCommand(insertSalesOrderString, con))
                 {
-                    SqlParameter employeeParam = new SqlParameter("@EmployeeId", aSalesOrder.Employee.EmployeeNo);
+                    SqlParameter shippingParam = new SqlParameter("@ShippingId", DBNull.Value);
+                    SqlParameter employeeParam = new SqlParameter("@EmployeeId", DBNull.Value);
+                    SqlParameter customerParam = new SqlParameter("@CustomerId", DBNull.Value);
+
+                    SqlParameter salesDateParam = new SqlParameter("@SalesDate", aSalesOrder.SalesDate);
+                    CreateCommand.Parameters.Add(salesDateParam);
+                    SqlParameter paymentAmountParam = new SqlParameter("@PaymentAmount", aSalesOrder.PaymentAmount);
+                    CreateCommand.Parameters.Add(paymentAmountParam);
+                    SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
+                    CreateCommand.Parameters.Add(statusParam);
+
+                    //Set Shipping ID if Shipping is not null
+                    if (aSalesOrder.Shipping != null)
+                    {
+                        shippingParam = new SqlParameter("@ShippingId", aSalesOrder.Shipping.Id);
+                    }
+                    CreateCommand.Parameters.Add(shippingParam);
+
+                    //Set Employee ID if Employee is not null
+                    if (aSalesOrder.Employee != null)
+                    {
+                        employeeParam = new SqlParameter("@EmployeeId", aSalesOrder.Employee.EmployeeNo);
+                    }
                     CreateCommand.Parameters.Add(employeeParam);
+
+                    //Set Customer ID if Customer is not null
+                    if (aSalesOrder.Customer != null)
+                    {
+                        customerParam = new SqlParameter("@CustomerId", aSalesOrder.Customer.CustomerNo);
+                    }
+                    CreateCommand.Parameters.Add(customerParam);
+
+                    con.Open();
+                    insertedSalesOrderId = (int)CreateCommand.ExecuteScalar();
                 }
-                else
+
+                foreach (SalesLineItem salesLine in aSalesOrder.SalesLineItem)
                 {
-                    SqlParameter employeeParam = new SqlParameter("@EmployeeId", null);
-                    CreateCommand.Parameters.Add(employeeParam);
+                    AddSalesLineItemToSalesOrder(salesLine, insertedSalesOrderId);
                 }
-                SqlParameter customerParam = new SqlParameter("@CustomerId", aSalesOrder.Customer.CustomerNo);
-                CreateCommand.Parameters.Add(customerParam);
 
-                con.Open();
-                insertedSalesOrderId = (int)CreateCommand.ExecuteScalar();
+                // The Complete method commits the transaction. If an exception has been thrown,
+                // Complete is not called and the transaction is rolled back.
+                scope.Complete();
             }
-
-
             return insertedSalesOrderId;
         }
-        private int CreateSalesOrderWithoutEmployee(SalesOrder aSalesOrder)
-        {
-            int insertedSalesOrderId = -1;
 
-            string insertSalesOrderString = "insert into SalesOrder (salesDate, paymentAmount, status, shipping_id_fk, customerNo_fk) " +
-            "OUTPUT INSERTED.salesNo values(@SalesDate, @PaymentAmount, @Status, @ShippingId, @CustomerId )";
+        private bool AddSalesLineItemToSalesOrder(SalesLineItem aSalesLineItem, int salesOrderId)
+        {
+            int numRowsUpdated = 0;
+            string queryString = "update SalesLineItem set cart_id_fk = @CartId, salesNo_fk = @SalesNo from SalesLineItem where id = @Id ";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertSalesOrderString, con))
             {
-                SqlParameter salesDateParam = new SqlParameter("@SalesDate", aSalesOrder.SalesDate);
-                CreateCommand.Parameters.Add(salesDateParam);
-                SqlParameter paymentAmountParam = new SqlParameter("@PaymentAmount", aSalesOrder.PaymentAmount);
-                CreateCommand.Parameters.Add(paymentAmountParam);
-                SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
-                CreateCommand.Parameters.Add(statusParam);
-                SqlParameter shippingParam = new SqlParameter("@ShippingId", aSalesOrder.Shipping.Id);
-                CreateCommand.Parameters.Add(shippingParam);
-                SqlParameter customerParam = new SqlParameter("@CustomerId", aSalesOrder.Customer.CustomerNo);
-                CreateCommand.Parameters.Add(customerParam);
-
-                con.Open();
-                insertedSalesOrderId = (int)CreateCommand.ExecuteScalar();
+                numRowsUpdated = con.Execute(queryString, new
+                {
+                    CartId = (int?)null,
+                    SalesNo = salesOrderId,
+                    Id = aSalesLineItem.Id
+                });
             }
 
-            return insertedSalesOrderId;
+            return (numRowsUpdated == 1);
         }
-        private int CreateSalesOrderWithoutShipping(SalesOrder aSalesOrder)
-        {
-            int insertedSalesOrderId = -1;
 
-            string insertSalesOrderString = "insert into SalesOrder (salesDate, paymentAmount, status, employeeNo_fk, customerNo_fk) " +
-            "OUTPUT INSERTED.salesNo values(@SalesDate, @PaymentAmount, @Status,  @EmployeeId, @CustomerId )";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertSalesOrderString, con))
-            {
-                SqlParameter salesDateParam = new SqlParameter("@SalesDate", aSalesOrder.SalesDate);
-                CreateCommand.Parameters.Add(salesDateParam);
-                SqlParameter paymentAmountParam = new SqlParameter("@PaymentAmount", aSalesOrder.PaymentAmount);
-                CreateCommand.Parameters.Add(paymentAmountParam);
-                SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
-                CreateCommand.Parameters.Add(statusParam);
-                SqlParameter employeeParam = new SqlParameter("@EmployeeId", aSalesOrder.Employee.EmployeeNo);
-                CreateCommand.Parameters.Add(employeeParam);
-                SqlParameter customerParam = new SqlParameter("@CustomerId", aSalesOrder.Customer.CustomerNo);
-                CreateCommand.Parameters.Add(customerParam);
-
-                con.Open();
-                insertedSalesOrderId = (int)CreateCommand.ExecuteScalar();
-            }
-
-            return insertedSalesOrderId;
-        }
-        private int CreateSalesOrderWithoutShippingCustomerEmployee(SalesOrder aSalesOrder)
-        {
-            int insertedSalesOrderId = -1;
-
-            string insertSalesOrderString = "insert into SalesOrder (salesDate, paymentAmount, status) " +
-            "OUTPUT INSERTED.salesNo values(@SalesDate, @PaymentAmount, @Status )";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand CreateCommand = new SqlCommand(insertSalesOrderString, con))
-            {
-                SqlParameter salesDateParam = new SqlParameter("@SalesDate", aSalesOrder.SalesDate);
-                CreateCommand.Parameters.Add(salesDateParam);
-                SqlParameter paymentAmountParam = new SqlParameter("@PaymentAmount", aSalesOrder.PaymentAmount);
-                CreateCommand.Parameters.Add(paymentAmountParam);
-                SqlParameter statusParam = new SqlParameter("@Status", aSalesOrder.Status);
-                CreateCommand.Parameters.Add(statusParam);
-
-                con.Open();
-                insertedSalesOrderId = (int)CreateCommand.ExecuteScalar();
-            }
-
-            return insertedSalesOrderId;
-        }
         public SalesOrder GetSalesOrderById(int salesOrderId)
         {
             SalesOrder foundSalesOrder = null;

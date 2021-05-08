@@ -9,8 +9,7 @@ namespace ArmysalgDataAccess.Database
 {
     public interface ISalesOrderDatabaseAccess
     {
-        int CreateSalesOrder(SalesOrder salesOrderToAdd);
+        int CreateSalesOrder(SalesOrder aSalesOrder);
         SalesOrder GetSalesOrderById(int salesOrderId);
-      
     }
 }

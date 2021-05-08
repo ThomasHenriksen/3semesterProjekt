@@ -15,13 +15,13 @@ namespace ArmysalgService.Controllers
     [ApiController]
     public class SalesOrderController : ControllerBase
     {
-        private readonly ISalesOrderLogic _sControl;
+        private readonly ISalesOrderLogic _salesOrderLogíc;
         private readonly IConfiguration _configuration;
 
         public SalesOrderController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _sControl = new SalesOrderLogic(_configuration);
+            _salesOrderLogíc = new SalesOrderLogic(_configuration);
         }
 
         //URL: api/salesOrders
@@ -37,7 +37,7 @@ namespace ArmysalgService.Controllers
         {
             ActionResult<SalesOrderdataReadDto> foundReturn;
 
-            SalesOrder foundSalesOrder = _sControl.GetSalesOrderById(id);
+            SalesOrder foundSalesOrder = _salesOrderLogíc.GetSalesOrderById(id);
 
             SalesOrderdataReadDto foundDts = SalesOrderdataReadDtoConvert.FromSalesOrder(foundSalesOrder);
 
@@ -68,7 +68,7 @@ namespace ArmysalgService.Controllers
             if(inSalesOrder != null)
             {
                 SalesOrder dbSalesOrder = SalesOrderdataWriteDtoConvert.ToSalesOrder(inSalesOrder);
-                insertedSalesNo = _sControl.AddSalesOrder(dbSalesOrder);
+                insertedSalesNo = _salesOrderLogíc.AddSalesOrder(dbSalesOrder);
             }
             if (insertedSalesNo > 0) 
             {
