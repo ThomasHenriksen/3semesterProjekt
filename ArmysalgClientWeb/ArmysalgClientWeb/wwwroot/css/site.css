@@ -13,10 +13,10 @@ a {
     font-weight: bold;
 }
 
-a:hover {
-    color: #6e8b3d;
-    font-weight: bold;
-}
+    a:hover {
+        color: #6e8b3d;
+        font-weight: bold;
+    }
 
 .btn-primary {
     color: #000000;
@@ -108,39 +108,6 @@ input[type="number"] {
     vertical-align: middle;
 }
 
-/*h1, h4 {
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    color: black;
-    opacity: 0.8;
-    border-radius: 15px;
-    padding: 10px;
-    height: auto;
-    text-align: center;
-    position: absolute;
-    font-family: "Stencil", Stencil;
-}*/
-
-p {
-    display: block;
-    background-color: white;
-    color: black;
-    opacity: 0.8;
-    border-radius: 15px;
-    padding: 10px;
-    height: auto;
-}
-
-/*label {
-    display: block;
-    background-color: white;
-    color: black;
-    opacity: 0.8;
-    border-radius: 15px;
-    padding: 10px;
-}*/
-
 .center {
     display: block;
     margin-left: auto;
@@ -184,14 +151,23 @@ div.h4container {
         font-family: "Stencil", Stencil;
     }
 
-
-
 div.labeltcontainer {
     position: relative
 }
+
 div.labelcontainer label {
     background-color: white;
     opacity: 0.8;
     border-radius: 15px;
     padding: 10px;
+}
+
+p {
+    display: block;
+    background-color: white;
+    color: black;
+    opacity: 0.8;
+    border-radius: 15px;
+    padding: 10px;
+    height: auto;
 }
