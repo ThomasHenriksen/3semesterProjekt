@@ -35,6 +35,11 @@
         </tr>
     }
 </table>
+
+<div class="totalCartValue">
+    <h1>TOTAL: @Model.TotalValueOfCart</h1>
+</div>
+
 <form asp-action="CompleteOrder">
     <input type="submit" value="Gennemfør Ordre" class="btn btn-primary" />
 </form>

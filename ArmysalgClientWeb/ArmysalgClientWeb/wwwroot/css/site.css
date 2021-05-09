@@ -181,3 +181,20 @@ p {
     padding: 10px;
     height: auto;
 }
+
+div.totalCartValue {
+    height: 2em;
+    position: relative
+}
+
+    div.totalCartValue h1 {
+        background-color: white;
+        opacity: 0.8;
+        border-radius: 15px;
+        padding: 10px;
+        position: absolute;
+        margin-right: -50%;
+        left: 65%;
+        top: 50%;
+        font-family: "Stencil", Stencil;
+    }

@@ -10,6 +10,11 @@ namespace ArmysalgClientWeb.Models
         public int Id { get; set; }
         public DateTime LastUpdated { get; set; }
         public List<SalesLineItem> SalesLineItems { get; set; }
+        public decimal TotalValueOfCart
+        {
+            get { return CalcTotalValueOfCart(); }
+        }
+
 
         public Cart()
         {
@@ -22,5 +27,18 @@ namespace ArmysalgClientWeb.Models
             LastUpdated = lastUpdated;
             SalesLineItems = salesLineItems;
         }
+
+        private decimal CalcTotalValueOfCart()
+        {
+            decimal totalValue = 0;
+
+            foreach (SalesLineItem salesLineItem in SalesLineItems)
+            {
+                totalValue += salesLineItem.TotalPrice;
+            }
+
+            return totalValue;
+        }
+
     }
 }
