@@ -91,7 +91,6 @@ namespace ArmysalgDataAccess.Database
                 foreach (SalesLineItem salesLine in aSalesOrder.SalesLineItem)
                 {
                     AddSalesLineItemToSalesOrder(salesLine, insertedSalesOrderId);
-                    SubstractQuantityFromProductStock(salesLine.Quantity, salesLine.Products.Id);
                 }
 
                 // The Complete method commits the transaction. If an exception has been thrown,
@@ -116,31 +115,26 @@ namespace ArmysalgDataAccess.Database
                 });
             }
 
+            SubstractQuantityFromProductStock(aSalesLineItem.Quantity, aSalesLineItem.Products.Id);
+
             return (numRowsUpdated == 1);
         }
 
         private bool SubstractQuantityFromProductStock(int quantity, int productNo)
         {
             int numRowsUpdated = 0;
-            string queryString = "update Product set stock = @Stock where productNo = @ProductNo ";
+            string queryString = "update Product set stock = stock - @Stock where productNo = @ProductNo ";
 
             Product product = _product.GetProductById(productNo);
             int newStock = product.Stock - quantity;
 
-            if (product.Stock >= quantity)
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                using (SqlConnection con = new SqlConnection(_connectionString))
+                numRowsUpdated = con.Execute(queryString, new
                 {
-                    numRowsUpdated = con.Execute(queryString, new
-                    {
-                        ProductNo = productNo,
-                        Stock = newStock
-                    });
-                }
-            }
-            if (product.Stock < quantity)
-            {
-                throw new InvalidOperationException("Product is out of stock");
+                    ProductNo = productNo,
+                    Stock = newStock
+                });
             }
 
             return (numRowsUpdated == 1);
