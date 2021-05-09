@@ -91,6 +91,7 @@ namespace ArmysalgDataAccess.Database
                 foreach (SalesLineItem salesLine in aSalesOrder.SalesLineItem)
                 {
                     AddSalesLineItemToSalesOrder(salesLine, insertedSalesOrderId);
+                    SubstractQuantityFromProductStock(salesLine.Quantity, salesLine.Products.Id);
                 }
 
                 // The Complete method commits the transaction. If an exception has been thrown,
@@ -114,8 +115,6 @@ namespace ArmysalgDataAccess.Database
                     Id = aSalesLineItem.Id
                 });
             }
-
-            SubstractQuantityFromProductStock(aSalesLineItem.Quantity, aSalesLineItem.Products.Id);
 
             return (numRowsUpdated == 1);
         }
