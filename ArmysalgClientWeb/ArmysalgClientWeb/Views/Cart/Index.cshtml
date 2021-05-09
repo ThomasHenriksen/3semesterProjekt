@@ -4,34 +4,36 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>KURV</h1>
+<div class=h1h2container>
+    <h1>KURV</h1>
+</div>
 
 <table class="table">
+    <tr>
+        <th>
+            Navn
+        </th>
+        <th>
+            Antal
+        </th>
+        <th>
+            Pris
+        </th>
+    </tr>
+    @foreach (var item in Model.SalesLineItems)
+    {
         <tr>
-            <th>
-                Navn
-            </th>
-            <th>
-                Antal
-            </th>
-            <th>
-                Pris
-            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Products.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
         </tr>
-        @foreach (var item in Model.SalesLineItems)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Products.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalPrice)
-                </td>
-            </tr>
-        }
+    }
 </table>
 <form asp-action="CompleteOrder">
     <input type="submit" value="Gennemfør Ordre" class="btn btn-primary" />

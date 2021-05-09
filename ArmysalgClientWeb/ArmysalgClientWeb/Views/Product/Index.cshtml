@@ -4,29 +4,30 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Produkter</h1>
-
+<div class=h1h2container>
+    <h1>Produkter</h1>
+</div>
 
 <table class="table">
-        <tr>
-            <th>
-                Navn
-            </th>
-            <th>
-                Beskrivelse
-            </th>
-            <th>
-                Lager antal
-            </th>
-            <th>
-                Pris
-            </th>
-            <th>
-                <center>Antal</center>
-            </th>
-        </tr>
-@foreach (var item in Model) {
+    <tr>
+        <th>
+            Navn
+        </th>
+        <th>
+            Beskrivelse
+        </th>
+        <th>
+            Lager antal
+        </th>
+        <th>
+            Pris
+        </th>
+        <th>
+            <center>Antal</center>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -52,5 +53,5 @@
                 </div>
             </td>
         </tr>
-}
+    }
 </table>
