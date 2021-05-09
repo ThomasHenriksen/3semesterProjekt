@@ -123,7 +123,7 @@ namespace ArmysalgClientWeb.Controllers
 
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 

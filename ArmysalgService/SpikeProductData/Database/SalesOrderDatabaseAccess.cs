@@ -18,6 +18,7 @@ namespace ArmysalgDataAccess.Database
         private IShippingDatabaseAccess _shipping;
         private IEmployeeDatabaseAccess _employee;
         private ICustomerDatabaseAccess _customer;
+        private IProductDatabaseAccess _product;
 
         public SalesOrderDatabaseAccess(IConfiguration configuration)
         {
@@ -26,6 +27,7 @@ namespace ArmysalgDataAccess.Database
             _shipping = new ShippingDatabaseAccess(configuration);
             _employee = new EmployeeDatabaseAccess(configuration);
             _customer = new CustomerDatabaseAccess(configuration);
+            _product = new ProductDatabaseAccess(configuration);
         }
 
         // For test
@@ -112,6 +114,29 @@ namespace ArmysalgDataAccess.Database
                     Id = aSalesLineItem.Id
                 });
             }
+
+            SubstractQuantityFromProductStock(aSalesLineItem.Quantity, aSalesLineItem.Products.Id);
+
+            return (numRowsUpdated == 1);
+        }
+
+        private bool SubstractQuantityFromProductStock(int quantity, int productNo)
+        {
+            int numRowsUpdated = 0;
+            string queryString = "update Product set stock = @Stock where productNo = @ProductNo ";
+
+            Product product = _product.GetProductById(productNo);
+            int newStock = product.Stock - quantity;
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                numRowsUpdated = con.Execute(queryString, new
+                {
+                    ProductNo = productNo,
+                    Stock = newStock
+                });
+            }
+
             return (numRowsUpdated == 1);
         }
 
