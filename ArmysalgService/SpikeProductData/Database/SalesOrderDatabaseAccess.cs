@@ -128,13 +128,20 @@ namespace ArmysalgDataAccess.Database
             Product product = _product.GetProductById(productNo);
             int newStock = product.Stock - quantity;
 
-            using (SqlConnection con = new SqlConnection(_connectionString))
+            if (product.Stock >= quantity)
             {
-                numRowsUpdated = con.Execute(queryString, new
+                using (SqlConnection con = new SqlConnection(_connectionString))
                 {
-                    ProductNo = productNo,
-                    Stock = newStock
-                });
+                    numRowsUpdated = con.Execute(queryString, new
+                    {
+                        ProductNo = productNo,
+                        Stock = newStock
+                    });
+                }
+            }
+            if (product.Stock < quantity)
+            {
+                throw new InvalidOperationException("Product is out of stock");
             }
 
             return (numRowsUpdated == 1);
