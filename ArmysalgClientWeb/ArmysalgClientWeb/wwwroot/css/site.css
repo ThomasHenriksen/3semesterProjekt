@@ -115,6 +115,16 @@ input[type="number"] {
     width: 50%;
 }
 
+.navbar-brand h2 {
+    margin: 0;
+    font-size: 35px;
+    font-family: "Stencil", Stencil;
+}
+
+.navbar-brand img {
+    margin: 0;background-image: url('file:///D:\Downloads\cart.png');
+}
+
 div.h1h2container {
     height: 7em;
     position: relative
