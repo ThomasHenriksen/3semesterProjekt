@@ -22,36 +22,6 @@ namespace ProductDataTest
         }
 
         [Fact]
-        public void TestGetProductAll()
-        {
-            //Arrange
-
-            //Act
-            List<Product> readProducts = _productDatabaseAccess.GetProductAll();
-            bool productsWereRead = (readProducts.Count > 0);
-            // Print output
-            extraOutput.WriteLine("Number of products: " + readProducts.Count);
-
-            //Assert
-            Assert.True(productsWereRead);
-        }
-
-        [Fact]
-        public void TestGetProductById()
-        {
-            //Arrange
-            int idForProduct1 = 277;
-
-            //Act
-            Product productToRead = _productDatabaseAccess.GetProductById(idForProduct1);
-            bool product1wasFound = (productToRead.Id == idForProduct1);
-            extraOutput.WriteLine("Product name: " + productToRead.Name + " Product ID: " + productToRead.Id);
-
-            //Assert
-            Assert.True(product1wasFound);
-        }
-
-        [Fact]
         public void CreateProductTest()
         {
             //Arrange
@@ -97,50 +67,6 @@ namespace ProductDataTest
             //CleanUp
             _productDatabaseAccess.DeleteProductById(productIdOfInsertedProduct);
             _priceDatabaseAccess.DeletePriceById(idOfInsertedPrice);
-        }
-        [Fact]
-        public void TestUpdateProduct()
-        {
-            //Arrange
-            int targetId = 8;
-            string name = "bukser";
-            string description = "blå";
-            decimal purchasePrice = 3220;
-            int stock = 10;
-            int minStock = 3;
-            int maxStock = 10;
-            //Act
-            Product findProductToUpdate = _productDatabaseAccess.GetProductById(targetId);
-            findProductToUpdate.Name = name;
-            findProductToUpdate.Description = description;
-            findProductToUpdate.PurchasePrice = purchasePrice;
-            findProductToUpdate.Stock = stock;
-            findProductToUpdate.MinStock = minStock;
-            findProductToUpdate.MaxStock = maxStock;
-            bool productToUpdateByID = _productDatabaseAccess.UpdateProduct(findProductToUpdate);
-            //Assert
-            Assert.True(productToUpdateByID);
-        }
-        [Fact]
-        public void TestDeleteProduct()
-        {
-            //Arrange
-            string name = "bukser";
-            string description = "sort";
-            decimal purchasePrice = 340;
-            string status = "Indorder";
-            int stock = 10;
-            int minStock = 3;
-            int maxStock = 10;
-            bool isDeleted = false;
-            Price priceForTest = new Price();
-            List<Category> listForTest = new List<Category>();
-            //Act
-            Product productToCreate = new Product(name, description, purchasePrice, stock, minStock, maxStock, isDeleted, priceForTest, listForTest);
-            int productToReadByID = _productDatabaseAccess.CreateProduct(productToCreate);
-            bool productToUpdateByID = _productDatabaseAccess.DeleteProductById(productToReadByID);
-            //Assert
-            Assert.True(_productDatabaseAccess.GetProductById(productToReadByID).IsDeleted);
         }
     }
 }
