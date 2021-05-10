@@ -11,6 +11,9 @@ namespace ArmysalgDataTest
         private readonly ISupplierDatabaseAccess _supplierDatabaseAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
 
+        /*
+         * Used for testing.
+         */
         public SupplierTest(ITestOutputHelper output)
         {
             this.extraOutput = output;
@@ -32,7 +35,7 @@ namespace ArmysalgDataTest
             string phone = "+46 900400600";
             string email = "cust@fabriker.se";
             Supplier supplierToCreate = new Supplier(name, address, zipCode, city, country, phone, email);
-            
+
             //Act
             int idOfInsertedSupplier = _supplierDatabaseAccess.CreateSupplier(supplierToCreate);
             Supplier supplierToRead = _supplierDatabaseAccess.GetSupplierById(idOfInsertedSupplier);

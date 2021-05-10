@@ -22,9 +22,13 @@ namespace ArmysalgDataAccess.Database
             _salelineitem = new SalesLineItemDatabaseAccess(configuration);
         }
 
-        public CartDatabaseAccess(string connectionString)
+       /*
+         * Used for testing.
+        */
+        public CartDatabaseAccess(string inConnectionString)
         {
-            this.connectionString = connectionString;
+            _connectionString = inConnectionString;
+            _salelineitem = new SalesLineItemDatabaseAccess(inConnectionString);
         }
 
         public int CreateCart(Cart aCart, Customer customer)
@@ -118,19 +122,19 @@ namespace ArmysalgDataAccess.Database
         public bool DeleteCartByCartId(int id)
         {
             int numRowsUpdated = 0;
-            string queryString = "UPDATE Cart SET isDeleted = @inIsDelete from Cart where productId = @Id";
+            string queryString = "Delete Cart where id = @Id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 numRowsUpdated = con.Execute(queryString,
                  new
                  {
-                     inIsDelete = 1,
                      Id = id
                  });
             }
             return (numRowsUpdated == 1);
         }
+
         private Cart GetCartFromReader(SqlDataReader CartReader)
         {
 
