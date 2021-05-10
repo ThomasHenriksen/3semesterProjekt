@@ -204,6 +204,22 @@ namespace ArmysalgDataAccess.Database
 
             return foundSalesOrder;
         }
-    }
 
+        public bool DeleteSalesOrderBySalesNo(int id)
+        {
+            int numRowsUpdated = 0;
+            string queryStringForDeletingSalesOrder = "delete from SalesOrder where salesNo = @Id";
+
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                numRowsUpdated = con.Execute(queryStringForDeletingSalesOrder,
+                 new
+                 {
+                     Id = id
+                 });
+            }
+            return (numRowsUpdated == 1);
+        }
+    }
 }

@@ -14,56 +14,79 @@ namespace ArmysalgDataTest
     public class SalesOrderTest
     {
         private readonly ITestOutputHelper extraOutput;
-
         readonly private ISalesOrderDatabaseAccess _salesOrderAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
-        readonly SalesOrderDatabaseAccess _connection;
-        
-        // For test
+
+
         public SalesOrderTest(ITestOutputHelper output)
         {
             this.extraOutput = output;
-           _salesOrderAccess = new SalesOrderDatabaseAccess(_connectionString);
+            _salesOrderAccess = new SalesOrderDatabaseAccess(_connectionString);
         }
+
+        /*
+         * Tests instantiation of objects of class SalesOrder.
+         */
         [Fact]
         public void TestCreateSalesOrderObject()
         {
             //Arrange
-            SalesOrder testOrder = new SalesOrder(1, DateTime.Today, 200, SalesOrderStatus.Delivered);
+            SalesOrder initialSalesOrderToCompare = new(1, DateTime.Today, 200, SalesOrderStatus.Delivered);
             int salesNo = 1;
             DateTime date = DateTime.Today;
             decimal paymentAmount = 200;
             var status = SalesOrderStatus.Delivered;
-            int salesLineItem = 1;
 
             //Act
-            SalesOrder newOrder = new SalesOrder(salesNo, date, paymentAmount, status);
+            SalesOrder SalesOrderToCompare = new SalesOrder(salesNo, date, paymentAmount, status);
+
+            extraOutput.WriteLine("Sales Order INFO");
+            extraOutput.WriteLine("Sales Order ID: " + initialSalesOrderToCompare.SalesNo);
+            extraOutput.WriteLine("Date: " + initialSalesOrderToCompare.SalesDate);
+            extraOutput.WriteLine("Payment amount: " + initialSalesOrderToCompare.SalesNo);
+            extraOutput.WriteLine("Delivered: " + SalesOrderStatus.Delivered);
 
             //Assert
-            Assert.Equal(testOrder.SalesNo.ToString(), newOrder.SalesNo.ToString());
-            Assert.Equal(testOrder.SalesDate.ToString(), newOrder.SalesDate.ToString());
-            Assert.Equal(testOrder.PaymentAmount.ToString(), newOrder.PaymentAmount.ToString());
-            Assert.Equal(testOrder.Status, newOrder.Status);
-            //Assert.Equal(testOrder.SalesLineItem.ToString(), newOrder.SalesLineItem.ToString());
+            Assert.Equal(initialSalesOrderToCompare.SalesNo.ToString(), SalesOrderToCompare.SalesNo.ToString());
+            Assert.Equal(initialSalesOrderToCompare.SalesDate.ToString(), SalesOrderToCompare.SalesDate.ToString());
+            Assert.Equal(initialSalesOrderToCompare.PaymentAmount.ToString(), SalesOrderToCompare.PaymentAmount.ToString());
+            Assert.Equal(initialSalesOrderToCompare.Status, SalesOrderToCompare.Status);
         }
 
+        /*
+         * Tests CreateSalesOrder method.
+         */
         [Fact]
-        public void TestInsertCreatedSalesOrderToDatabase()
+        public void TestCreateSalesOrder()
         {
             //Arrange
-            SalesLineItem salesLineItemToTest = new();
-            List<SalesLineItem> listOfSalesLineItemToTest = new();
-            Shipping shippingForTest = new();
-            Employee employeeForTest = new();
-            Customer customerForTest = new();
-            SalesOrder salesOrderToDatabase = new SalesOrder(DateTime.Today, 200, SalesOrderStatus.Shipped, listOfSalesLineItemToTest);
+            DateTime dateTime = DateTime.Now;
+            decimal paymentAmount = 150;
+            SalesOrderStatus status = 0;
+            List<SalesLineItem> salesLineItems = new();
+            Shipping shipping = null;
+            Employee employee = null;
+            Customer customer = null;
+            SalesOrder salesOrderToCreate = new SalesOrder(dateTime, paymentAmount, status, salesLineItems, shipping, employee, customer);
 
             //Act
-            int salesOrderNoOnNewSalesOrderInDatabase = _salesOrderAccess.CreateSalesOrder(salesOrderToDatabase);
-            SalesOrder getNewlyInsertedSalesOrder = _salesOrderAccess.GetSalesOrderById(salesOrderNoOnNewSalesOrderInDatabase);
+            int idOfInsertedSalesOrder = _salesOrderAccess.CreateSalesOrder(salesOrderToCreate);
+            SalesOrder readSalesOrder = _salesOrderAccess.GetSalesOrderById(idOfInsertedSalesOrder);
+
+            extraOutput.WriteLine("Sales Order INFO");
+            extraOutput.WriteLine("Sales Order ID: " + salesOrderToCreate.SalesNo);
+            extraOutput.WriteLine("Date: " + salesOrderToCreate.SalesDate);
+            extraOutput.WriteLine("Payment amount: " + salesOrderToCreate.SalesNo);
+            extraOutput.WriteLine("Delivered: " + SalesOrderStatus.Delivered);
 
             //Assert
-            Assert.Equal(getNewlyInsertedSalesOrder.SalesNo.ToString(), salesOrderNoOnNewSalesOrderInDatabase.ToString());
+            Assert.Equal(idOfInsertedSalesOrder, readSalesOrder.SalesNo);
+            Assert.Equal(salesOrderToCreate.SalesDate.ToString(), readSalesOrder.SalesDate.ToString());
+            Assert.Equal(salesOrderToCreate.PaymentAmount, readSalesOrder.PaymentAmount);
+            Assert.Equal(salesOrderToCreate.Status, readSalesOrder.Status);
+
+            //CleanUp
+            _salesOrderAccess.DeleteSalesOrderBySalesNo(idOfInsertedSalesOrder);
         }
     }
 }

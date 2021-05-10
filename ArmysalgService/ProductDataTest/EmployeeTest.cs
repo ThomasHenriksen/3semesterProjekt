@@ -33,9 +33,9 @@ namespace ArmysalgDataTest
             string email = "perfekt@gmail.com";
             double salary = 350000;
             string position = "RX designer";
+            Employee employeeToCreate = new(firstName, lastName, address, zipCode, city, phone, email, salary, position);
 
             //Act
-            Employee employeeToCreate = new(firstName, lastName, address, zipCode, city, phone, email, salary, position);
             int idOfInsertedEmployee = _employeeAccess.CreateEmployee(employeeToCreate);
             Employee readEmployee = _employeeAccess.GetEmployeeByEmployeeNo(idOfInsertedEmployee);
 
