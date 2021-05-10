@@ -83,6 +83,9 @@ namespace ArmysalgClientWeb.Controllers
         {
             try
             {
+                if (quantity == 0) {
+                    quantity = 1;
+                }
                 Product productToAdd = await _productLogic.GetProductById(id);
 
                 string customerEmail = User.Identity.Name;
