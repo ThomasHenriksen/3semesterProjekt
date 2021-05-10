@@ -14,12 +14,18 @@ namespace ArmysalgDataAccess.Database
     {
         readonly string _connectionString;
         private ISalesLineItemDatabaseAcces _salelineitem;
+        private string connectionString;
+
         public CartDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
             _salelineitem = new SalesLineItemDatabaseAccess(configuration);
         }
 
+        public CartDatabaseAccess(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
 
         public int CreateCart(Cart aCart, Customer customer)
         {
