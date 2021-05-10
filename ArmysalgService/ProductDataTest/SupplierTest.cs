@@ -29,7 +29,7 @@ namespace ArmysalgDataTest
             string zipCode = "311 63";
             string city = "Älvsered";
             string country = "Sverige";
-            string phone = "900400600";
+            string phone = "+46 900400600";
             string email = "cust@fabriker.se";
             Supplier supplierToCreate = new Supplier(name, address, zipCode, city, country, phone, email);
             
@@ -38,6 +38,14 @@ namespace ArmysalgDataTest
             Supplier supplierToRead = _supplierAccess.GetSupplierById(idOfInsertedSupplier);
 
             extraOutput.WriteLine("Supplier ID: " + supplierToRead.Id);
+
+            extraOutput.WriteLine("LEVERANDØRINFO");
+            extraOutput.WriteLine("Leverandør ID: " + supplierToRead.Id);
+            extraOutput.WriteLine("Navn: " + supplierToRead.Name);
+            extraOutput.WriteLine("Adresse: " + supplierToRead.Address);
+            extraOutput.WriteLine("By: " + supplierToRead.ZipCode + " " + supplierToRead.City);
+            extraOutput.WriteLine("Telefon: " + supplierToRead.Phone);
+            extraOutput.WriteLine("Mail: " + supplierToRead.Email);
 
             //Assert
             Assert.Equal(idOfInsertedSupplier.ToString(), supplierToRead.Id.ToString());
