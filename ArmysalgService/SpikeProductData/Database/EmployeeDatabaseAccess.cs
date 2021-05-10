@@ -60,7 +60,7 @@ namespace ArmysalgDataAccess.Database
 
         /* Three possible returns:
         * A Employee object
-        * An empty Employee object (no match on customerNo)
+        * An empty Employee object (no match on employeeNo)
         * Null - Some error occurred
         */
         public Employee GetEmployeeByEmployeeNo(int? findEmployeeNo)
@@ -135,14 +135,13 @@ namespace ArmysalgDataAccess.Database
         public bool DeleteEmployeeByEmployeeNo(int id)
         {
             int numRowsUpdated = 0;
-            string queryString = "UPDATE Product SET  isDeleted = @inIsDelete from Product where productNo = @Id";
+            string queryString = "delete from Employee where employeeNo = @Id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 numRowsUpdated = con.Execute(queryString,
                  new
                  {
-                     inIsDelete = 1,
                      Id = id
                  });
             }
