@@ -16,5 +16,6 @@ namespace ArmysalgDataAccess.Database
         bool UpdateEndDatePrice(Price priceToUpdate);
         Price GetPriceByProductNoAndNoEndDate(int productNo);
         Price GetPriceById(int priceId);
+        bool DeletePriceById(int priceId);
     }
 }

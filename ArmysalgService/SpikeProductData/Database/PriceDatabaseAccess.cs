@@ -219,5 +219,21 @@ namespace ArmysalgDataAccess.Database
 
             return foundPrice;
         }
+
+        public bool DeletePriceById(int priceId)
+        {
+            int numberOfRowsDeleted = 0;
+            string deleteString = "DELETE FROM price WHERE id=@PriceId";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand deleteCommand = new SqlCommand(deleteString, conn))
+            {
+                deleteCommand.Parameters.AddWithValue("@PriceId", priceId);
+
+                conn.Open();
+                numberOfRowsDeleted = deleteCommand.ExecuteNonQuery();
+            }
+            return (numberOfRowsDeleted > 0);
+        }
     }
 }
