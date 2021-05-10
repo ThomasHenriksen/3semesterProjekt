@@ -8,13 +8,13 @@ namespace ArmysalgDataTest
     public class SupplierTest
     {
         private readonly ITestOutputHelper extraOutput;
-        private readonly ISupplierDatabaseAccess _supplierAccess;
+        private readonly ISupplierDatabaseAccess _supplierDatabaseAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
 
         public SupplierTest(ITestOutputHelper output)
         {
             this.extraOutput = output;
-            _supplierAccess = new SupplierDatabaseAccess(_connectionString);
+            _supplierDatabaseAccess = new SupplierDatabaseAccess(_connectionString);
         }
 
         /*
@@ -34,10 +34,8 @@ namespace ArmysalgDataTest
             Supplier supplierToCreate = new Supplier(name, address, zipCode, city, country, phone, email);
             
             //Act
-            int idOfInsertedSupplier = _supplierAccess.CreateSupplier(supplierToCreate);
-            Supplier supplierToRead = _supplierAccess.GetSupplierById(idOfInsertedSupplier);
-
-            extraOutput.WriteLine("Supplier ID: " + supplierToRead.Id);
+            int idOfInsertedSupplier = _supplierDatabaseAccess.CreateSupplier(supplierToCreate);
+            Supplier supplierToRead = _supplierDatabaseAccess.GetSupplierById(idOfInsertedSupplier);
 
             extraOutput.WriteLine("LEVERANDØRINFO");
             extraOutput.WriteLine("Leverandør ID: " + supplierToRead.Id);
@@ -58,7 +56,7 @@ namespace ArmysalgDataTest
             Assert.Equal(supplierToCreate.Email, supplierToRead.Email);
 
             //CleanUp
-            _supplierAccess.DeleteSupplierById(idOfInsertedSupplier);
+            _supplierDatabaseAccess.DeleteSupplierById(idOfInsertedSupplier);
         }
     }
 }
