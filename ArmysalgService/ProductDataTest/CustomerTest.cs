@@ -1,6 +1,4 @@
-﻿using System;
-using Xunit;
-using System.Collections.Generic;
+﻿using Xunit;
 using Xunit.Abstractions;
 using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
@@ -10,18 +8,19 @@ namespace CustomerDataTest
     public class TestCustomerDataAccess
     {
         private readonly ITestOutputHelper extraOutput;
-
-        readonly private ICustomerDatabaseAccess _customerAccess;
+        readonly private ICustomerDatabaseAccess _customerDatabaseAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
 
         public TestCustomerDataAccess(ITestOutputHelper output)
         {
             this.extraOutput = output;
-            _customerAccess = new CustomerDatabaseAccess(_connectionString);
+            _customerDatabaseAccess = new CustomerDatabaseAccess(_connectionString);
         }
-
+        /*
+         *  Test CreateCustomer method.
+         */
         [Fact]
-        public void TestCreateCustomer()
+        public void CreateCustomerTest()
         {
             //Arrange
             string firstName = "Carsten";
@@ -29,14 +28,14 @@ namespace CustomerDataTest
             string address = "Vestrebro 45, 3. tv.";
             string zipCode = "8000";
             string city = "AarhusC";
-            string phone = "20856640";
+            string phone = "+45 20856640";
             string email = "cardolberg@gmail.com";
             Cart cart = null;
+            Customer customerToCreate = new Customer(firstName, lastName, address, zipCode, city, phone, email, cart);
 
             //Act
-            Customer customerToCreate = new Customer(firstName, lastName, address, zipCode, city, phone, email, cart);
-            int customerNoOfInsertedCustomer = _customerAccess.CreateCustomer(customerToCreate);
-            Customer customerToRead = _customerAccess.GetCustomerByCustomerNo(customerNoOfInsertedCustomer);
+            int customerNoOfInsertedCustomer = _customerDatabaseAccess.CreateCustomer(customerToCreate);
+            Customer customerToRead = _customerDatabaseAccess.GetCustomerByCustomerNo(customerNoOfInsertedCustomer);
 
             extraOutput.WriteLine("KUNDEINFO");
             extraOutput.WriteLine("Kunde nr: " + customerToRead.CustomerNo);
@@ -47,13 +46,18 @@ namespace CustomerDataTest
             extraOutput.WriteLine("Mail: " + customerToRead.Email);
 
             //Assert
-            Assert.True(customerToCreate.FirstName.Equals(customerToRead.FirstName));
-            Assert.True(customerToCreate.LastName.Equals(customerToRead.LastName));
-            Assert.True(customerToCreate.Address.Equals(customerToRead.Address));
-            Assert.True(customerToCreate.ZipCode.Equals(customerToRead.ZipCode));
-            Assert.True(customerToCreate.City.Equals(customerToRead.City));
-            Assert.True(customerToCreate.Phone.Equals(customerToRead.Phone));
-            Assert.True(customerToCreate.Email.Equals(customerToRead.Email));
+            Assert.Equal(customerNoOfInsertedCustomer.ToString(), customerToRead.CustomerNo.ToString());
+            Assert.Equal(customerToCreate.FirstName, customerToRead.FirstName);
+            Assert.Equal(customerToCreate.LastName, customerToRead.LastName);
+            Assert.Equal(customerToCreate.Address, customerToRead.Address);
+            Assert.Equal(customerToCreate.ZipCode, customerToRead.ZipCode);
+            Assert.Equal(customerToCreate.City, customerToRead.City);
+            Assert.Equal(customerToCreate.Phone, customerToRead.Phone);
+            Assert.Equal(customerToCreate.Email, customerToRead.Email);
+
+            //CleanUp
+            _customerDatabaseAccess.DeleteCustomerByCustomerNo(customerNoOfInsertedCustomer);
+   
         }
     }
 }

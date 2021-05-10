@@ -83,7 +83,7 @@ namespace ArmysalgDataAccess.Database
             using (SqlConnection conn = new SqlConnection(_connectionString))
             using (SqlCommand deleteCommand = new SqlCommand(deleteString, conn))
             {
-                deleteCommand.Parameters.AddWithValue("SupplierId", supplierId);
+                deleteCommand.Parameters.AddWithValue("@SupplierId", supplierId);
 
                 conn.Open();
                 numberOfRowsDeleted = deleteCommand.ExecuteNonQuery();

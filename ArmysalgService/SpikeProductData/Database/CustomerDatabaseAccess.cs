@@ -113,10 +113,6 @@ namespace ArmysalgDataAccess.Database
             }
         }
 
-
-
-
-
        /* Three possible returns:
         * A Customer object
         * An empty Customer object (no match on customerNo)
@@ -186,9 +182,27 @@ namespace ArmysalgDataAccess.Database
             return foundCustomer;
         }
 
+        /*
+         * Delete Customer from the database.
+         * @param CustomerNo.
+         * 
+         * @return bool
+         */
+
         public bool DeleteCustomerByCustomerNo(int customerNo)
         {
-            throw new NotImplementedException();
+            int numberOfRowsDeleted = 0;
+            string deleteString = "DELETE FROM Customer WHERE customerNo = @CustomerNo";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand deleteCommand = new SqlCommand(deleteString, conn))
+            {
+                deleteCommand.Parameters.AddWithValue("@CustomerNo", customerNo);
+
+                conn.Open();
+                numberOfRowsDeleted = deleteCommand.ExecuteNonQuery();
+            }
+            return (numberOfRowsDeleted > 0);
         }
     }
 }
