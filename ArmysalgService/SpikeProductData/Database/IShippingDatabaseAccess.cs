@@ -12,6 +12,6 @@ namespace ArmysalgDataAccess.Database
         Shipping GetShippingByShippingID(int? shippingID);
         List<Shipping> GetAllShippings();
         int CreateShipping(Shipping shippingToAdd);
-        bool DeleteShippingByshippingID(int shippingID);
+        bool DeleteShippingById(int shippingID);
     }
 }

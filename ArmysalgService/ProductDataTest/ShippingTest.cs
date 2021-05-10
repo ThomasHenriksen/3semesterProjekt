@@ -1,10 +1,5 @@
 ﻿using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -12,18 +7,21 @@ namespace ArmysalgDataTest
 {
     public class ShippingTest
     {
-        private readonly ITestOutputHelper output;
-        readonly private IShippingDatabaseAccess _shippingAccess;
+        private readonly ITestOutputHelper extraOutput;
+        readonly private IShippingDatabaseAccess _shippingDatabaseAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
-            
-    public ShippingTest(ITestOutputHelper output)
+
+        public ShippingTest(ITestOutputHelper output)
         {
-            this.output = output;
-            _shippingAccess = new ShippingDatabaseAccess(_connectionString);
+            this.extraOutput = output;
+            _shippingDatabaseAccess = new ShippingDatabaseAccess(_connectionString);
         }
 
-    [Fact]
-    public void CreateShippingTest()
+        /*
+         * Tests CreateShipping method.
+         */
+        [Fact]
+        public void CreateShippingTest()
         {
             //Arrange
             double price = 150;
@@ -33,13 +31,35 @@ namespace ArmysalgDataTest
             string zipCode = "9400";
             string city = "Nørresundby";
             string phone = "35353535";
-            string email = "livefastdiemiddleage@onlyfans.com";
-            //Act
+            string email = "Ryan@Engelbrecht.com";
             Shipping shippingToCreate = new(price, firstName, lastName, address, zipCode, city, phone, email);
-            int shippingID = _shippingAccess.CreateShipping(shippingToCreate);
-            Shipping shippingToCompare = _shippingAccess.GetShippingByShippingID(shippingID);
+
+            //Act
+            int idOfInsertedShipping = _shippingDatabaseAccess.CreateShipping(shippingToCreate);
+            Shipping shippingToRead = _shippingDatabaseAccess.GetShippingByShippingID(idOfInsertedShipping);
+
+            extraOutput.WriteLine("LEVERINGSINFO");
+            extraOutput.WriteLine("Leverandør ID: " + shippingToRead.Id);
+            extraOutput.WriteLine("Pris for levering: " + shippingToRead.Price);
+            extraOutput.WriteLine("Navn: " + shippingToRead.FirstName + " " + shippingToRead.LastName);
+            extraOutput.WriteLine("Adresse: " + shippingToRead.Address);
+            extraOutput.WriteLine("By: " + shippingToRead.ZipCode + " " + shippingToRead.City);
+            extraOutput.WriteLine("Telefon: " + shippingToRead.Phone);
+            extraOutput.WriteLine("Mail: " + shippingToRead.Email);
+
             //Assert
-            Assert.Equal(shippingToCreate.LastName, shippingToCompare.LastName);
-        }       
+            Assert.Equal(idOfInsertedShipping.ToString(), shippingToRead.Id.ToString());
+            Assert.Equal(shippingToCreate.Price, shippingToRead.Price);
+            Assert.Equal(shippingToCreate.FirstName, shippingToRead.FirstName);
+            Assert.Equal(shippingToCreate.LastName, shippingToRead.LastName);
+            Assert.Equal(shippingToCreate.Address, shippingToRead.Address);
+            Assert.Equal(shippingToCreate.ZipCode, shippingToRead.ZipCode);
+            Assert.Equal(shippingToCreate.City, shippingToRead.City);
+            Assert.Equal(shippingToCreate.Phone, shippingToRead.Phone);
+            Assert.Equal(shippingToCreate.Email, shippingToRead.Email);
+
+            //CleanUp
+            _shippingDatabaseAccess.DeleteShippingById(idOfInsertedShipping);
+        }
     }
 }

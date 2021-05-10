@@ -105,9 +105,20 @@ namespace ArmysalgDataAccess.Database
 
         }
 
-        public bool DeleteShippingByshippingID(int shippingID)
+        public bool DeleteShippingById(int ShippingId)
         {
-            throw new NotImplementedException();
+            int numberOfRowsDeleted = 0;
+            string deleteString = "DELETE FROM shipping WHERE id=@ShippingId";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand deleteCommand = new SqlCommand(deleteString, conn))
+            {
+                deleteCommand.Parameters.AddWithValue("ShippingId", ShippingId);
+
+                conn.Open();
+                numberOfRowsDeleted = deleteCommand.ExecuteNonQuery();
+            }
+            return (numberOfRowsDeleted > 0);
         }
 
         public List<Shipping> GetAllShippings()
