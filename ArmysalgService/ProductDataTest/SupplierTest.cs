@@ -1,10 +1,5 @@
 ﻿using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -23,32 +18,39 @@ namespace ArmysalgDataTest
         }
 
         /*
-         * Tests CreateSupplier method on databaselayer.
+         * Tests CreateSupplier method.
          */
         [Fact]
         public void CreateSupplierTest()
         {
             //Arrange
-            string name = "TilAftaltTid";
+            string name = "Militärfabriker";
             string address = "Topperedsvägen 7";
             string zipCode = "311 63";
             string city = "Älvsered";
             string country = "Sverige";
             string phone = "900400600";
-            string email = "vileverer@tiden.se";
-            Supplier supplierToCreateToDatabase = new Supplier(name, address, zipCode, city, country, phone, email);
+            string email = "cust@fabriker.se";
+            Supplier supplierToCreate = new Supplier(name, address, zipCode, city, country, phone, email);
             
             //Act
-            int supplierIdOfInsertedSupplier = _supplierAccess.CreateSupplier(supplierToCreateToDatabase);
-            Supplier supplierToRead = _supplierAccess.GetSupplierById(supplierIdOfInsertedSupplier);
+            int idOfInsertedSupplier = _supplierAccess.CreateSupplier(supplierToCreate);
+            Supplier supplierToRead = _supplierAccess.GetSupplierById(idOfInsertedSupplier);
 
             extraOutput.WriteLine("Supplier ID: " + supplierToRead.Id);
 
             //Assert
-            Assert.Equal(supplierIdOfInsertedSupplier.ToString(), supplierToRead.Id.ToString());
+            Assert.Equal(idOfInsertedSupplier.ToString(), supplierToRead.Id.ToString());
+            Assert.Equal(supplierToCreate.Name, supplierToRead.Name);
+            Assert.Equal(supplierToCreate.Address, supplierToRead.Address);
+            Assert.Equal(supplierToCreate.ZipCode, supplierToRead.ZipCode);
+            Assert.Equal(supplierToCreate.City, supplierToRead.City);
+            Assert.Equal(supplierToCreate.Country, supplierToRead.Country);
+            Assert.Equal(supplierToCreate.Phone, supplierToRead.Phone);
+            Assert.Equal(supplierToCreate.Email, supplierToRead.Email);
 
             //CleanUp
-            _supplierAccess.DeleteSupplierById(supplierIdOfInsertedSupplier);
+            _supplierAccess.DeleteSupplierById(idOfInsertedSupplier);
         }
     }
 }

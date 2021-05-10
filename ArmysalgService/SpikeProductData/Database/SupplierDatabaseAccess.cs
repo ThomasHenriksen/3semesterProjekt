@@ -19,8 +19,8 @@ namespace ArmysalgDataAccess.Database
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
         }
 
-        /*
-         * For database tests
+       /*
+        * Used for testing.
         */
         public SupplierDatabaseAccess(string inConnectionString)
         {
