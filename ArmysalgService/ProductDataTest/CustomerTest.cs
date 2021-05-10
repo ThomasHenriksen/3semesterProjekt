@@ -3,15 +3,15 @@ using Xunit.Abstractions;
 using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
 
-namespace CustomerDataTest
+namespace ArmysalgDataTest
 {
-    public class TestCustomerDataAccess
+    public class CustomerTest
     {
         private readonly ITestOutputHelper extraOutput;
         readonly private ICustomerDatabaseAccess _customerDatabaseAccess;
         readonly string _connectionString = "Server = hildur.ucn.dk; Database = dmaa0220_1085014; User Id = dmaa0220_1085014; Password = Password1!; Trusted_Connection = False";
 
-        public TestCustomerDataAccess(ITestOutputHelper output)
+        public CustomerTest(ITestOutputHelper output)
         {
             this.extraOutput = output;
             _customerDatabaseAccess = new CustomerDatabaseAccess(_connectionString);

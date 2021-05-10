@@ -278,5 +278,21 @@ namespace ArmysalgDataAccess.Database
 
             return foundProduct;
         }
+
+        public bool DeleteCategoryByCategoryId(int categoryId)
+        {
+            int numberOfRowsDeleted = 0;
+            string deleteString = "DELETE FROM Category WHERE id = @CategoryId";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand deleteCommand = new SqlCommand(deleteString, conn))
+            {
+                deleteCommand.Parameters.AddWithValue("@CategoryId", categoryId);
+
+                conn.Open();
+                numberOfRowsDeleted = deleteCommand.ExecuteNonQuery();
+            }
+            return (numberOfRowsDeleted > 0);
+        }
     }
 }
