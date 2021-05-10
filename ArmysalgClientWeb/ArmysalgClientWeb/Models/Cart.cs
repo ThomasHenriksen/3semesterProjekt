@@ -31,10 +31,12 @@ namespace ArmysalgClientWeb.Models
         private decimal CalcTotalValueOfCart()
         {
             decimal totalValue = 0;
-
-            foreach (SalesLineItem salesLineItem in SalesLineItems)
+            if (SalesLineItems != null)
             {
-                totalValue += salesLineItem.TotalPrice;
+                foreach (SalesLineItem salesLineItem in SalesLineItems)
+                {
+                    totalValue += salesLineItem.TotalPrice;
+                }
             }
 
             return totalValue;
