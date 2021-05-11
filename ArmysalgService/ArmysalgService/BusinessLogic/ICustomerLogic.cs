@@ -22,7 +22,7 @@ namespace ArmysalgService.BusinessLogic
         /// Customer object.
         /// </returns>
         /// <param name="customerNo">Customer number.</param>
-        Customer GetCustomer(int customerNo);
+        Customer GetCustomerByCustomerNo(int customerNo);
 
         // Find and return customer from database by customer email.
         /// <summary>
@@ -32,6 +32,6 @@ namespace ArmysalgService.BusinessLogic
         /// Customer object.
         /// </returns>
         /// <param name="customerEmail">Customer email.</param>
-        Customer GetCustomer(string customerEmail);
+        Customer GetCustomerByCustomerMail(string customerEmail);
     }
 }
