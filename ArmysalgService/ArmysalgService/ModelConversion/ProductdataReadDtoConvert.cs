@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace ArmysalgService.ModelConversion
 {
-    public class ProductdataReadDtoConvert
+    public class ProductDataReadDtoConvert
     {
-        public static List<ProductdataReadDto> FromProductCollection(List<Product> inProducts)
+        public static List<ProductDataReadDto> FromProductCollection(List<Product> inProducts)
         {
-            List<ProductdataReadDto> aProductReadDtoList = null;
+            List<ProductDataReadDto> aProductReadDtoList = null;
             if (inProducts != null)
             {
-                aProductReadDtoList = new List<ProductdataReadDto>();
-                ProductdataReadDto tempDto;
+                aProductReadDtoList = new List<ProductDataReadDto>();
+                ProductDataReadDto tempDto;
                 foreach (Product aProduct in inProducts)
                 {
                     tempDto = FromProduct(aProduct);
@@ -22,12 +22,12 @@ namespace ArmysalgService.ModelConversion
             return aProductReadDtoList;
         }
 
-        public static ProductdataReadDto FromProduct(Product inProduct)
+        public static ProductDataReadDto FromProduct(Product inProduct)
         {
-            ProductdataReadDto aProductReadDto = null;
+            ProductDataReadDto aProductReadDto = null;
             if (inProduct != null)
             {
-                aProductReadDto = new ProductdataReadDto(inProduct.Id, inProduct.Name, inProduct.Description, inProduct.PurchasePrice, inProduct.Stock, inProduct.MinStock, inProduct.MaxStock, inProduct.IsDeleted, inProduct.Price, inProduct.Category);
+                aProductReadDto = new ProductDataReadDto(inProduct.Id, inProduct.Name, inProduct.Description, inProduct.PurchasePrice, inProduct.Stock, inProduct.MinStock, inProduct.MaxStock, inProduct.IsDeleted, inProduct.Price, inProduct.Category);
             }
             return aProductReadDto;
         }

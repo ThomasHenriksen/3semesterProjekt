@@ -1,14 +1,14 @@
 ﻿namespace ArmysalgService.DTOs
 {
-    public class CustomerdataReadDto : PersondataReadDto
+    public class CustomerDataReadDto : PersonDataReadDto
     {
         public int CustomerNo { get; set; }
 
-        public CustomerdataReadDto()
+        public CustomerDataReadDto()
         {
         }
 
-        public CustomerdataReadDto(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, int customerNo)
+        public CustomerDataReadDto(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, int customerNo)
         {
             FirstName = firstName;
             LastName = lastName;

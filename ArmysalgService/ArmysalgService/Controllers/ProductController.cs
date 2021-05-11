@@ -27,12 +27,12 @@ namespace ArmysalgService.Controllers
          * format, evaluated and the an response must be sent back*/
         // URL: api/products
         [HttpGet]
-        public ActionResult<List<ProductdataReadDto>> Get()
+        public ActionResult<List<ProductDataReadDto>> Get()
         {
-            ActionResult<List<ProductdataReadDto>> foundReturn;
+            ActionResult<List<ProductDataReadDto>> foundReturn;
             // retrieve and convert data
             List<Product> foundProducts = _productLogic.Get();
-            List<ProductdataReadDto> foundDts = ModelConversion.ProductdataReadDtoConvert.FromProductCollection(foundProducts);
+            List<ProductDataReadDto> foundDts = ModelConversion.ProductDataReadDtoConvert.FromProductCollection(foundProducts);
             // evaluate
             if (foundDts != null)
             {
@@ -55,13 +55,13 @@ namespace ArmysalgService.Controllers
 
         // URL: api/products/{id}
         [HttpGet, Route("{id}")]
-        public ActionResult<ProductdataReadDto> Get(int id)
+        public ActionResult<ProductDataReadDto> Get(int id)
         {
-            ActionResult<ProductdataReadDto> foundReturn;
+            ActionResult<ProductDataReadDto> foundReturn;
             // retrieve and convert data
             Product foundProducts = _productLogic.Get(id);
 
-            ProductdataReadDto foundDts = ModelConversion.ProductdataReadDtoConvert.FromProduct(foundProducts);
+            ProductDataReadDto foundDts = ModelConversion.ProductDataReadDtoConvert.FromProduct(foundProducts);
             // evaluate
             if (foundDts != null)
             {
@@ -84,13 +84,13 @@ namespace ArmysalgService.Controllers
 
         // URL: api/Product
         [HttpPost]
-        public ActionResult<int> PostNewProduct(ProductdataWriteDto inProduct)
+        public ActionResult<int> PostNewProduct(ProductDataWriteDto inProduct)
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
             if (inProduct != null)
             {
-                Product dbProduct = ProductdataWriteDtoConvert.ToProduct(inProduct);
+                Product dbProduct = ProductDataWriteDtoConvert.ToProduct(inProduct);
                 insertedId = _productLogic.Add(dbProduct);
             }
             if (insertedId > 0)
@@ -105,14 +105,14 @@ namespace ArmysalgService.Controllers
         }
         // URL: api/Product/2
         [HttpPut, Route("{id}")]
-        public ActionResult<int> PutUpdateProduct(int id, ProductdataWriteDto inProduct)
+        public ActionResult<int> PutUpdateProduct(int id, ProductDataWriteDto inProduct)
         {
 
             ActionResult<int> foundReturn;
             int insertedId = -1;
             if (inProduct != null)
             {
-                Product dbProduct = ProductdataWriteDtoConvert.ToProduct(inProduct);
+                Product dbProduct = ProductDataWriteDtoConvert.ToProduct(inProduct);
                 dbProduct.Id = id;
                 _productLogic.Put(dbProduct);
                 insertedId = dbProduct.Id;

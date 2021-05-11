@@ -22,13 +22,13 @@ namespace ArmysalgService.Controllers
 
         // URL: api/customer
         [HttpPost]
-        public ActionResult<int> PostNewCustomer(CustomerdataWriteDto inCustomer)
+        public ActionResult<int> PostNewCustomer(CustomerDataWriteDto inCustomer)
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
             if (inCustomer != null)
             {
-                Customer dbCustomer = CustomerdataWriteDtoConvert.ToCustomer(inCustomer);
+                Customer dbCustomer = CustomerDataWriteDtoConvert.ToCustomer(inCustomer);
                 insertedId = _customerControl.AddCustomer(dbCustomer);
             }
             if (insertedId > 0)
@@ -43,13 +43,13 @@ namespace ArmysalgService.Controllers
         }
 
         [HttpGet, Route("{customerEmail}")]
-        public ActionResult<CustomerdataReadDto> Get(string customerEmail)
+        public ActionResult<CustomerDataReadDto> Get(string customerEmail)
         {
-            ActionResult<CustomerdataReadDto> foundReturn;
+            ActionResult<CustomerDataReadDto> foundReturn;
             // retrieve and convert data
             Customer foundCustomer = _customerControl.GetCustomer(customerEmail);
 
-            CustomerdataReadDto foundDts = CustomerdataReadDtoConvert.FromCustomer(foundCustomer);
+            CustomerDataReadDto foundDts = CustomerDataReadDtoConvert.FromCustomer(foundCustomer);
             // evaluate
             if (foundDts != null)
             {
