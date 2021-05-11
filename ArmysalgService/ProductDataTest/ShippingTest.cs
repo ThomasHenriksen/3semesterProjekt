@@ -35,7 +35,7 @@ namespace ArmysalgDataTest
             Shipping shippingToCreate = new(price, firstName, lastName, address, zipCode, city, phone, email);
 
             //Act
-            int idOfInsertedShipping = _shippingDatabaseAccess.CreateShipping(shippingToCreate);
+            int idOfInsertedShipping = _shippingDatabaseAccess.AddShipping(shippingToCreate);
             Shipping shippingToRead = _shippingDatabaseAccess.GetShippingByShippingID(idOfInsertedShipping);
 
             extraOutput.WriteLine("LEVERINGSINFO");

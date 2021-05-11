@@ -15,13 +15,19 @@ namespace ArmysalgDataAccess.Database
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
         }
 
-        //For test
+        // Used for testing
+        /// <summary>
+        /// Used for testing
+        /// </summary>
+        /// <param name="connectionString">Connection string.</param>
         public ShippingDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
         }
 
-        public int CreateShipping(Shipping aShipping)
+        //Add shipping to the database.
+        /// <inheritdoc/>
+        public int AddShipping(Shipping aShipping)
         {
             int insertedId = -1;
 
@@ -46,17 +52,18 @@ namespace ArmysalgDataAccess.Database
                 SqlParameter email = new SqlParameter("@Email", aShipping.Email);
                 CreateCommand.Parameters.Add(email);
 
-
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
             }
             return insertedId;
         }
 
+        // Find and return shipping from database by shipping id
+        /// <inheritdoc/>
         public Shipping GetShippingByShippingID(int shippingID)
         {
-
             Shipping foundShipping = null;
+
             string queryString = "SELECT dbo.Shipping.id, dbo.Shipping.price, dbo.Shipping.firstName, dbo.Shipping.lastName, dbo.Shipping.address, dbo.Shipping.zipCode_fk, dbo.Shipping.phone, dbo.Shipping.email, dbo.ZipCity.zipCode, dbo.ZipCity.city " +
                 "FROM dbo.Shipping INNER JOIN dbo.ZipCity ON dbo.Shipping.zipCode_fk = dbo.ZipCity.zipCode" +
                 " WHERE(dbo.Shipping.id = @ShippingID) ";
@@ -78,6 +85,32 @@ namespace ArmysalgDataAccess.Database
             return foundShipping;
         }
 
+        // Delete shipping from database based on shipping id.
+        /// <inheritdoc/>
+        public bool DeleteShippingById(int ShippingId)
+        {
+            int numberOfRowsDeleted = 0;
+            string deleteString = "DELETE FROM shipping WHERE id=@ShippingId";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand deleteCommand = new SqlCommand(deleteString, conn))
+            {
+                deleteCommand.Parameters.AddWithValue("ShippingId", ShippingId);
+
+                conn.Open();
+                numberOfRowsDeleted = deleteCommand.ExecuteNonQuery();
+            }
+            return (numberOfRowsDeleted > 0);
+        }
+
+        // Build and return shipping object based on SQL data read.
+        /// <summary>
+        /// Build and return shipping object based on SQL data read.
+        /// </summary>
+        /// <returns>
+        /// Shipping object.
+        /// </returns>
+        /// <param name="shippingReader">SQL data read.</param>
         private Shipping GetShippingFromReader(SqlDataReader shippingReader)
         {
             Shipping foundShipping;
@@ -99,28 +132,6 @@ namespace ArmysalgDataAccess.Database
             foundShipping = new(tempShippingID, tempPrice, tempFirstName, tempLastName, tempAddress, tempZipCode_fk, tempCity, tempPhone, tempEmail);
 
             return foundShipping;
-
-        }
-
-        public bool DeleteShippingById(int ShippingId)
-        {
-            int numberOfRowsDeleted = 0;
-            string deleteString = "DELETE FROM shipping WHERE id=@ShippingId";
-
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            using (SqlCommand deleteCommand = new SqlCommand(deleteString, conn))
-            {
-                deleteCommand.Parameters.AddWithValue("ShippingId", ShippingId);
-
-                conn.Open();
-                numberOfRowsDeleted = deleteCommand.ExecuteNonQuery();
-            }
-            return (numberOfRowsDeleted > 0);
-        }
-
-        public List<Shipping> GetAllShippings()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -16,17 +16,5 @@
         public ShippingDataWriteDto()
         {
         }
-        public ShippingDataWriteDto(double price, string firstName, string lastName, string address, string zipCode,
-            string city, string phone, string email)
-        {
-            Price = price;
-            FirstName = firstName;
-            LastName = lastName;
-            Address = address;
-            ZipCode = zipCode;
-            City = city;
-            Phone = phone;
-            Email = email;
-        }
     }
 }

@@ -21,23 +21,38 @@ namespace ArmysalgService.Controllers
             _sControl = new ShippingLogic(_configuration);
         }
 
-        //URL: api/shippings
-        [HttpGet]
-        public ActionResult<List<ShippingDataReadDto>> Get()
+        // URL: api/shippings
+        [HttpPost]
+        public ActionResult<int> PostNewShipping(ShippingDataWriteDto inShipping)
         {
-            return null;
+            ActionResult<int> foundReturn;
+            int insertedId = -1;
+            if (inShipping != null)
+            {
+                Shipping dbShipping = ShippingDataWriteDtoConvert.ToShipping(inShipping);
+                insertedId = _sControl.AddShipping(dbShipping);
+            }
+            if (insertedId > 0)
+            {
+                foundReturn = Ok(insertedId);
+            }
+            else
+            {
+                foundReturn = new StatusCodeResult(500);
+            }
+            return foundReturn;
         }
 
         // URL: api/shipping/{id}
         [HttpGet, Route("{id}")]
-        public ActionResult<ShippingDataReadDto> Get(int id)
+        public ActionResult<ShippingDataReadDto> Get(int shippingId)
         {
             ActionResult<ShippingDataReadDto> foundReturn;
-
-            Shipping foundShipping = _sControl.GetShippingByID(id);
+            // retrieve and convert data
+            Shipping foundShipping = _sControl.GetShippingByID(shippingId);
 
             ShippingDataReadDto foundDts = ShippingDataReadDtoConvert.FromShipping(foundShipping);
-
+            // evaluate
             if (foundDts != null)
             {
                 if (foundDts != null)
@@ -53,30 +68,8 @@ namespace ArmysalgService.Controllers
             {
                 foundReturn = new StatusCodeResult(500);        // Server error
             }
+            // send response back to client
             return foundReturn;
         }
-
-        // URL: api/shippings
-        [HttpPost]
-        public ActionResult<int> PostNewShipping(ShippingDataWriteDto inShipping)
-        {
-            ActionResult<int> foundReturn;
-            int insertedShippingID = -1;
-            if (inShipping != null)
-            {
-                Shipping dbShipping = ModelConversion.ShippingDataWriteDtoConvert.ToShipping(inShipping);
-                insertedShippingID = _sControl.AddShipping(dbShipping);
-            }
-            if (insertedShippingID > 0)
-            {
-                foundReturn = Ok(insertedShippingID);
-            }
-            else
-            {
-                foundReturn = new StatusCodeResult(500);
-            }
-            return foundReturn;
-        }
-
     }
 }

@@ -37,7 +37,7 @@ namespace ArmysalgDataTest
             Supplier supplierToCreate = new Supplier(name, address, zipCode, city, country, phone, email);
 
             //Act
-            int idOfInsertedSupplier = _supplierDatabaseAccess.CreateSupplier(supplierToCreate);
+            int idOfInsertedSupplier = _supplierDatabaseAccess.AddSupplier(supplierToCreate);
             Supplier supplierToRead = _supplierDatabaseAccess.GetSupplierById(idOfInsertedSupplier);
 
             extraOutput.WriteLine("LEVERANDØRINFO");
