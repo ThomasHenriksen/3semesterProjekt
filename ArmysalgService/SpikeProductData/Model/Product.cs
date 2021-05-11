@@ -12,7 +12,7 @@ namespace ArmysalgDataAccess.Model
         public int MinStock { get; set; }
         public int MaxStock { get; set; }
         public bool IsDeleted { get; set; }
-        public Price? Price { get; set; }
+        public Price Price { get; set; }
         public List<Category> Category { get; set; }
 
         // Constuct a product object.
@@ -36,7 +36,7 @@ namespace ArmysalgDataAccess.Model
         /// <param name="isDeleted"></param>
         /// <param name="price"></param>
         /// <param name="categories"></param>
-        public Product(string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price? price, List<Category> categories)
+        public Product(string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price price, List<Category> categories)
         {
 
             Name = name;
