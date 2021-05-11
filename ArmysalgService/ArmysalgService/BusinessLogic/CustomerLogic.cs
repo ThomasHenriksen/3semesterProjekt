@@ -48,7 +48,7 @@ namespace ArmysalgService.BusinessLogic
 
         // Find and return customer from database by customer number.
         /// <inheritdoc/>
-        public Customer GetCustomer(int customerNo)
+        public Customer GetCustomerByCustomerNo(int customerNo)
         {
             Customer foundCustomer;
             try
@@ -64,16 +64,15 @@ namespace ArmysalgService.BusinessLogic
 
         // Find and return customer from database by customer email.
         /// <inheritdoc/>
-        public Customer GetCustomer(string customerEmail)
+        public Customer GetCustomerByCustomerMail(string customerEmail)
         {
             Customer foundCustomer;
             try
             {
                 foundCustomer = _customerAccess.GetCustomerByCustomerEmail(customerEmail);
             }
-            catch (Exception e)
+            catch 
             {
-                string test = e.ToString();
                 foundCustomer = null;
             }
             return foundCustomer;

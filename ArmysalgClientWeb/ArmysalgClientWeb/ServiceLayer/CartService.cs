@@ -60,7 +60,6 @@ namespace ArmysalgClientWeb.ServiceLayer
             bool updatedOk;
 
             string useRestUrl = restUrl;
-            useRestUrl += "/" + cartToUpdate.Id;
 
             var uri = new Uri(string.Format(useRestUrl, string.Empty));
 

@@ -24,13 +24,13 @@ namespace ArmysalgService.Controllers
 
         /* Data retrieved from the database, is converted to eksternal 
          * format, evaluated and the an response must be sent back*/
-        // URL: api/Cart
+        // URL: api/Cart/1
         [HttpGet, Route("{CustomerNo}")]
         public ActionResult<CartdataReadDto> GetCustomer(int customerNo)
         {
             ActionResult<CartdataReadDto> foundReturn;
             // retrieve and convert data
-            Cart foundCart = _cartControl.GetCart(_customerController.GetCustomer(customerNo));
+            Cart foundCart = _cartControl.GetCart(_customerController.GetCustomerByCustomerNo(customerNo));
             CartdataReadDto foundDts = ModelConversion.CartdataReadDtoConvert.FromCart(foundCart);
             // evaluate
             if (foundDts != null)
@@ -61,7 +61,7 @@ namespace ArmysalgService.Controllers
             if (inCart != null)
             {
                 Cart dbCart = CartdataWriteDtoConvert.ToCart(inCart);
-                insertedId = _cartControl.AddCart(dbCart, _customerController.GetCustomer(customerNo));
+                insertedId = _cartControl.AddCart(dbCart, _customerController.GetCustomerByCustomerNo(customerNo));
             }
             if (insertedId > 0)
             {
@@ -74,9 +74,9 @@ namespace ArmysalgService.Controllers
             return foundReturn;
         }
 
-        // URL: api/Cart/3
-        [HttpPut, Route("{id}")]
-        public ActionResult<int> UpdateCart(int cartId, CartdataWriteDto inCart)
+        // URL: api/Cart
+        [HttpPut]
+        public ActionResult<int> UpdateCart(CartdataWriteDto inCart)
         {
 
             ActionResult<int> foundReturn;
@@ -84,7 +84,6 @@ namespace ArmysalgService.Controllers
             if (inCart != null)
             {
                 Cart dbCart = CartdataWriteDtoConvert.ToCart(inCart);
-                dbCart.Id = cartId;
                 _cartControl.UpdateCart(dbCart);
                 insertedId = dbCart.Id;
             }
@@ -105,7 +104,7 @@ namespace ArmysalgService.Controllers
         {
             ActionResult<bool> foundReturn;
             bool insertedId = false;
-            Cart findCart = _cartControl.GetCart(_customerController.GetCustomer(cartId));
+            Cart findCart = _cartControl.GetCart(_customerController.GetCustomerByCustomerNo(cartId));
             if (findCart != null)
             {
                 insertedId = _cartControl.DeleteCart(findCart.Id);

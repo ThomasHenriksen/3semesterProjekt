@@ -47,7 +47,7 @@ namespace ArmysalgService.Controllers
         {
             ActionResult<CustomerDataReadDto> foundReturn;
             // retrieve and convert data
-            Customer foundCustomer = _customerControl.GetCustomer(customerEmail);
+            Customer foundCustomer = _customerControl.GetCustomerByCustomerMail(customerEmail);
 
             CustomerDataReadDto foundDts = CustomerDataReadDtoConvert.FromCustomer(foundCustomer);
             // evaluate
