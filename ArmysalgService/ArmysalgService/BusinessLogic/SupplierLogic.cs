@@ -1,17 +1,14 @@
 ﻿using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.BusinessLogic
 {
     public class SupplierLogic : ISupplierLogic
     {
         ISupplierDatabaseAccess _suppliberAccess;
-        
+
         public SupplierLogic(IConfiguration inConfiguration)
         {
             _suppliberAccess = new SupplierDatabaseAccess(inConfiguration);
@@ -45,7 +42,7 @@ namespace ArmysalgService.BusinessLogic
             {
                 foundSuppliers = _suppliberAccess.GetAllSuppliers();
             }
-            catch 
+            catch
             {
                 foundSuppliers = null;
             }

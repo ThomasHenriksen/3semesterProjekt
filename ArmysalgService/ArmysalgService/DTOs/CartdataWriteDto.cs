@@ -1,15 +1,13 @@
 ﻿using ArmysalgDataAccess.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.DTOs
 {
     public class CartdataWriteDto
     {
 
-       
+
         public DateTime LastUpdated { get; set; }
         public List<SalesLineItem> SalesLineItems { get; set; }
 
@@ -18,7 +16,7 @@ namespace ArmysalgService.DTOs
         {
         }
 
-        public CartdataWriteDto(DateTime lastUpdated) 
+        public CartdataWriteDto(DateTime lastUpdated)
         {
             LastUpdated = lastUpdated;
         }

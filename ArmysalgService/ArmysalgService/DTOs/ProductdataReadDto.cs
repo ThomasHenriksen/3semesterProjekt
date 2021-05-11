@@ -1,8 +1,5 @@
 ﻿using ArmysalgDataAccess.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.DTOs
 {
@@ -23,7 +20,7 @@ namespace ArmysalgService.DTOs
         {
         }
 
-        public ProductdataReadDto(int id ,string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted , Price price, List<Category> categories)
+        public ProductdataReadDto(int id, string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price price, List<Category> categories)
         {
             Id = id;
             Name = name;

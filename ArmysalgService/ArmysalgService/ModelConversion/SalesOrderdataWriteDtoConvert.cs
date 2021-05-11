@@ -1,9 +1,5 @@
 ﻿using ArmysalgDataAccess.Model;
 using ArmysalgService.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.ModelConversion
 {
@@ -12,9 +8,9 @@ namespace ArmysalgService.ModelConversion
         public static SalesOrder ToSalesOrder(SalesOrderdataWriteDto inDto)
         {
             SalesOrder aSalesOrder = null;
-            if(inDto != null)
+            if (inDto != null)
             {
-                aSalesOrder = new SalesOrder(inDto.SalesDate, inDto.PaymentAmount, inDto.Status, inDto.SalesLineItem, inDto.Shipping, inDto.Employee, inDto.Customer); 
+                aSalesOrder = new SalesOrder(inDto.SalesDate, inDto.PaymentAmount, inDto.Status, inDto.SalesLineItem, inDto.Shipping, inDto.Employee, inDto.Customer);
             }
             return aSalesOrder;
         }

@@ -4,27 +4,24 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArmysalgDataAccess.Database
 {
     public class PriceDatabaseAccess : IPriceDatabaseAccess
     {
         readonly string _connectionString;
-        
+
         public PriceDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
-         
+
         }
 
         //For Test 
         public PriceDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
-          
+
         }
 
         public int CreatePrice(Price aPrice, Product product)
@@ -100,7 +97,7 @@ namespace ArmysalgDataAccess.Database
             return foundPrices;
 
         }
-        public List<Price> GetPriceByProductNo( int productNo)
+        public List<Price> GetPriceByProductNo(int productNo)
         {
             List<Price> foundPrices;
             Price readPrice;
@@ -169,7 +166,7 @@ namespace ArmysalgDataAccess.Database
             return foundPrice;
 
         }
-    
+
         public Price GetPriceById(int priceId)
         {
             Price foundPrice = null;
@@ -200,16 +197,17 @@ namespace ArmysalgDataAccess.Database
             decimal tempValue;
             DateTime tempStartDate;
             DateTime? tempEndDate = null;
-            
+
 
 
             tempId = priceReader.GetInt32(priceReader.GetOrdinal("id"));
             tempValue = priceReader.GetDecimal(priceReader.GetOrdinal("price"));
             tempStartDate = priceReader.GetDateTime(priceReader.GetOrdinal("startDate"));
-            if (!priceReader.IsDBNull(priceReader.GetOrdinal("endDate"))) {
+            if (!priceReader.IsDBNull(priceReader.GetOrdinal("endDate")))
+            {
                 tempEndDate = priceReader.GetDateTime(priceReader.GetOrdinal("endDate"));
             }
-            
+
 
 
             foundPrice = new Price(tempId, tempValue, tempStartDate, tempEndDate);

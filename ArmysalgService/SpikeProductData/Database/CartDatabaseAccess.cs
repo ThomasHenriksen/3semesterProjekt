@@ -4,9 +4,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArmysalgDataAccess.Database
 {
@@ -22,9 +19,9 @@ namespace ArmysalgDataAccess.Database
             _salelineitem = new SalesLineItemDatabaseAccess(configuration);
         }
 
-       /*
-         * Used for testing.
-        */
+        /*
+          * Used for testing.
+         */
         public CartDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;

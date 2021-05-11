@@ -4,10 +4,7 @@ using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.Controllers
 {
@@ -116,7 +113,7 @@ namespace ArmysalgService.Controllers
             {
                 Category dbCategory = CategoryDataWriteDtoConvert.ToCategory(inCategory);
                 _cControl.Put(dbCategory);
-                
+
                 insertedId = dbCategory.Id;
             }
             if (insertedId > 0)
@@ -129,26 +126,26 @@ namespace ArmysalgService.Controllers
             }
             return foundReturn;
         }
-    /*    // URL: api/Product/2
-        [HttpDelete, Route("{id}")]
-        public ActionResult<bool> DeleteCategory(int id)
-        {
-            ActionResult<bool> foundReturn;
-            bool insertedId = false;
-            Category findCategory = _cControl.Get(id);
-            if (findCategory != null)
+        /*    // URL: api/Product/2
+            [HttpDelete, Route("{id}")]
+            public ActionResult<bool> DeleteCategory(int id)
             {
-                insertedId = _cControl.Delete(findCategory.Id);
-            }
-            if (insertedId == true)
-            {
-                foundReturn = Ok(insertedId);
-            }
-            else
-            {
-                foundReturn = new StatusCodeResult(500);
-            }
-            return foundReturn;
-        }*/
+                ActionResult<bool> foundReturn;
+                bool insertedId = false;
+                Category findCategory = _cControl.Get(id);
+                if (findCategory != null)
+                {
+                    insertedId = _cControl.Delete(findCategory.Id);
+                }
+                if (insertedId == true)
+                {
+                    foundReturn = Ok(insertedId);
+                }
+                else
+                {
+                    foundReturn = new StatusCodeResult(500);
+                }
+                return foundReturn;
+            }*/
     }
 }

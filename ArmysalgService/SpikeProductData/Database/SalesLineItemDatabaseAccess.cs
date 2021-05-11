@@ -1,13 +1,8 @@
 ﻿using ArmysalgDataAccess.Model;
 using Dapper;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
 {
@@ -27,26 +22,26 @@ namespace ArmysalgDataAccess.Database
         public int CreateSalesLineItem(SalesLineItem aSalesLineItem, Cart aCart)
         {
             int insertedId = -1;
-         
-                string insertString = "insert into SalesLineItem (quantity, cart_id_fk, productNo_fk) OUTPUT INSERTED.id values (@Quantity, @CartId, @ProductId)";
+
+            string insertString = "insert into SalesLineItem (quantity, cart_id_fk, productNo_fk) OUTPUT INSERTED.id values (@Quantity, @CartId, @ProductId)";
 
 
-                using (SqlConnection con = new SqlConnection(_connectionString))
-                using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
-                {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
+            {
 
-                    SqlParameter nameParam = new SqlParameter("@Quantity", aSalesLineItem.Quantity);
-                    CreateCommand.Parameters.Add(nameParam);
-                    SqlParameter cartIdParam = new SqlParameter("@CartId", aCart.Id);
-                    CreateCommand.Parameters.Add(cartIdParam);
-                    SqlParameter ProductIdParam = new SqlParameter("@ProductId", aSalesLineItem.Products.Id);
-                    CreateCommand.Parameters.Add(ProductIdParam);
+                SqlParameter nameParam = new SqlParameter("@Quantity", aSalesLineItem.Quantity);
+                CreateCommand.Parameters.Add(nameParam);
+                SqlParameter cartIdParam = new SqlParameter("@CartId", aCart.Id);
+                CreateCommand.Parameters.Add(cartIdParam);
+                SqlParameter ProductIdParam = new SqlParameter("@ProductId", aSalesLineItem.Products.Id);
+                CreateCommand.Parameters.Add(ProductIdParam);
 
-                    con.Open();
-                    insertedId = (int)CreateCommand.ExecuteScalar();
+                con.Open();
+                insertedId = (int)CreateCommand.ExecuteScalar();
 
-                }
-            
+            }
+
 
             return insertedId;
         }

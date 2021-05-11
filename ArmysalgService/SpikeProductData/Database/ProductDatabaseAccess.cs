@@ -1,12 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using ArmysalgDataAccess.Model;
+﻿using ArmysalgDataAccess.Model;
+using Dapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
-using Dapper;
 using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
@@ -276,7 +273,8 @@ namespace ArmysalgDataAccess.Database
             {
                 tempIsDeleted = productReader.GetBoolean(productReader.GetOrdinal("isDeleted"));
             }
-            else {
+            else
+            {
                 tempIsDeleted = false;
             }
 
@@ -288,7 +286,7 @@ namespace ArmysalgDataAccess.Database
                 tempEndDate = productReader.GetDateTime(productReader.GetOrdinal("endDate"));
             }
 
-          //  tempCategory = GetAllCategoryForProduct(tempId);
+            //  tempCategory = GetAllCategoryForProduct(tempId);
             foundPrice = new Price(tempPriceId, tempValue, tempStartDate, tempEndDate);
             foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, foundPrice, tempCategory);
 

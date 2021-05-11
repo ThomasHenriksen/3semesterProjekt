@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using ArmysalgDataAccess.Database;
+﻿using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
+using Microsoft.Extensions.Configuration;
+using System;
 
 namespace ArmysalgService.BusinessLogic
 {
@@ -39,7 +36,7 @@ namespace ArmysalgService.BusinessLogic
                 {
                     _cartLogic.AddCart(newCustomer.Cart, newCustomer);
                 }
-                
+
                 //Add customer to AspNetUser
                 if (_customerAccess.CustomerHasAspNetUser(newCustomer))
                 {
@@ -79,7 +76,7 @@ namespace ArmysalgService.BusinessLogic
             {
                 foundCustomer = _customerAccess.GetCustomerByCustomerEmail(customerEmailToMatch);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 string test = e.ToString();
                 foundCustomer = null;

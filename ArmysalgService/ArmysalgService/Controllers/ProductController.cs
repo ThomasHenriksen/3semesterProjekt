@@ -1,11 +1,10 @@
-﻿using ArmysalgService.BusinessLogic;
+﻿using ArmysalgDataAccess.Model;
+using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
-using ArmysalgDataAccess.Model;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ArmysalgService.Controllers
 {

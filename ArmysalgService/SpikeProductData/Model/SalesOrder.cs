@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArmysalgDataAccess.Model
 {
@@ -22,13 +19,13 @@ namespace ArmysalgDataAccess.Model
 
         }
 
-        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItems) 
+        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItems)
         {
             SalesDate = salesDate;
             PaymentAmount = paymentAmount;
             Status = status;
             SalesLineItem = salesLineItems;
-            
+
         }
 
         public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping? shippingId, Employee? employeeId, Customer? customerId)
@@ -52,13 +49,13 @@ namespace ArmysalgDataAccess.Model
             Customer = customerId;
         }
 
-        public SalesOrder(int salesNo, DateTime date, decimal paymentAmount, SalesOrderStatus status) 
+        public SalesOrder(int salesNo, DateTime date, decimal paymentAmount, SalesOrderStatus status)
         {
             SalesNo = salesNo;
             SalesDate = date;
             PaymentAmount = paymentAmount;
             Status = status;
-            
+
         }
     }
 }

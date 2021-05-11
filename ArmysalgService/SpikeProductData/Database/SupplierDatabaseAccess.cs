@@ -1,11 +1,7 @@
 ﻿using ArmysalgDataAccess.Model;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
@@ -19,9 +15,9 @@ namespace ArmysalgDataAccess.Database
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
         }
 
-       /*
-        * Used for testing.
-        */
+        /*
+         * Used for testing.
+         */
         public SupplierDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;

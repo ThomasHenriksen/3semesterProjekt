@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ArmysalgDataAccess.Model
 {
@@ -17,12 +13,12 @@ namespace ArmysalgDataAccess.Model
         {
 
         }
-        public Category(string name , string description)
+        public Category(string name, string description)
         {
             Name = name;
             Description = description;
         }
-        public Category( int id, string name, string description)
+        public Category(int id, string name, string description)
         {
             Id = id;
             Name = name;
@@ -30,7 +26,7 @@ namespace ArmysalgDataAccess.Model
         }
         public Category(string name, string description, List<Product> productCateGory)
         {
-           
+
             Name = name;
             Description = description;
             ProductCategory = productCateGory;

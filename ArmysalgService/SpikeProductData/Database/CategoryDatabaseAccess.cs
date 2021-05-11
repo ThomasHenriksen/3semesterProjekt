@@ -4,9 +4,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace ArmysalgDataAccess.Database
@@ -18,14 +15,14 @@ namespace ArmysalgDataAccess.Database
         public CategoryDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
-           
+
         }
 
         //For Test 
         public CategoryDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
-        
+
         }
 
         public int CreateCategory(Category aCategory)
@@ -63,23 +60,23 @@ namespace ArmysalgDataAccess.Database
         private void CreateProductCategory(int insertedId, Product aProduct)
         {
             string insertString = "insert into ProductCategory (category_id_fk, productNo_fk) values (@categoryId, @productNo)";
-          
-                if (!CheckProductCategory(insertedId, aProduct))
+
+            if (!CheckProductCategory(insertedId, aProduct))
+            {
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
                 {
-                    using (SqlConnection con = new SqlConnection(_connectionString))
-                    using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
-                    {
-                        SqlParameter nameParam = new SqlParameter("@categoryId", insertedId);
-                        CreateCommand.Parameters.Add(nameParam);
-                        SqlParameter descParam = new SqlParameter("@productNo", aProduct.Id);
-                        CreateCommand.Parameters.Add(descParam);
+                    SqlParameter nameParam = new SqlParameter("@categoryId", insertedId);
+                    CreateCommand.Parameters.Add(nameParam);
+                    SqlParameter descParam = new SqlParameter("@productNo", aProduct.Id);
+                    CreateCommand.Parameters.Add(descParam);
 
-                        con.Open();
-                        CreateCommand.ExecuteScalar();
+                    con.Open();
+                    CreateCommand.ExecuteScalar();
 
-                    }
                 }
-           
+            }
+
         }
         private bool CheckProductCategory(int insertedId, Product aProduct)
         {
@@ -88,25 +85,25 @@ namespace ArmysalgDataAccess.Database
 
             bool exiting = false;
 
-          
-                using (SqlConnection con = new SqlConnection(_connectionString))
-                using (SqlCommand readCommand = new SqlCommand(queryString, con))
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParamCategoryId = new SqlParameter("@categoryId", insertedId);
+                readCommand.Parameters.Add(idParamCategoryId);
+                SqlParameter idParamProductNo = new SqlParameter("@productNo", aProduct.Id);
+                readCommand.Parameters.Add(idParamProductNo);
+                con.Open();
+
+                SqlDataReader reader = readCommand.ExecuteReader();
+                if (reader.HasRows)
                 {
-                    SqlParameter idParamCategoryId = new SqlParameter("@categoryId", insertedId);
-                    readCommand.Parameters.Add(idParamCategoryId);
-                    SqlParameter idParamProductNo = new SqlParameter("@productNo", aProduct.Id);
-                    readCommand.Parameters.Add(idParamProductNo);
-                    con.Open();
-
-                    SqlDataReader reader = readCommand.ExecuteReader();
-                    if (reader.HasRows)
-                    {
-                        exiting = true;
-                    }
+                    exiting = true;
                 }
+            }
 
-           
-         
+
+
             return exiting;
         }
         public List<Category> GetCategorysAll()
@@ -184,7 +181,7 @@ namespace ArmysalgDataAccess.Database
             }
             return (numRowsUpdated == 1);
         }
-       
+
         private List<Product> GetAllProductsForACategory(int categoryId)
         {
 
@@ -272,7 +269,7 @@ namespace ArmysalgDataAccess.Database
                 tempEndDate = productReader.GetDateTime(productReader.GetOrdinal("endDate"));
             }
 
-         
+
             foundPrice = new Price(tempPriceId, tempValue, tempStartDate, tempEndDate);
             foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, foundPrice);
 

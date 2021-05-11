@@ -1,9 +1,6 @@
 ﻿using ArmysalgDataAccess.Model;
 using ArmysalgService.DTOs;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.ModelConversion
 {
@@ -29,18 +26,18 @@ namespace ArmysalgService.ModelConversion
                     aSalesOrderReadDtoList.Add(tempDto);
                 }
             }
-                return aSalesOrderReadDtoList;
+            return aSalesOrderReadDtoList;
         }
 
         public static SalesOrderdataReadDto FromSalesOrder(SalesOrder inSalesOrder)
         {
-                SalesOrderdataReadDto aSalesOrderReadDto = null;
-                if (inSalesOrder != null)
-                {
-                    aSalesOrderReadDto = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem, inSalesOrder.Shipping, inSalesOrder.Employee, inSalesOrder.Customer);
-                }
-                return aSalesOrderReadDto;
+            SalesOrderdataReadDto aSalesOrderReadDto = null;
+            if (inSalesOrder != null)
+            {
+                aSalesOrderReadDto = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem, inSalesOrder.Shipping, inSalesOrder.Employee, inSalesOrder.Customer);
+            }
+            return aSalesOrderReadDto;
         }
-        
+
     }
 }

@@ -1,9 +1,6 @@
 ﻿using ArmysalgDataAccess.Model;
 using ArmysalgService.DTOs;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.ModelConversion
 {
@@ -18,7 +15,7 @@ namespace ArmysalgService.ModelConversion
             }
             return aSupplierReadDto;
         }
-        
+
         public static List<SupplierDataReadDto> FromSupplierCollection(List<Supplier> suppliers)
         {
             List<SupplierDataReadDto> anSupplierCollection = null;

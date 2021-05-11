@@ -1,8 +1,6 @@
 ﻿using ArmysalgDataAccess.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.DTOs
 {
@@ -23,7 +21,7 @@ namespace ArmysalgService.DTOs
 
         public SalesOrderdataWriteDto(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem)
         {
-            
+
             SalesDate = salesDate;
             PaymentAmount = paymentAmount;
             Status = status;

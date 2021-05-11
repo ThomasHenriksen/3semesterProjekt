@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ArmysalgDataAccess.Model;
+﻿using ArmysalgDataAccess.Model;
 
 namespace ArmysalgService.BusinessLogic
 {
@@ -11,6 +7,6 @@ namespace ArmysalgService.BusinessLogic
         Customer GetCustomer(int customerNo);
         Customer GetCustomer(string customerEmailToMatch);
         int AddCustomer(Customer customerToAdd);
-        
+
     }
 }

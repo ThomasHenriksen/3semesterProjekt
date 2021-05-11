@@ -1,9 +1,5 @@
-﻿using ArmysalgService.DTOs;
-using ArmysalgDataAccess.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ArmysalgDataAccess.Model;
+using ArmysalgService.DTOs;
 
 namespace ArmysalgService.ModelConversion
 {

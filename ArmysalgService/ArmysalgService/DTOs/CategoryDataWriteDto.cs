@@ -1,14 +1,11 @@
 ﻿using ArmysalgDataAccess.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.DTOs
 {
     public class CategoryDataWriteDto
     {
-       
+
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -23,9 +20,9 @@ namespace ArmysalgService.DTOs
             Description = description;
         }
 
-        public CategoryDataWriteDto( string name, string description, List<Product> productCateGory)
+        public CategoryDataWriteDto(string name, string description, List<Product> productCateGory)
         {
-        
+
             Name = name;
             Description = description;
             ProductCategory = productCateGory;

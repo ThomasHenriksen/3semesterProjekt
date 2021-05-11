@@ -1,12 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using ArmysalgDataAccess.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ArmysalgDataAccess.Model;
+using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
-using Dapper;
 
 namespace ArmysalgDataAccess.Database
 {
@@ -113,11 +107,11 @@ namespace ArmysalgDataAccess.Database
             }
         }
 
-       /* Three possible returns:
-        * A Customer object
-        * An empty Customer object (no match on customerNo)
-        * Null - Some error occurred
-        */
+        /* Three possible returns:
+         * A Customer object
+         * An empty Customer object (no match on customerNo)
+         * Null - Some error occurred
+         */
         public Customer GetCustomerByCustomerNo(int? findCustomerNo)
         {
             Customer foundCustomer = null;

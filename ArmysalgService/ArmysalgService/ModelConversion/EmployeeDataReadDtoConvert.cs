@@ -1,9 +1,6 @@
 ﻿using ArmysalgDataAccess.Model;
 using ArmysalgService.DTOs;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.ModelConversion
 {
@@ -19,14 +16,14 @@ namespace ArmysalgService.ModelConversion
             return aEmployeeReadDto;
         }
 
-        public static List<EmployeeDataReadDto> FromEmployeeCollection(List<Employee> employees) 
+        public static List<EmployeeDataReadDto> FromEmployeeCollection(List<Employee> employees)
         {
             List<EmployeeDataReadDto> anEmployeeCollection = null;
-            if(employees != null)
+            if (employees != null)
             {
                 anEmployeeCollection = new List<EmployeeDataReadDto>();
                 EmployeeDataReadDto tempDto;
-                foreach(Employee anEmployee in employees)
+                foreach (Employee anEmployee in employees)
                 {
                     tempDto = FromEmployee(anEmployee);
                     anEmployeeCollection.Add(tempDto);

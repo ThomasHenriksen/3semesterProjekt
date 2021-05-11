@@ -4,10 +4,7 @@ using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.Controllers
 {
@@ -41,9 +38,9 @@ namespace ArmysalgService.Controllers
 
             SalesOrderdataReadDto foundDts = SalesOrderdataReadDtoConvert.FromSalesOrder(foundSalesOrder);
 
-            if(foundDts != null)
+            if (foundDts != null)
             {
-                if(foundDts != null)
+                if (foundDts != null)
                 {
                     foundReturn = Ok(foundDts);             // Statuscode 200
                 }
@@ -65,12 +62,12 @@ namespace ArmysalgService.Controllers
         {
             ActionResult<int> foundReturn;
             int insertedSalesNo = -1;
-            if(inSalesOrder != null)
+            if (inSalesOrder != null)
             {
                 SalesOrder dbSalesOrder = SalesOrderdataWriteDtoConvert.ToSalesOrder(inSalesOrder);
                 insertedSalesNo = _salesOrderLogíc.AddSalesOrder(dbSalesOrder);
             }
-            if (insertedSalesNo > 0) 
+            if (insertedSalesNo > 0)
             {
                 foundReturn = Ok(insertedSalesNo);
             }

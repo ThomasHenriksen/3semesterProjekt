@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using ArmysalgDataAccess.Database;
+﻿using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.BusinessLogic
 {
@@ -54,7 +52,7 @@ namespace ArmysalgService.BusinessLogic
          */
         public Product Get(int idToMatch)
         {
-            return _productAccess.GetProductById(idToMatch); 
+            return _productAccess.GetProductById(idToMatch);
         }
         /*
            *  this method is use to find all products in the database where IsDelete is false 

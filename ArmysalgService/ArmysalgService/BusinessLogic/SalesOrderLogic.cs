@@ -3,8 +3,6 @@ using ArmysalgDataAccess.Model;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgService.BusinessLogic
 {
@@ -24,7 +22,7 @@ namespace ArmysalgService.BusinessLogic
             {
                 insertedSalesNo = _salesOrderAccess.CreateSalesOrder(salesOrderToAdd);
             }
-            catch 
+            catch
             {
                 insertedSalesNo = -1;
             }
@@ -43,7 +41,7 @@ namespace ArmysalgService.BusinessLogic
             {
                 foundSalesOrder = _salesOrderAccess.GetSalesOrderById(salesNoToMatch);
             }
-            catch 
+            catch
             {
                 foundSalesOrder = null;
             }

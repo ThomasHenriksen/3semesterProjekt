@@ -1,17 +1,15 @@
-﻿using ArmysalgService.BusinessLogic;
+﻿using ArmysalgDataAccess.Model;
+using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using ArmysalgDataAccess.Model;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ArmysalgService.Controllers
 {
     [Route("api/Cart")]
     [ApiController]
-   // [Authorize]
+    // [Authorize]
     public class CartController : ControllerBase
     {
         private readonly ICartLogic _cartControl;
@@ -55,7 +53,7 @@ namespace ArmysalgService.Controllers
             return foundReturn;
         }
 
-      
+
 
         // URL: api/Product
         [HttpPost, Route("{CustomerNo}")]

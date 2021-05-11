@@ -1,8 +1,4 @@
-﻿using ArmysalgDataAccess.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace ArmysalgService.DTOs
 {
@@ -11,7 +7,7 @@ namespace ArmysalgService.DTOs
         public decimal Value { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-       
+
         public PriceDataWriteDto(decimal value, DateTime startDate, DateTime? endDate)
         {
             Value = value;
@@ -20,7 +16,7 @@ namespace ArmysalgService.DTOs
             {
                 EndDate = endDate;
             }
-           
+
         }
     }
 }

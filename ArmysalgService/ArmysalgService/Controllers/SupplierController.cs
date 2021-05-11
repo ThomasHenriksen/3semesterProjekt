@@ -55,7 +55,7 @@ namespace ArmysalgService.Controllers
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
-            if(inSupplier != null)
+            if (inSupplier != null)
             {
                 Supplier dbSupplier = SupplierDataWriteDtoConvert.ToSupplier(inSupplier);
                 insertedId = _supplierLogic.CreateSupplier(dbSupplier);
@@ -70,6 +70,6 @@ namespace ArmysalgService.Controllers
             }
             return foundReturn;
         }
-    
+
     }
 }

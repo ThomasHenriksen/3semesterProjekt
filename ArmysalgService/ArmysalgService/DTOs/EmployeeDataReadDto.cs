@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ArmysalgService.DTOs
+﻿namespace ArmysalgService.DTOs
 {
     public class EmployeeDataReadDto : PersondataReadDto
-        {
+    {
         public int EmployeeNo { get; set; }
         public double Salary { get; set; }
         public string Position { get; set; }

@@ -1,13 +1,9 @@
-﻿using ArmysalgService.BusinessLogic;
+﻿using ArmysalgDataAccess.Model;
+using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ArmysalgDataAccess.Model;
 
 namespace ArmysalgService.Controllers
 {
@@ -25,33 +21,33 @@ namespace ArmysalgService.Controllers
         }
 
         // URL: api/customer/{customerNo}
-   /*     [HttpGet, Route("{customerNo}")]
-        public ActionResult<CustomerdataReadDto> Get(int customerNo)
-        {
-            ActionResult<CustomerdataReadDto> foundReturn;
-            // retrieve and convert data
-            Customer foundCustomer = _customerControl.GetCustomer(customerNo);
+        /*     [HttpGet, Route("{customerNo}")]
+             public ActionResult<CustomerdataReadDto> Get(int customerNo)
+             {
+                 ActionResult<CustomerdataReadDto> foundReturn;
+                 // retrieve and convert data
+                 Customer foundCustomer = _customerControl.GetCustomer(customerNo);
 
-            CustomerdataReadDto foundDts = ModelConversion.CustomerdataReadDtoConvert.FromCustomer(foundCustomer);
-            // evaluate
-            if (foundDts != null)
-            {
-                if (foundDts != null)
-                {
-                    foundReturn = Ok(foundDts);         //Statuscode 200
-                }
-                else
-                {
-                    foundReturn = new StatusCodeResult(204);    //Ok, but no content
-                }
-            }
-            else
-            {
-                foundReturn = new StatusCodeResult(500);        //Server error
-            }
-            // send response back to client
-            return foundReturn;
-        }*/
+                 CustomerdataReadDto foundDts = ModelConversion.CustomerdataReadDtoConvert.FromCustomer(foundCustomer);
+                 // evaluate
+                 if (foundDts != null)
+                 {
+                     if (foundDts != null)
+                     {
+                         foundReturn = Ok(foundDts);         //Statuscode 200
+                     }
+                     else
+                     {
+                         foundReturn = new StatusCodeResult(204);    //Ok, but no content
+                     }
+                 }
+                 else
+                 {
+                     foundReturn = new StatusCodeResult(500);        //Server error
+                 }
+                 // send response back to client
+                 return foundReturn;
+             }*/
         [HttpGet, Route("{customerEmail}")]
         public ActionResult<CustomerdataReadDto> Get(string customerEmail)
         {
