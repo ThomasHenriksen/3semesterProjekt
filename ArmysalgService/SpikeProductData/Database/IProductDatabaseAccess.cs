@@ -23,7 +23,7 @@ namespace ArmysalgDataAccess.Database
         /// <returns>
         /// product object.
         /// </returns>
-        /// <param name="ProductNo">Product number.</param>
+        /// <param name="ProductNo">product number.</param>
         Product GetProductByProductNo(int ProductNo);
 
         // Find and return all product from database.
@@ -52,8 +52,8 @@ namespace ArmysalgDataAccess.Database
         /// <returns>
         /// Bool statement whether product was deleted or not.
         /// </returns>
-        /// <param name="aProduct">product object.</param>
-        bool DeleteProductById(int id);
+        /// <param name="productNo">product number.</param>
+        bool DeleteProductByProductNo(int productNo);
 
 
     }

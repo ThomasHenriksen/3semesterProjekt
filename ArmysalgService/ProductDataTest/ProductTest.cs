@@ -43,7 +43,7 @@ namespace ProductDataTest
             //Act
             int productIdOfInsertedProduct = _productDatabaseAccess.AddProduct(productToCreate);
             productToCreate.Id = productIdOfInsertedProduct;
-            int idOfInsertedPrice = _priceDatabaseAccess.CreatePriceWithOutEndDate(priceToTest, productToCreate);
+            int idOfInsertedPrice = _priceDatabaseAccess.AddPrice(priceToTest, productToCreate);
             Product productToRead = _productDatabaseAccess.GetProductByProductNo(productIdOfInsertedProduct);
 
             extraOutput.WriteLine("PRODUKTINFO");
@@ -65,7 +65,7 @@ namespace ProductDataTest
             Assert.Equal(productToCreate.IsDeleted.ToString(), productToRead.IsDeleted.ToString());
 
             //CleanUp
-            _productDatabaseAccess.DeleteProductById(productIdOfInsertedProduct);
+            _productDatabaseAccess.DeleteProductByProductNo(productIdOfInsertedProduct);
             _priceDatabaseAccess.DeletePriceById(idOfInsertedPrice);
         }
     }

@@ -5,9 +5,24 @@ namespace ArmysalgService.BusinessLogic
 {
     public interface IPriceLogic
     {
+        // Find and return price from database by price id.
+        /// <summary>
+        /// Find and return price from database by price id.
+        /// </summary>
+        /// <returns>
+        /// price object.
+        /// </returns>
+        /// <param name="priceId">price number.</param>
         int Add(Price newPrice, Product product);
-        Price Get(int idToMatch);
-        List<Price> GetAll(int idToMatch);
-        bool Put(Price PriceToUpdate);
+
+        // Update a price in the database.
+        /// <summary>
+        /// Update a price in the database.
+        /// </summary>
+        /// <returns>
+        ///  Bool statement whether price has be updated or not.
+        /// </returns>
+        /// <param name="aPrice">price object.</param>
+        bool Put(Price aPrice);
     }
 }

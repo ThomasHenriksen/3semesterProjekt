@@ -265,7 +265,7 @@ namespace ArmysalgDataAccess.Database
 
         // Delete product from database based on product object.
         /// <inheritdoc/>
-        public bool DeleteProductById(int id)
+        public bool DeleteProductByProductNo(int id)
         {
             int numRowsUpdated = 0;
             string queryString = "UPDATE Product SET  isDeleted = @inIsDelete from Product where productNo = @Id";
@@ -287,7 +287,7 @@ namespace ArmysalgDataAccess.Database
         /// Build and return product object based on SQL data read.
         /// </summary>
         /// <returns>
-        /// Customer object.
+        /// product object.
         /// </returns>
         /// <param name="productReader">SQL data read.</param>
         private Product GetProductFromReader(SqlDataReader productReader)

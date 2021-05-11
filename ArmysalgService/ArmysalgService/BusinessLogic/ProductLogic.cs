@@ -60,7 +60,7 @@ namespace ArmysalgService.BusinessLogic
         /// <inheritdoc/>
         public bool Delete(int idToMatch)
         {
-            return _productAccess.DeleteProductById(idToMatch);
+            return _productAccess.DeleteProductByProductNo(idToMatch);
         }
     }
 }

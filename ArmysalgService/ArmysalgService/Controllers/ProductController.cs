@@ -13,13 +13,13 @@ namespace ArmysalgService.Controllers
     // [Authorize]
     public class ProductController : ControllerBase
     {
-        private readonly IProductLogic _pControl;
+        private readonly IProductLogic _productLogic;
         private readonly IConfiguration _configuration;
 
         public ProductController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _pControl = new ProductLogic(_configuration);
+            _productLogic = new ProductLogic(_configuration);
         }
 
 
@@ -31,7 +31,7 @@ namespace ArmysalgService.Controllers
         {
             ActionResult<List<ProductdataReadDto>> foundReturn;
             // retrieve and convert data
-            List<Product> foundProducts = _pControl.Get();
+            List<Product> foundProducts = _productLogic.Get();
             List<ProductdataReadDto> foundDts = ModelConversion.ProductdataReadDtoConvert.FromProductCollection(foundProducts);
             // evaluate
             if (foundDts != null)
@@ -59,7 +59,7 @@ namespace ArmysalgService.Controllers
         {
             ActionResult<ProductdataReadDto> foundReturn;
             // retrieve and convert data
-            Product foundProducts = _pControl.Get(id);
+            Product foundProducts = _productLogic.Get(id);
 
             ProductdataReadDto foundDts = ModelConversion.ProductdataReadDtoConvert.FromProduct(foundProducts);
             // evaluate
@@ -91,7 +91,7 @@ namespace ArmysalgService.Controllers
             if (inProduct != null)
             {
                 Product dbProduct = ProductdataWriteDtoConvert.ToProduct(inProduct);
-                insertedId = _pControl.Add(dbProduct);
+                insertedId = _productLogic.Add(dbProduct);
             }
             if (insertedId > 0)
             {
@@ -114,7 +114,7 @@ namespace ArmysalgService.Controllers
             {
                 Product dbProduct = ProductdataWriteDtoConvert.ToProduct(inProduct);
                 dbProduct.Id = id;
-                _pControl.Put(dbProduct);
+                _productLogic.Put(dbProduct);
                 insertedId = dbProduct.Id;
             }
             if (insertedId > 0)
@@ -133,10 +133,10 @@ namespace ArmysalgService.Controllers
         {
             ActionResult<bool> foundReturn;
             bool insertedId = false;
-            Product findProduct = _pControl.Get(id);
+            Product findProduct = _productLogic.Get(id);
             if (findProduct != null)
             {
-                insertedId = _pControl.Delete(findProduct.Id);
+                insertedId = _productLogic.Delete(findProduct.Id);
             }
             if (insertedId == true)
             {

@@ -47,7 +47,7 @@ namespace ArmysalgDataTest
             //Act
             int idOfInsertedProduct = _productDatabaseAccess.AddProduct(productToCreate);
             productToCreate.Id = idOfInsertedProduct;
-            int idOfInsertedPrice = _priceDatabaseAccess.CreatePriceWithOutEndDate(priceToCreate, productToCreate);
+            int idOfInsertedPrice = _priceDatabaseAccess.AddPrice(priceToCreate, productToCreate);
             Price priceToRead = _priceDatabaseAccess.GetPriceById(idOfInsertedPrice);
 
             extraOutput.WriteLine("PRIS");
@@ -62,7 +62,7 @@ namespace ArmysalgDataTest
 
             //CleanUp
             _priceDatabaseAccess.DeletePriceById(idOfInsertedPrice);
-            _productDatabaseAccess.DeleteProductById(idOfInsertedProduct);
+            _productDatabaseAccess.DeleteProductByProductNo(idOfInsertedProduct);
         }
     }
 }

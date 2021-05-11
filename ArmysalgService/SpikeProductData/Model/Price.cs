@@ -10,9 +10,19 @@ namespace ArmysalgDataAccess.Model
         public DateTime? EndDate { get; set; }
 
 
-
+        // Constuct a price object.
+        /// <summary>
+        /// Constuct a price object.
+        /// </summary>
         public Price() { }
 
+        // Constuct a price object.
+        /// <summary>
+        /// Constuct a price object.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
         public Price(decimal value, DateTime startDate, DateTime? endDate)
         {
             Value = value;
@@ -20,13 +30,15 @@ namespace ArmysalgDataAccess.Model
             EndDate = endDate;
 
         }
-        public Price(int id, decimal value, DateTime startDate)
-        {
-            Id = id;
-            Value = value;
-            StartDate = startDate;
 
-        }
+        // Constuct a price object.
+        /// <summary>
+        /// Constuct a price object.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
         public Price(int id, decimal value, DateTime startDate, DateTime? endDate)
         {
             Id = id;

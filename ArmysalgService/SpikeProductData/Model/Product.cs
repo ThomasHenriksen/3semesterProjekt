@@ -15,7 +15,10 @@ namespace ArmysalgDataAccess.Model
         public Price? Price { get; set; }
         public List<Category> Category { get; set; }
 
-
+        // Constuct a product object.
+        /// <summary>
+        /// Constuct a product object.
+        /// </summary>
         public Product()
         {
         }
