@@ -71,9 +71,8 @@ namespace ArmysalgService.BusinessLogic
             {
                 foundCustomer = _customerAccess.GetCustomerByCustomerEmail(customerEmail);
             }
-            catch (Exception e)
+            catch 
             {
-                string test = e.ToString();
                 foundCustomer = null;
             }
             return foundCustomer;
