@@ -26,10 +26,10 @@ namespace ArmysalgService.Controllers
         public ActionResult<List<SupplierDataReadDto>> GetAllSuppliers()
         {
             ActionResult<List<SupplierDataReadDto>> foundReturn;
-            //retrieve and convert data
+
+            // Retrieve and convert data
             List<Supplier> foundSuppliers = _supplierLogic.GetAllSuppliers();
             List<SupplierDataReadDto> foundDto = ModelConversion.SupplierDataReadDtoConvert.FromSupplierCollection(foundSuppliers);
-            // evaluate
 
             if (foundDto != null)
             {
@@ -55,21 +55,21 @@ namespace ArmysalgService.Controllers
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
+
             if (inSupplier != null)
             {
                 Supplier dbSupplier = SupplierDataWriteDtoConvert.ToSupplier(inSupplier);
-                insertedId = _supplierLogic.CreateSupplier(dbSupplier);
+                insertedId = _supplierLogic.AddSupplier(dbSupplier);
             }
             if (insertedId > 0)
             {
-                foundReturn = Ok(insertedId);
+                foundReturn = Ok(insertedId);               //Statuscode 200
             }
             else
             {
-                foundReturn = new StatusCodeResult(500);
+                foundReturn = new StatusCodeResult(500);    //Server error    
             }
             return foundReturn;
         }
-
     }
 }
