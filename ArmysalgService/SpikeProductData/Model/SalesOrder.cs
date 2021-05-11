@@ -10,9 +10,9 @@ namespace ArmysalgDataAccess.Model
         public decimal PaymentAmount { get; set; }
         public SalesOrderStatus Status { get; set; }
         public List<SalesLineItem> SalesLineItems { get; set; }
-        public Shipping? Shipping { get; set; }
-        public Employee? Employee { get; set; }
-        public Customer? Customer { get; set; }
+        public Shipping Shipping { get; set; }
+        public Employee Employee { get; set; }
+        public Customer Customer { get; set; }
 
         public SalesOrder()
         {
@@ -47,7 +47,7 @@ namespace ArmysalgDataAccess.Model
         /// <param name="shippingId">Shipping ID of salesOrder</param>
         /// <param name="employeeId">Employee ID of salesOrder</param>
         /// <param name="customerId">Customer ID of salesOrder</param>
-        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItems, Shipping? shippingId, Employee? employeeId, Customer? customerId)
+        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItems, Shipping shippingId, Employee employeeId, Customer customerId)
         {
             SalesDate = salesDate;
             PaymentAmount = paymentAmount;
@@ -70,7 +70,7 @@ namespace ArmysalgDataAccess.Model
         /// <param name="shippingId">Shipping ID of salesOrder</param>
         /// <param name="employeeId">Employee ID of salesOrder</param>
         /// <param name="customerId">Customer ID of salesOrder</param>
-        public SalesOrder(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItems, Shipping? shippingId, Employee? employeeId, Customer? customerId) : this(salesNo, salesDate, paymentAmount, status)
+        public SalesOrder(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItems, Shipping shippingId, Employee employeeId, Customer customerId) : this(salesNo, salesDate, paymentAmount, status)
         {
             SalesLineItems = salesLineItems;
             Shipping = shippingId;
