@@ -16,31 +16,27 @@ namespace ArmysalgService.BusinessLogic
             _cartLogic = new CartLogic(inConfiguration);
         }
 
-        /*
-         *  Create a new customer in the database
-         *  @param newCustomer
-         *  
-         *  @return insertedCustomerNo
-         */
-        public int AddCustomer(Customer newCustomer)
+        // Add a new customer in the database.
+        /// <inheritdoc/>
+        public int AddCustomer(Customer addCustomer)
         {
             int insertedCustomerNo;
 
             try
             {
-                insertedCustomerNo = _customerAccess.CreateCustomer(newCustomer);
-                newCustomer.CustomerNo = insertedCustomerNo;
+                insertedCustomerNo = _customerAccess.AddCustomer(addCustomer);
+                addCustomer.CustomerNo = insertedCustomerNo;
 
                 //Add cart to customer
-                if (newCustomer.Cart != null)
+                if (addCustomer.Cart != null)
                 {
-                    _cartLogic.AddCart(newCustomer.Cart, newCustomer);
+                    _cartLogic.AddCart(addCustomer.Cart, addCustomer);
                 }
 
                 //Add customer to AspNetUser
-                if (_customerAccess.CustomerHasAspNetUser(newCustomer))
+                if (_customerAccess.CustomerHasAspNetUser(addCustomer))
                 {
-                    _customerAccess.ConnectCustomerToAspNetUser(newCustomer);
+                    _customerAccess.ConnectCustomerToAspNetUser(addCustomer);
                 }
             }
             catch
@@ -50,18 +46,14 @@ namespace ArmysalgService.BusinessLogic
             return insertedCustomerNo;
         }
 
-        /*
-         *  Find a customer in the database by customerNo
-         *  @param customerNoToMatch
-         *  
-         *  @return Customer
-         */
-        public Customer GetCustomer(int customerNoToMatch)
+        // Find and return customer from database by customer number.
+        /// <inheritdoc/>
+        public Customer GetCustomer(int customerNo)
         {
             Customer foundCustomer;
             try
             {
-                foundCustomer = _customerAccess.GetCustomerByCustomerNo(customerNoToMatch);
+                foundCustomer = _customerAccess.GetCustomerByCustomerNo(customerNo);
             }
             catch
             {
@@ -69,12 +61,15 @@ namespace ArmysalgService.BusinessLogic
             }
             return foundCustomer;
         }
-        public Customer GetCustomer(string customerEmailToMatch)
+
+        // Find and return customer from database by customer email.
+        /// <inheritdoc/>
+        public Customer GetCustomer(string customerEmail)
         {
             Customer foundCustomer;
             try
             {
-                foundCustomer = _customerAccess.GetCustomerByCustomerEmail(customerEmailToMatch);
+                foundCustomer = _customerAccess.GetCustomerByCustomerEmail(customerEmail);
             }
             catch (Exception e)
             {

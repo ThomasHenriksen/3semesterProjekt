@@ -41,7 +41,7 @@ namespace ArmysalgDataTest
             Customer customerToCreate = new Customer(firstName, lastName, address, zipCode, city, phone, email, cart);
 
             //Act
-            int idOfInsertedCustomer = _customerDatabaseAccess.CreateCustomer(customerToCreate);
+            int idOfInsertedCustomer = _customerDatabaseAccess.AddCustomer(customerToCreate);
             Customer customerToRead = _customerDatabaseAccess.GetCustomerByCustomerNo(idOfInsertedCustomer);
 
             int idOfInsertedCart = _cartDatabaseAccess.CreateCart(cartToCreate, customerToRead);

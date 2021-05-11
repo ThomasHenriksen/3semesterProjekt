@@ -13,19 +13,19 @@ namespace ArmysalgDataAccess.Database
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
         }
 
-        //For Test 
-        public CustomerDatabaseAccess(string inConnectionString)
+        // Used for testing
+        /// <summary>
+        /// Used for testing
+        /// </summary>
+        /// <param name="connectionString">Connection string.</param>
+        public CustomerDatabaseAccess(string connectionString)
         {
-            _connectionString = inConnectionString;
+            _connectionString = connectionString;
         }
 
-        /*
-         *  Add customer to the database
-         *  @param aCustomer
-         *  
-         *  @return insertedCustomerNo
-         */
-        public int CreateCustomer(Customer aCustomer)
+        // Add customer to the database.
+        /// <inheritdoc/>
+        public int AddCustomer(Customer aCustomer)
         {
             int insertedCustomerNo = -1;
 
@@ -50,17 +50,80 @@ namespace ArmysalgDataAccess.Database
 
                 con.Open();
                 insertedCustomerNo = (int)CreateCommand.ExecuteScalar();
-
             }
             return insertedCustomerNo;
         }
 
-        /*
-         *  Checks if customer has AspNetUser by comparing email parameter
-         *  @param aCustomer
-         *  
-         *  @return customerHasAspNetUser
-         */
+        // Find and return customer from database by customer number.
+        /// <inheritdoc/>
+        public Customer GetCustomerByCustomerNo(int customerNo)
+        {
+            Customer foundCustomer = null;
+
+            string queryString = "select customerNo, firstName, lastName, address, zipCode, city, phone, email from Customer" + " join zipCity zc on customer.zipCode_fk = zc.zipCode" + " where customerNo = @CustomerNo";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@CustomerNo", customerNo);
+                readCommand.Parameters.Add(idParam);
+
+                con.Open();
+
+                SqlDataReader customerReader = readCommand.ExecuteReader();
+                foundCustomer = new Customer();
+                while (customerReader.Read())
+                {
+                    foundCustomer = GetCustomerFromReader(customerReader);
+                }
+            }
+            return foundCustomer;
+        }
+
+        // Find and return customer from database by customer email.
+        /// <inheritdoc/>
+        public Customer GetCustomerByCustomerEmail(string customerEmail)
+        {
+            Customer foundCustomer = null;
+
+            string queryString = "SELECT Customer.customerNo, Customer.firstName, Customer.lastName, Customer.address, Customer.phone, Customer.email, ZipCity.zipCode, ZipCity.city FROM Customer INNER JOIN ZipCity ON Customer.zipCode_fk = ZipCity.zipCode WHERE(dbo.Customer.email = @email)";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter emailParam = new SqlParameter("@email", customerEmail);
+                readCommand.Parameters.Add(emailParam);
+
+                con.Open();
+
+                SqlDataReader customerReader = readCommand.ExecuteReader();
+                foundCustomer = new Customer();
+                while (customerReader.Read())
+                {
+                    foundCustomer = GetCustomerFromReader(customerReader);
+                }
+            }
+            return foundCustomer;
+        }
+
+        // Delete customer from database based on customer number.
+        /// <inheritdoc/>
+        public bool DeleteCustomerByCustomerNo(int customerNo)
+        {
+            int numberOfRowsDeleted = 0;
+            string deleteString = "DELETE FROM Customer WHERE customerNo = @CustomerNo";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand deleteCommand = new SqlCommand(deleteString, conn))
+            {
+                deleteCommand.Parameters.AddWithValue("@CustomerNo", customerNo);
+
+                conn.Open();
+                numberOfRowsDeleted = deleteCommand.ExecuteNonQuery();
+            }
+            return (numberOfRowsDeleted > 0);
+        }
+
+        // Checks if customer has AspNetUser by comparing email parameter.
+        /// <inheritdoc/>
         public bool CustomerHasAspNetUser(Customer aCustomer)
         {
             bool customerHasAspNetUser = false;
@@ -83,13 +146,12 @@ namespace ArmysalgDataAccess.Database
 
                 return customerHasAspNetUser;
             }
+
+
         }
 
-        /*
-         *  Connect customer to AspNetUser by adding customerNo to customerNo_fk on AspNetUser
-         *  @param aCustomer
-         *  
-         */
+        // Connects customer to AspNetUser in database.
+        /// <inheritdoc/>
         public void ConnectCustomerToAspNetUser(Customer aCustomer)
         {
             string insertString = "update AspNetUsers set customerNo_fk = (@CustomerNo) where email = (@Email) ";
@@ -107,55 +169,14 @@ namespace ArmysalgDataAccess.Database
             }
         }
 
-        /* Three possible returns:
-         * A Customer object
-         * An empty Customer object (no match on customerNo)
-         * Null - Some error occurred
-         */
-        public Customer GetCustomerByCustomerNo(int? findCustomerNo)
-        {
-            Customer foundCustomer = null;
-
-            string queryString = "select customerNo, firstName, lastName, address, zipCode, city, phone, email from Customer" + " join zipCity zc on customer.zipCode_fk = zc.zipCode" + " where customerNo = @CustomerNo";
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
-            {
-                SqlParameter idParam = new SqlParameter("@CustomerNo", findCustomerNo);
-                readCommand.Parameters.Add(idParam);
-
-                con.Open();
-
-                SqlDataReader customerReader = readCommand.ExecuteReader();
-                foundCustomer = new Customer();
-                while (customerReader.Read())
-                {
-                    foundCustomer = GetCustomerFromReader(customerReader);
-                }
-            }
-            return foundCustomer;
-        }
-        public Customer GetCustomerByCustomerEmail(string findCustomerEmail)
-        {
-            Customer foundCustomer = null;
-
-            string queryString = "SELECT Customer.customerNo, Customer.firstName, Customer.lastName, Customer.address, Customer.phone, Customer.email, ZipCity.zipCode, ZipCity.city FROM Customer INNER JOIN ZipCity ON Customer.zipCode_fk = ZipCity.zipCode WHERE(dbo.Customer.email = @email)";
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
-            {
-                SqlParameter emailParam = new SqlParameter("@email", findCustomerEmail);
-                readCommand.Parameters.Add(emailParam);
-
-                con.Open();
-
-                SqlDataReader customerReader = readCommand.ExecuteReader();
-                foundCustomer = new Customer();
-                while (customerReader.Read())
-                {
-                    foundCustomer = GetCustomerFromReader(customerReader);
-                }
-            }
-            return foundCustomer;
-        }
+        // Build and return customer object based on SQL data read.
+        /// <summary>
+        /// Build and return customer object based on SQL data read.
+        /// </summary>
+        /// <returns>
+        /// Customer object.
+        /// </returns>
+        /// <param name="customerReader">SQL data read.</param>
         private Customer GetCustomerFromReader(SqlDataReader customerReader)
         {
             Customer foundCustomer;
@@ -174,29 +195,6 @@ namespace ArmysalgDataAccess.Database
             foundCustomer = new Customer(tempFirstName, tempLastName, tempAddress, tempZipCode, tempCity, tempPhone, tempEmail, tempCustomerNo);
 
             return foundCustomer;
-        }
-
-        /*
-         * Delete Customer from the database.
-         * @param CustomerNo.
-         * 
-         * @return bool
-         */
-
-        public bool DeleteCustomerByCustomerNo(int customerNo)
-        {
-            int numberOfRowsDeleted = 0;
-            string deleteString = "DELETE FROM Customer WHERE customerNo = @CustomerNo";
-
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            using (SqlCommand deleteCommand = new SqlCommand(deleteString, conn))
-            {
-                deleteCommand.Parameters.AddWithValue("@CustomerNo", customerNo);
-
-                conn.Open();
-                numberOfRowsDeleted = deleteCommand.ExecuteNonQuery();
-            }
-            return (numberOfRowsDeleted > 0);
         }
     }
 }
