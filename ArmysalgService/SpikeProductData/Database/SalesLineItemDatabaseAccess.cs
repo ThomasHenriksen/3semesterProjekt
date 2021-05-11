@@ -10,26 +10,28 @@ namespace ArmysalgDataAccess.Database
     {
         readonly string _connectionString;
         private IProductDatabaseAccess _productDatabase;
+
         public SalesLineItemDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
             _productDatabase = new ProductDatabaseAccess(configuration);
         }
+
         public SalesLineItemDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
         }
-        public int CreateSalesLineItem(SalesLineItem aSalesLineItem, Cart aCart)
+        //  Add saleLineItem to the database
+        /// <inheritdoc/>
+        public int AddSalesLineItem(SalesLineItem aSalesLineItem, Cart aCart)
         {
             int insertedId = -1;
 
             string insertString = "insert into SalesLineItem (quantity, cart_id_fk, productNo_fk) OUTPUT INSERTED.id values (@Quantity, @CartId, @ProductId)";
 
-
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-
                 SqlParameter nameParam = new SqlParameter("@Quantity", aSalesLineItem.Quantity);
                 CreateCommand.Parameters.Add(nameParam);
                 SqlParameter cartIdParam = new SqlParameter("@CartId", aCart.Id);
@@ -39,41 +41,13 @@ namespace ArmysalgDataAccess.Database
 
                 con.Open();
                 insertedId = (int)CreateCommand.ExecuteScalar();
-
             }
-
-
             return insertedId;
         }
-        public bool CheckSalesLineItem(SalesLineItem aSalesLineItem, Cart aCart)
-        {
-            string queryString = "select id, quantity, cart_id_fk, productNo_fk, salesNo_fk from SalesLineItem where cart_id_fk = @cartId and productNo_fk = @productNo";
 
-
-            bool exiting = false;
-
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
-            {
-                SqlParameter idParamCategoryId = new SqlParameter("@cartId", aCart.Id);
-                readCommand.Parameters.Add(idParamCategoryId);
-                SqlParameter idParamProductNo = new SqlParameter("@productNo", aSalesLineItem.Products.Id);
-                readCommand.Parameters.Add(idParamProductNo);
-                con.Open();
-
-                SqlDataReader reader = readCommand.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    exiting = true;
-                }
-            }
-
-
-
-            return exiting;
-        }
-        public bool UpdateSalesLineItem(SalesLineItem aSalesLineItem, Cart? aCart, SalesOrder? aSalesOrder)
+        // Update a saleLineItem to the database base on a cart or salesOrder object.
+        /// <inheritdoc/>
+        public bool UpdateSalesLineItem(SalesLineItem aSalesLineItem, Cart aCart, SalesOrder aSalesOrder)
         {
             bool Updated = false;
             if (aCart != null)
@@ -84,53 +58,14 @@ namespace ArmysalgDataAccess.Database
             {
                 Updated = UpdateSalesLineItemSalesOrder(aSalesLineItem, aSalesOrder);
             }
-
             return Updated;
         }
 
-        private bool UpdateSalesLineItemCart(SalesLineItem aSalesLineItem, Cart? aCart)
-        {
-            int numRowsUpdated = 0;
-            string queryString = "UPDATE SalesLineItem SET quantity = @inQuantity from SalesLineItem where cart_id_fk = @inCartId and productNo_fk = @inProductNo";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-
-                numRowsUpdated = con.Execute(queryString, new
-                {
-                    inQuantity = aSalesLineItem.Quantity,
-                    inCartId = aCart.Id,
-                    inProductNo = aSalesLineItem.Products.Id
-                });
-            }
-
-            return (numRowsUpdated == 1);
-        }
-        private bool UpdateSalesLineItemSalesOrder(SalesLineItem aSalesLineItem, SalesOrder? aSalesOrder)
-        {
-            int numRowsUpdated = 0;
-            string queryString = "UPDATE category SET quantity = @inQuantity, salesNo_fk = @inSaleId from category where id = @Id ";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-
-                numRowsUpdated = con.Execute(queryString,
-            new
-            {
-                inQuantity = aSalesLineItem.Quantity,
-                inSaleId = aSalesOrder.SalesNo,
-                Id = aSalesLineItem.Id
-            });
-
-            }
-
-            return (numRowsUpdated == 1);
-        }
-
+        // Find and return saleLineItem from database by saleLineItem Id.
+        /// <inheritdoc/>
         public SalesLineItem GetSalesLineItem(int saleLineItemId)
         {
             SalesLineItem FoundSalesLineItem = null;
-
 
             string queryString = "select id, quantity, cart_id_fk, productNo_fk, salesNo_fk from SalesLineItem where id = @id ";
 
@@ -151,11 +86,12 @@ namespace ArmysalgDataAccess.Database
             return FoundSalesLineItem;
         }
 
+        // Find and return all SaleLineItem from database by cart Id or sales number.
+        /// <inheritdoc/>
         public List<SalesLineItem> GetSalesLineItems(int? cartId, int? salesNo)
         {
             List<SalesLineItem> foundSalesLineItems;
             SalesLineItem FoundSalesLineItem = null;
-
 
             string queryString = "select id, quantity, cart_id_fk, productNo_fk, salesNo_fk from SalesLineItem ";
             if (cartId != null && salesNo == null)
@@ -191,43 +127,122 @@ namespace ArmysalgDataAccess.Database
             }
             return foundSalesLineItems;
         }
+
+        // Delete SaleLineItem from database based on saleLineItem object.
+        /// <inheritdoc/>
         public bool DeleteSaleLineItem(SalesLineItem aSalesLineItem)
         {
             bool deleted = false;
 
             string insertString = "DELETE FROM SalesLineItem where id = @Id";
 
-
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand CreateCommand = new SqlCommand(insertString, con))
             {
-
                 SqlParameter nameParam = new SqlParameter("@Id", aSalesLineItem.Id);
                 CreateCommand.Parameters.Add(nameParam);
 
-
                 con.Open();
                 CreateCommand.ExecuteReader();
-
             }
-
             return deleted;
-
         }
+
+        // Check if saleLineItem exists in the database base on a cart object.
+        /// <inheritdoc/>
+        public bool CheckSalesLineItem(SalesLineItem aSalesLineItem, Cart aCart)
+        {
+            string queryString = "select id, quantity, cart_id_fk, productNo_fk, salesNo_fk from SalesLineItem where cart_id_fk = @cartId and productNo_fk = @productNo";
+
+            bool exiting = false;
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParamCategoryId = new SqlParameter("@cartId", aCart.Id);
+                readCommand.Parameters.Add(idParamCategoryId);
+                SqlParameter idParamProductNo = new SqlParameter("@productNo", aSalesLineItem.Products.Id);
+                readCommand.Parameters.Add(idParamProductNo);
+                con.Open();
+
+                SqlDataReader reader = readCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    exiting = true;
+                }
+            }
+            return exiting;
+        }
+
+        // Update a saleLineItem to the database on a cart object.
+        /// <summary>
+        /// Update a saleLineItem to the database on a cart object.
+        /// </summary>
+        /// <returns>
+        /// Bool statement whether saleLineItem has be updated or not.
+        /// </returns>
+        /// <param name="aSalesLineItem">SaleLineItem object</param>
+        /// <param name="aCart">Cart object</param>
+        private bool UpdateSalesLineItemCart(SalesLineItem aSalesLineItem, Cart aCart)
+        {
+            int numRowsUpdated = 0;
+            string queryString = "UPDATE SalesLineItem SET quantity = @inQuantity from SalesLineItem where cart_id_fk = @inCartId and productNo_fk = @inProductNo";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                numRowsUpdated = con.Execute(queryString, new
+                {
+                    inQuantity = aSalesLineItem.Quantity,
+                    inCartId = aCart.Id,
+                    inProductNo = aSalesLineItem.Products.Id
+                });
+            }
+            return (numRowsUpdated == 1);
+        }
+
+        // Update a saleLineItem to the database on a salesOrder object.
+        /// <summary>
+        /// Update a saleLineItem to the database on a salesOrder object.
+        /// </summary>
+        /// <returns>
+        /// Bool statement whether saleLineItem has be updated or not.
+        /// </returns>
+        /// <param name="aSalesLineItem">SaleLineItem object</param>
+        /// <param name="aSalesOrder">alesOrder object</param>
+        private bool UpdateSalesLineItemSalesOrder(SalesLineItem aSalesLineItem, SalesOrder aSalesOrder)
+        {
+            int numRowsUpdated = 0;
+            string queryString = "UPDATE category SET quantity = @inQuantity, salesNo_fk = @inSaleId from category where id = @Id ";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                numRowsUpdated = con.Execute(queryString, new
+                {
+                inQuantity = aSalesLineItem.Quantity,
+                inSaleId = aSalesOrder.SalesNo,
+                Id = aSalesLineItem.Id
+                });
+            }
+            return (numRowsUpdated == 1);
+        }
+
+
+
+
+
+
+
         private SalesLineItem GetSalesLineItemFromReader(SqlDataReader salesLineItemReader)
         {
-
             SalesLineItem foundSalesLineItem;
             int tempId, quantity;
 
             Product tempProduct = null;
 
-
             tempId = salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("id"));
             quantity = salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("quantity"));
             int test = salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("productNo_fk"));
             tempProduct = _productDatabase.GetProductByProductNo(test);
-
 
             foundSalesLineItem = new SalesLineItem(tempId, quantity, tempProduct);
             if (tempProduct.Id == 0)
