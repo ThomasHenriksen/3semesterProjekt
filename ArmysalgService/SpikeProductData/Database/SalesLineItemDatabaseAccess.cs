@@ -226,12 +226,14 @@ namespace ArmysalgDataAccess.Database
             return (numRowsUpdated == 1);
         }
 
-
-
-
-
-
-
+        // Build and return salesLineItem object based on SQL data read.
+        /// <summary>
+        /// Build and return salesLineItem object based on SQL data read.
+        /// </summary>
+        /// <returns>
+        /// SalesLineItem object.
+        /// </returns>
+        /// <param name="salesLineItemReader">SQL data read.</param>
         private SalesLineItem GetSalesLineItemFromReader(SqlDataReader salesLineItemReader)
         {
             SalesLineItem foundSalesLineItem;
