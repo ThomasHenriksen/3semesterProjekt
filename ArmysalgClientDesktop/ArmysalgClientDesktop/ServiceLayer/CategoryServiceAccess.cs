@@ -12,7 +12,7 @@ namespace ArmysalgClientDesktop.ServiceLayer
 {
     class CategoryServiceAccess
     {
-        static readonly string restUrl = "http://localhost:50902/api/category";
+        static readonly string restUrl = "http://localhost:50902/api/categories";
         static readonly string authenType = "Bearer";
         readonly HttpClient _httpClient;
 

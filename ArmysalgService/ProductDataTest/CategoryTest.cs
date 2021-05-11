@@ -32,7 +32,7 @@ namespace ArmysalgDataTest
             Category categoryToCreate = new Category(name, description, products);
 
             //Act 
-            int idOfInsertedCategory = _categoryDatabaseAccess.CreateCategory(categoryToCreate);
+            int idOfInsertedCategory = _categoryDatabaseAccess.AddCategory(categoryToCreate);
             Category categoryToRead = _categoryDatabaseAccess.GetCategoryById(idOfInsertedCategory);
 
             extraOutput.WriteLine("KATEGORIINFO");

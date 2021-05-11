@@ -2,6 +2,7 @@
 using ArmysalgService.BusinessLogic;
 using ArmysalgService.DTOs;
 using ArmysalgService.ModelConversion;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace ArmysalgService.Controllers
 {
     [Route("api/employees")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeLogic _employeeControl;

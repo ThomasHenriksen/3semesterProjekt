@@ -8,36 +8,34 @@ using System.Collections.Generic;
 
 namespace ArmysalgService.Controllers
 {
-    [Route("api/category")]
+    [Route("api/categories")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryLogic _cControl;
+        private readonly ICategoryLogic _categoryLogic;
         private readonly IConfiguration _configuration;
 
         public CategoryController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _cControl = new CategoryLogic(_configuration);
+            _categoryLogic = new CategoryLogic(_configuration);
         }
-
-
-        /* Data retrieved from the database, is converted to eksternal 
-         * format, evaluated and the an response must be sent back*/
-        // URL: api/products
+        
+        // URL: api/categories
         [HttpGet]
-        public ActionResult<List<CategoryDataReadDto>> Get()
+        public ActionResult<List<CategoryDataReadDto>> GetAllCategories()
         {
             ActionResult<List<CategoryDataReadDto>> foundReturn;
+
             // retrieve and convert data
-            List<Category> foundCategory = _cControl.GetAll();
+            List<Category> foundCategory = _categoryLogic.GetAllCategories();
             List<CategoryDataReadDto> foundDts = ModelConversion.CategoryDataReadDtoConvert.FromCategoryCollection(foundCategory);
-            // evaluate
+            
             if (foundDts != null)
             {
                 if (foundDts.Count > 0)
                 {
-                    foundReturn = Ok(foundDts);         //Statuscode 200
+                    foundReturn = Ok(foundDts);                 //Statuscode 200
                 }
                 else
                 {
@@ -48,25 +46,25 @@ namespace ArmysalgService.Controllers
             {
                 foundReturn = new StatusCodeResult(500);        //Server error
             }
-            // send response back to client
             return foundReturn;
         }
-
-        // URL: api/products/{id}
+        
+        // URL: api/categories/{id}
         [HttpGet, Route("{id}")]
-        public ActionResult<CategoryDataReadDto> Get(int id)
+        public ActionResult<CategoryDataReadDto> GetCategoryById(int categoryId)
         {
             ActionResult<CategoryDataReadDto> foundReturn;
-            // retrieve and convert data
-            Category foundCategorys = _cControl.Get(id);
 
+
+            // retrieve and convert data
+            Category foundCategorys = _categoryLogic.GetCategory(categoryId);
             CategoryDataReadDto foundDts = ModelConversion.CategoryDataReadDtoConvert.FromCategory(foundCategorys);
-            // evaluate
+            
             if (foundDts != null)
             {
                 if (foundDts != null)
                 {
-                    foundReturn = Ok(foundDts);         //Statuscode 200
+                    foundReturn = Ok(foundDts);                 //Statuscode 200
                 }
                 else
                 {
@@ -77,75 +75,55 @@ namespace ArmysalgService.Controllers
             {
                 foundReturn = new StatusCodeResult(500);        //Server error
             }
-            // send response back to client
             return foundReturn;
         }
 
-        // URL: api/Product
+        // URL: api/categories
         [HttpPost]
         public ActionResult<int> PostNewCategory(CategoryDataWriteDto inCategory)
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
+
             if (inCategory != null)
             {
                 Category dbCategory = CategoryDataWriteDtoConvert.ToCategory(inCategory);
-                insertedId = _cControl.Add(dbCategory);
+                insertedId = _categoryLogic.AddCategory(dbCategory);
             }
             if (insertedId > 0)
             {
-                foundReturn = Ok(insertedId);
+                foundReturn = Ok(insertedId);                   //Statuscode 200
             }
             else
             {
-                foundReturn = new StatusCodeResult(500);
+                foundReturn = new StatusCodeResult(500);        //Server error
             }
             return foundReturn;
         }
-        // URL: api/Product/2
+
+        // URL: api/categories/2
         [HttpPut, Route("{id}")]
         public ActionResult<int> PutUpdateCategory(int id, CategoryDataWriteDto inCategory)
         {
-
             ActionResult<int> foundReturn;
             int insertedId = -1;
+
             if (inCategory != null)
             {
                 Category dbCategory = CategoryDataWriteDtoConvert.ToCategory(inCategory);
-                _cControl.Put(dbCategory);
+                _categoryLogic.UpdateCategory(dbCategory);
 
                 insertedId = dbCategory.Id;
             }
             if (insertedId > 0)
             {
-                foundReturn = Ok(insertedId);
+                foundReturn = Ok(insertedId);                   //Statuscode 200             
             }
             else
             {
-                foundReturn = new StatusCodeResult(500);
+                foundReturn = new StatusCodeResult(500);        //Server error
             }
             return foundReturn;
         }
-        /*    // URL: api/Product/2
-            [HttpDelete, Route("{id}")]
-            public ActionResult<bool> DeleteCategory(int id)
-            {
-                ActionResult<bool> foundReturn;
-                bool insertedId = false;
-                Category findCategory = _cControl.Get(id);
-                if (findCategory != null)
-                {
-                    insertedId = _cControl.Delete(findCategory.Id);
-                }
-                if (insertedId == true)
-                {
-                    foundReturn = Ok(insertedId);
-                }
-                else
-                {
-                    foundReturn = new StatusCodeResult(500);
-                }
-                return foundReturn;
-            }*/
     }
 }
