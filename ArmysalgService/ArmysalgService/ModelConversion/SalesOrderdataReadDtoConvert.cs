@@ -6,20 +6,13 @@ namespace ArmysalgService.ModelConversion
 {
     public class SalesOrderdataReadDtoConvert
     {
-
-        //public static SalesOrderdataReadDto FromOrderToReadDto(SalesOrder inSalesOrder)
-        //{
-        //    SalesOrderdataReadDto foundSales = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItem, inSalesOrder.ShippingId, inSalesOrder.EmployeeId, inSalesOrder.CustomerId);
-        //    return foundSales;
-        //}
-
-        public static List<SalesOrderdataReadDto> FromSalesOrderCollection(List<SalesOrder> inSalesOrders)
+        public static List<SalesOrderDataReadDto> FromSalesOrderCollection(List<SalesOrder> inSalesOrders)
         {
-            List<SalesOrderdataReadDto> aSalesOrderReadDtoList = null;
+            List<SalesOrderDataReadDto> aSalesOrderReadDtoList = null;
             if (inSalesOrders != null)
             {
-                aSalesOrderReadDtoList = new List<SalesOrderdataReadDto>();
-                SalesOrderdataReadDto tempDto;
+                aSalesOrderReadDtoList = new List<SalesOrderDataReadDto>();
+                SalesOrderDataReadDto tempDto;
                 foreach (SalesOrder aSalesOrder in inSalesOrders)
                 {
                     tempDto = FromSalesOrder(aSalesOrder);
@@ -29,12 +22,12 @@ namespace ArmysalgService.ModelConversion
             return aSalesOrderReadDtoList;
         }
 
-        public static SalesOrderdataReadDto FromSalesOrder(SalesOrder inSalesOrder)
+        public static SalesOrderDataReadDto FromSalesOrder(SalesOrder inSalesOrder)
         {
-            SalesOrderdataReadDto aSalesOrderReadDto = null;
+            SalesOrderDataReadDto aSalesOrderReadDto = null;
             if (inSalesOrder != null)
             {
-                aSalesOrderReadDto = new SalesOrderdataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItems, inSalesOrder.Shipping, inSalesOrder.Employee, inSalesOrder.Customer);
+                aSalesOrderReadDto = new SalesOrderDataReadDto(inSalesOrder.SalesNo, inSalesOrder.SalesDate, inSalesOrder.PaymentAmount, inSalesOrder.Status, inSalesOrder.SalesLineItems, inSalesOrder.Shipping, inSalesOrder.Employee, inSalesOrder.Customer);
             }
             return aSalesOrderReadDto;
         }

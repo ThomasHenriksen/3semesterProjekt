@@ -3,9 +3,9 @@ using ArmysalgService.DTOs;
 
 namespace ArmysalgService.ModelConversion
 {
-    public class ProductdataWriteDtoConvert
+    public class ProductDataWriteDtoConvert
     {
-        public static Product ToProduct(ProductdataWriteDto inDto)
+        public static Product ToProduct(ProductDataWriteDto inDto)
         {
             Product aProduct = null;
             if (inDto != null)

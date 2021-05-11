@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ArmysalgService.DTOs
 {
-    public class ProductdataReadDto
+    public class ProductDataReadDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -16,11 +16,11 @@ namespace ArmysalgService.DTOs
         public bool IsDeleted { get; set; }
         public Price price { get; set; }
         public List<Category> Categories { get; set; }
-        public ProductdataReadDto()
+        public ProductDataReadDto()
         {
         }
 
-        public ProductdataReadDto(int id, string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price price, List<Category> categories)
+        public ProductDataReadDto(int id, string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price price, List<Category> categories)
         {
             Id = id;
             Name = name;

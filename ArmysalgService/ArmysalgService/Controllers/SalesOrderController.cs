@@ -23,20 +23,20 @@ namespace ArmysalgService.Controllers
 
         //URL: api/salesOrders
         [HttpGet]
-        public ActionResult<List<SalesOrderdataReadDto>> Get()
+        public ActionResult<List<SalesOrderDataReadDto>> Get()
         {
             return null;
         }
 
         // URL: api/salesOrders/{id}
         [HttpGet, Route("{id}")]
-        public ActionResult<SalesOrderdataReadDto> Get(int id)
+        public ActionResult<SalesOrderDataReadDto> Get(int id)
         {
-            ActionResult<SalesOrderdataReadDto> foundReturn;
+            ActionResult<SalesOrderDataReadDto> foundReturn;
 
             SalesOrder foundSalesOrder = _salesOrderLogíc.GetSalesOrderById(id);
 
-            SalesOrderdataReadDto foundDts = SalesOrderdataReadDtoConvert.FromSalesOrder(foundSalesOrder);
+            SalesOrderDataReadDto foundDts = SalesOrderdataReadDtoConvert.FromSalesOrder(foundSalesOrder);
 
             if (foundDts != null)
             {
@@ -58,7 +58,7 @@ namespace ArmysalgService.Controllers
 
         // URL: api/salesOrders
         [HttpPost]
-        public ActionResult<int> PostNewSalesOrder(SalesOrderdataWriteDto inSalesOrder)
+        public ActionResult<int> PostNewSalesOrder(SalesOrderDataWriteDto inSalesOrder)
         {
             ActionResult<int> foundReturn;
             int insertedSalesNo = -1;

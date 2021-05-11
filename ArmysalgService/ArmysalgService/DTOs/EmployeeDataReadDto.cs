@@ -1,6 +1,6 @@
 ﻿namespace ArmysalgService.DTOs
 {
-    public class EmployeeDataReadDto : PersondataReadDto
+    public class EmployeeDataReadDto : PersonDataReadDto
     {
         public int EmployeeNo { get; set; }
         public double Salary { get; set; }
