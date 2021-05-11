@@ -25,7 +25,11 @@ namespace ArmysalgDataAccess.Database
             _customer = new CustomerDatabaseAccess(configuration);
         }
 
-        // For test
+        // Used for testing
+        /// <summary>
+        /// Used for testing
+        /// </summary>
+        /// <param name="connectionString">Connection string.</param>
         public SalesOrderDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
@@ -35,7 +39,9 @@ namespace ArmysalgDataAccess.Database
             _customer = new CustomerDatabaseAccess(inConnectionString);
         }
 
-        public int CreateSalesOrder(SalesOrder aSalesOrder)
+        // Add salesOrder to the database.
+        /// <inheritdoc/>
+        public int AddSalesOrder(SalesOrder aSalesOrder)
         {
             int insertedSalesOrderId = -1;
 
@@ -83,7 +89,7 @@ namespace ArmysalgDataAccess.Database
                     insertedSalesOrderId = (int)CreateCommand.ExecuteScalar();
                 }
 
-                foreach (SalesLineItem salesLine in aSalesOrder.SalesLineItem)
+                foreach (SalesLineItem salesLine in aSalesOrder.SalesLineItems)
                 {
                     AddSalesLineItemToSalesOrder(salesLine, insertedSalesOrderId);
                 }
@@ -95,6 +101,8 @@ namespace ArmysalgDataAccess.Database
             return insertedSalesOrderId;
         }
 
+        // Add salesLineItem to salesOrder in the database.
+        /// <inheritdoc/>
         private bool AddSalesLineItemToSalesOrder(SalesLineItem aSalesLineItem, int salesOrderId)
         {
             int numRowsUpdated = 0;
@@ -115,6 +123,8 @@ namespace ArmysalgDataAccess.Database
             return (numRowsUpdated == 1);
         }
 
+        // Subtract quantity from stock on product in the database.
+        /// <inheritdoc/>
         private bool SubstractQuantityFromProductStock(int quantity, int productNo)
         {
             int numRowsUpdated = 0;
@@ -132,6 +142,8 @@ namespace ArmysalgDataAccess.Database
             return (numRowsUpdated == 1);
         }
 
+        // Find and return salesOrder from database by salesOrder number.
+        /// <inheritdoc/>
         public SalesOrder GetSalesOrderById(int salesOrderId)
         {
             SalesOrder foundSalesOrder = null;
@@ -154,6 +166,14 @@ namespace ArmysalgDataAccess.Database
             return foundSalesOrder;
         }
 
+        // Build and return salesOrder object based on SQL data read.
+        /// <summary>
+        /// Build and return salesOrder object based on SQL data read.
+        /// </summary>
+        /// <returns>
+        /// SalesOrder object.
+        /// </returns>
+        /// <param name="salesOrderReader">SQL data read.</param>
         private SalesOrder GetSalesOrderFromReader(SqlDataReader salesOrderReader)
         {
             SalesOrder foundSalesOrder;
@@ -202,6 +222,8 @@ namespace ArmysalgDataAccess.Database
             return foundSalesOrder;
         }
 
+        // Delete salesOrder from database based on salesOrder number.
+        /// <inheritdoc/>
         public bool DeleteSalesOrderBySalesNo(int id)
         {
             int numRowsUpdated = 0;

@@ -15,12 +15,14 @@ namespace ArmysalgService.BusinessLogic
             _salesOrderAccess = new SalesOrderDatabaseAccess(inConfiguration);
         }
 
+        // Add a new salesOrder in the database.
+        /// <inheritdoc/>
         public int AddSalesOrder(SalesOrder salesOrderToAdd)
         {
             int insertedSalesNo;
             try
             {
-                insertedSalesNo = _salesOrderAccess.CreateSalesOrder(salesOrderToAdd);
+                insertedSalesNo = _salesOrderAccess.AddSalesOrder(salesOrderToAdd);
             }
             catch
             {
@@ -29,11 +31,15 @@ namespace ArmysalgService.BusinessLogic
             return insertedSalesNo;
         }
 
+        // Find and return salesOrders from database.
+        /// <inheritdoc/>
         public List<SalesOrder> GetAllSalesOrder()
         {
             throw new NotImplementedException(); //Todo or not todo!
         }
 
+        // Find and return salesOrder from database by salesOrder number.
+        /// <inheritdoc/>
         public SalesOrder GetSalesOrderById(int salesNoToMatch)
         {
             SalesOrder foundSalesOrder;

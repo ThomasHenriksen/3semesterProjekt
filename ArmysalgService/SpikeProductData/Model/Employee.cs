@@ -21,8 +21,8 @@
         /// <param name="city">City of employee</param>
         /// <param name="phone">Phone of employee</param>
         /// <param name="email">Email of employee</param>
-        /// <param name="salary">Cart of employee</param>
-        /// <param name="position">Cart of employee</param>
+        /// <param name="salary">Salary of employee</param>
+        /// <param name="position">Position of employee</param>
         public Employee(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, double salary, string position)
         {
             FirstName = firstName;
@@ -48,8 +48,8 @@
         /// <param name="phone">Phone of employee</param>
         /// <param name="email">Email of employee</param>
         /// <param name="employeeNo">Email of employee</param>
-        /// <param name="salary">Cart of employee</param>
-        /// <param name="position">Cart of employee</param>
+        /// <param name="salary">Salary of employee</param>
+        /// <param name="position">Position of employee</param>
         public Employee(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, int employeeNo, double salary, string position)
         {
             FirstName = firstName;

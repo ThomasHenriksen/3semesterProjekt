@@ -12,7 +12,7 @@ namespace ArmysalgService.BusinessLogic
         /// <returns>
         /// employee number of inserted employee object.
         /// </returns>
-        /// <param name="aemployee">employee object.</param>
+        /// <param name="aEmployee">Employee object.</param>
         int AddEmployee(Employee employeeToAdd);
 
         // Find and return employee from database by employee number.
@@ -22,7 +22,7 @@ namespace ArmysalgService.BusinessLogic
         /// <returns>
         /// employee object.
         /// </returns>
-        /// <param name="employeeNo">employee number.</param>
+        /// <param name="employeeNo">Employee number.</param>
         Employee GetEmployee(int employeeNo);
 
         // Find and return employees from database.
@@ -30,9 +30,8 @@ namespace ArmysalgService.BusinessLogic
         /// Find and return employees from database.
         /// </summary>
         /// <returns>
-        /// employee object.
+        /// List of employee.
         /// </returns>
-        /// <param name="employeeNo">employee number.</param>
         List<Employee> GetAllEmployees();
     }
 }

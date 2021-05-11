@@ -70,7 +70,7 @@ namespace ArmysalgDataTest
             SalesOrder salesOrderToCreate = new SalesOrder(dateTime, paymentAmount, status, salesLineItems, shipping, employee, customer);
 
             //Act
-            int idOfInsertedSalesOrder = _salesOrderAccess.CreateSalesOrder(salesOrderToCreate);
+            int idOfInsertedSalesOrder = _salesOrderAccess.AddSalesOrder(salesOrderToCreate);
             SalesOrder readSalesOrder = _salesOrderAccess.GetSalesOrderById(idOfInsertedSalesOrder);
 
             extraOutput.WriteLine("Sales Order INFO");
