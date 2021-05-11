@@ -10,7 +10,7 @@ namespace ArmysalgService.ModelConversion
             Cart aCart = null;
             if (inDto != null)
             {
-                aCart = new Cart(inDto.LastUpdated, inDto.SalesLineItems);
+                aCart = new Cart(inDto.Id, inDto.LastUpdated, inDto.SalesLineItems);
             }
             return aCart;
         }
