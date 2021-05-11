@@ -11,9 +11,9 @@ namespace ArmysalgService.DTOs
         public decimal PaymentAmount { get; set; }
         public SalesOrderStatus Status { get; set; }
         public List<SalesLineItem> SalesLineItem { get; set; }
-        public Shipping? Shipping { get; set; }
-        public Employee? Employee { get; set; }
-        public Customer? Customer { get; set; }
+        public Shipping Shipping { get; set; }
+        public Employee Employee { get; set; }
+        public Customer Customer { get; set; }
 
         public SalesOrderdataReadDto()
         {
