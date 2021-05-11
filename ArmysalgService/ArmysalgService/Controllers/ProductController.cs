@@ -113,7 +113,8 @@ namespace ArmysalgService.Controllers
             if (inProduct != null)
             {
                 Product dbProduct = ProductdataWriteDtoConvert.ToProduct(inProduct);
-                _pControl.Put(dbProduct, id);
+                dbProduct.Id = id;
+                _pControl.Put(dbProduct);
                 insertedId = dbProduct.Id;
             }
             if (insertedId > 0)

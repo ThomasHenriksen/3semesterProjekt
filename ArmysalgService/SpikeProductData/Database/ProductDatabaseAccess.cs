@@ -19,15 +19,19 @@ namespace ArmysalgDataAccess.Database
 
 
         }
-
-        //For Test 
+        // Used for testing
+        /// <summary>
+        /// Used for testing
+        /// </summary>
+        /// <param name="connectionString">Connection string.</param>
         public ProductDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
 
         }
-
-        public int CreateProduct(Product aProduct)
+        // Add product to the database.
+        /// <inheritdoc/>
+        public int AddProduct(Product aProduct)
         {
             int insertedId = -1;
 
@@ -66,6 +70,49 @@ namespace ArmysalgDataAccess.Database
                 return insertedId;
             }
         }
+        // Checks if product has a connects with category or not.
+        /// <summary>
+        /// Checks if product has a connects with category or not.
+        /// </summary>
+        /// <returns>
+        /// Bool statement whether product has a connects with category or not.
+        /// </returns>
+        /// <param name="productNo">product number.</param>
+        /// <param name="aCategory">Category object.</param>
+        private bool CheckProductCategory(int productNo, Category aCategory)
+        {
+            string queryString = "select category_id_fk, productNo_fk from ProductCategory where category_id_fk = @categoryId and productNo_fk = @productNo";
+
+
+            bool exiting = false;
+
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParamCategoryId = new SqlParameter("@categoryId", aCategory.Id);
+                readCommand.Parameters.Add(idParamCategoryId);
+                SqlParameter idParamProductNo = new SqlParameter("@productNo", productNo);
+                readCommand.Parameters.Add(idParamProductNo);
+                con.Open();
+
+                SqlDataReader reader = readCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    exiting = true;
+                }
+            }
+            return exiting;
+        }
+        // Add a connects with categories
+        /// <summary>
+        /// Add a connects with categories
+        /// </summary>
+        /// <returns>
+        /// Makes a coonects with a product to categories 
+        /// </returns>
+        /// <param name="productNo">product number.</param>
+        /// <param name="aCategory">Category object.</param>
         private void CreateProductCategory(int insertedId, Category aCategory)
         {
             string insertString = "insert into ProductCategory (category_id_fk, productNo_fk) values (@categoryId, @productNo)";
@@ -87,48 +134,39 @@ namespace ArmysalgDataAccess.Database
                 }
             }
         }
-        private bool CheckProductCategory(int insertedId, Category aCategory)
+        // Find and return product from database by product number.
+        /// <inheritdoc/>
+        public Product GetProductByProductNo(int ProductNo)
         {
-            string queryString = "select category_id_fk, productNo_fk from ProductCategory where category_id_fk = @categoryId and productNo_fk = @productNo";
+            Product foundProduct = null;
 
-
-            bool exiting = false;
-
+            DateTime currDate = DateTime.Now;
+            string querySelectString = "select ProductNo, ProductName, ProductDescription, purchasePrice, stock, maxStock, minStock, PriceID, price, startDate, endDate, isDeleted ";
+            string queryFromString = "from ProductPrice ";
+            string queryWhereString = "where isDeleted = 0 and startDate >= @CurrDate and @CurrDate <= endDate or endDate is null and productNo = @Id ";
+            string queryString = querySelectString + queryFromString + queryWhereString;
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                SqlParameter idParamCategoryId = new SqlParameter("@categoryId", aCategory.Id);
-                readCommand.Parameters.Add(idParamCategoryId);
-                SqlParameter idParamProductNo = new SqlParameter("@productNo", insertedId);
-                readCommand.Parameters.Add(idParamProductNo);
+                SqlParameter DateParam = new SqlParameter("@CurrDate", currDate);
+                readCommand.Parameters.Add(DateParam);
+                SqlParameter idParam = new SqlParameter("@Id", ProductNo);
+                readCommand.Parameters.Add(idParam);
+
                 con.Open();
 
-                SqlDataReader reader = readCommand.ExecuteReader();
-                if (reader.HasRows)
+                SqlDataReader productReader = readCommand.ExecuteReader();
+                foundProduct = new Product();
+                while (productReader.Read())
                 {
-                    exiting = true;
+                    foundProduct = GetProductFromReader(productReader);
                 }
             }
-            return exiting;
+            return foundProduct;
         }
-        public bool DeleteProductById(int id)
-        {
-            int numRowsUpdated = 0;
-            string queryString = "UPDATE Product SET  isDeleted = @inIsDelete from Product where productNo = @Id";
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-                numRowsUpdated = con.Execute(queryString,
-                 new
-                 {
-                     inIsDelete = 1,
-                     Id = id
-                 });
-            }
-            return (numRowsUpdated == 1);
-        }
-
+        // Find and return all product from database.
+        /// <inheritdoc/>
         public List<Product> GetProductAll()
         {
             List<Product> foundProducts;
@@ -158,7 +196,16 @@ namespace ArmysalgDataAccess.Database
             return foundProducts;
 
         }
-        private List<Category> GetAllCategoryForProduct(int productId)
+
+        // Find and return all Category from database for a product number.
+        /// <summary>
+        /// Find and return all Category from database for a product number.
+        /// </summary>
+        /// <returns>
+        /// List of category objects.
+        /// </returns>
+        /// <param name="productNo">product number.</param>
+        private List<Category> GetAllCategoryForProduct(int productNo)
         {
             List<Category> foundCategorys;
             Category readCategory;
@@ -168,7 +215,7 @@ namespace ArmysalgDataAccess.Database
             using (SqlConnection con = new SqlConnection(_connectionString))
             using (SqlCommand readCommand = new SqlCommand(queryString, con))
             {
-                SqlParameter idParam = new SqlParameter("@ProductId", productId);
+                SqlParameter idParam = new SqlParameter("@ProductId", productNo);
                 readCommand.Parameters.Add(idParam);
                 con.Open();
 
@@ -184,41 +231,9 @@ namespace ArmysalgDataAccess.Database
             return foundCategorys;
 
         }
-        /* Three possible returns:
-         * A Person object
-         * An empty Person object (no match on id)
-         * Null - Some error occurred
-        */
-        public Product GetProductById(int findId)
-        {
-            Product foundProduct = null;
 
-            DateTime currDate = DateTime.Now;
-            string querySelectString = "select ProductNo, ProductName, ProductDescription, purchasePrice, stock, maxStock, minStock, PriceID, price, startDate, endDate, isDeleted ";
-            string queryFromString = "from ProductPrice ";
-            string queryWhereString = "where isDeleted = 0 and startDate >= @CurrDate and @CurrDate <= endDate or endDate is null and productNo = @Id ";
-            string queryString = querySelectString + queryFromString + queryWhereString;
-
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
-            {
-                SqlParameter DateParam = new SqlParameter("@CurrDate", currDate);
-                readCommand.Parameters.Add(DateParam);
-                SqlParameter idParam = new SqlParameter("@Id", findId);
-                readCommand.Parameters.Add(idParam);
-
-                con.Open();
-
-                SqlDataReader productReader = readCommand.ExecuteReader();
-                foundProduct = new Product();
-                while (productReader.Read())
-                {
-                    foundProduct = GetProductFromReader(productReader);
-                }
-            }
-            return foundProduct;
-        }
-
+        // Update a product to the database.
+        /// <inheritdoc/>
         public bool UpdateProduct(Product productToUpdate)
         {
             int numRowsUpdated = 0;
@@ -248,6 +263,33 @@ namespace ArmysalgDataAccess.Database
             return (numRowsUpdated == 1);
         }
 
+        // Delete product from database based on product object.
+        /// <inheritdoc/>
+        public bool DeleteProductById(int id)
+        {
+            int numRowsUpdated = 0;
+            string queryString = "UPDATE Product SET  isDeleted = @inIsDelete from Product where productNo = @Id";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                numRowsUpdated = con.Execute(queryString,
+                 new
+                 {
+                     inIsDelete = 1,
+                     Id = id
+                 });
+            }
+            return (numRowsUpdated == 1);
+        }
+
+        // Build and return product object based on SQL data read.
+        /// <summary>
+        /// Build and return product object based on SQL data read.
+        /// </summary>
+        /// <returns>
+        /// Customer object.
+        /// </returns>
+        /// <param name="productReader">SQL data read.</param>
         private Product GetProductFromReader(SqlDataReader productReader)
         {
             Product foundProduct;
@@ -292,6 +334,14 @@ namespace ArmysalgDataAccess.Database
 
             return foundProduct;
         }
+        // Build and return category object based on SQL data read.
+        /// <summary>
+        /// Build and return category object based on SQL data read.
+        /// </summary>
+        /// <returns>
+        /// category object.
+        /// </returns>
+        /// <param name="categoryReader">SQL data read.</param>
         private Category GetCategoryFromReader(SqlDataReader categoryReader)
         {
 

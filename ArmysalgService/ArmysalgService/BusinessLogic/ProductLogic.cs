@@ -18,20 +18,16 @@ namespace ArmysalgService.BusinessLogic
             _categoryAccess = new CategoryDatabaseAccess(inConfiguration);
         }
 
-        /*
-           *  this method is use to create a new product in the database
-           *  @param newProduct
-           *  
-           *  @return insertedId
-         */
-        public int Add(Product newProduct)
+        // Add product to the database.
+        /// <inheritdoc/>
+        public int Add(Product aProduct)
         {
             int insertedId;
             try
             {
-                insertedId = _productAccess.CreateProduct(newProduct);
-                newProduct.Id = insertedId;
-                _priceData.Add(newProduct.Price, newProduct);
+                insertedId = _productAccess.AddProduct(aProduct);
+                aProduct.Id = insertedId;
+                _priceData.Add(aProduct.Price, aProduct);
             }
             catch (Exception e)
             {
@@ -40,55 +36,31 @@ namespace ArmysalgService.BusinessLogic
             return insertedId;
         }
 
-        public bool Delete(int idToMatch)
-        {
-            return _productAccess.DeleteProductById(idToMatch);
-        }
-        /*
-           *  this method is use to find a product in the database by id
-           *  @param idToMatch
-           *  
-           *  @return Product
-         */
+        // Find and return product from database by product number.
+        /// <inheritdoc/>
         public Product Get(int idToMatch)
         {
-            return _productAccess.GetProductById(idToMatch);
+            return _productAccess.GetProductByProductNo(idToMatch);
         }
-        /*
-           *  this method is use to find all products in the database where IsDelete is false 
-           *  @return List<Product> 
-         */
+
+        // Find and return all product from database.
+        /// <inheritdoc/>
         public List<Product> Get()
         {
             return _productAccess.GetProductAll();
         }
-        /*
-           *  this method is use to update a product where ID is use to find product 
-           *  @param productToUpdate
-           *  @param id 
-           *  @return bool
-         */
-        public bool Put(Product productToUpdate, int id)
+
+        // Update a product to the database.
+        /// <inheritdoc/>
+        public bool Put(Product productToUpdate)
         {
-            productToUpdate.Id = id;
-
-            Price checkPrice = _priceData.Get(productToUpdate.Id);
-            if (checkPrice == null)
-            {
-                _priceData.Add(productToUpdate.Price, productToUpdate);
-
-            }
-            else
-            {
-                if (checkPrice.Id != productToUpdate.Id)
-                {
-                    _priceData.Add(productToUpdate.Price, productToUpdate);
-                }
-            }
-
-
-
             return _productAccess.UpdateProduct(productToUpdate);
+        }
+        // Delete product from database based on product object.
+        /// <inheritdoc/>
+        public bool Delete(int idToMatch)
+        {
+            return _productAccess.DeleteProductById(idToMatch);
         }
     }
 }

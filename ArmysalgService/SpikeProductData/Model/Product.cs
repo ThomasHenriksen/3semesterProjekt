@@ -20,18 +20,19 @@ namespace ArmysalgDataAccess.Model
         {
         }
 
-        public Product(int id, string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted)
-        {
-            Id = id;
-            Name = name;
-            Description = description;
-            PurchasePrice = purchasePrice;
-            Stock = stock;
-            MinStock = minStock;
-            MaxStock = maxStock;
-            IsDeleted = isDeleted;
-
-        }
+        // Constuct a product object.
+        /// <summary>
+        /// Constuct a product object.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="purchasePrice"></param>
+        /// <param name="stock"></param>
+        /// <param name="minStock"></param>
+        /// <param name="maxStock"></param>
+        /// <param name="isDeleted"></param>
+        /// <param name="price"></param>
+        /// <param name="categories"></param>
         public Product(string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price? price, List<Category> categories)
         {
 
@@ -46,18 +47,19 @@ namespace ArmysalgDataAccess.Model
             Category = categories;
         }
 
-        public Product(int id, string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, List<Category> categories)
-        {
-            Id = id;
-            Name = name;
-            Description = description;
-            PurchasePrice = purchasePrice;
-            Stock = stock;
-            MinStock = minStock;
-            MaxStock = maxStock;
-            IsDeleted = isDeleted;
-            Category = categories;
-        }
+        // Constuct a product object.
+        /// <summary>
+        /// Constuct a product object.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="purchasePrice"></param>
+        /// <param name="stock"></param>
+        /// <param name="minStock"></param>
+        /// <param name="maxStock"></param>
+        /// <param name="isDeleted"></param>
+        /// <param name="price"></param>
         public Product(int id, string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price price)
         {
             Id = id;
@@ -70,6 +72,21 @@ namespace ArmysalgDataAccess.Model
             IsDeleted = isDeleted;
             Price = price;
         }
+
+        // Constuct a product object.
+        /// <summary>
+        /// Constuct a product object.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="purchasePrice"></param>
+        /// <param name="stock"></param>
+        /// <param name="minStock"></param>
+        /// <param name="maxStock"></param>
+        /// <param name="isDeleted"></param>
+        /// <param name="price"></param>
+        /// <param name="categories"></param>
         public Product(int id, string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted, Price price, List<Category> categories)
         {
             Id = id;

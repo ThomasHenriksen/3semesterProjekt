@@ -45,7 +45,7 @@ namespace ArmysalgDataTest
             Product productToCreate = new (productName, productDescription, purchasePrice, stock, minStock, maxStock, isDeleted, priceToCreate, categories);
             
             //Act
-            int idOfInsertedProduct = _productDatabaseAccess.CreateProduct(productToCreate);
+            int idOfInsertedProduct = _productDatabaseAccess.AddProduct(productToCreate);
             productToCreate.Id = idOfInsertedProduct;
             int idOfInsertedPrice = _priceDatabaseAccess.CreatePriceWithOutEndDate(priceToCreate, productToCreate);
             Price priceToRead = _priceDatabaseAccess.GetPriceById(idOfInsertedPrice);

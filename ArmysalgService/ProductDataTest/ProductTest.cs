@@ -41,10 +41,10 @@ namespace ProductDataTest
             Product productToCreate = new Product(name, description, purchasePrice, stock, minStock, maxStock, isDeleted, priceToTest, categoryListForTest);
 
             //Act
-            int productIdOfInsertedProduct = _productDatabaseAccess.CreateProduct(productToCreate);
+            int productIdOfInsertedProduct = _productDatabaseAccess.AddProduct(productToCreate);
             productToCreate.Id = productIdOfInsertedProduct;
             int idOfInsertedPrice = _priceDatabaseAccess.CreatePriceWithOutEndDate(priceToTest, productToCreate);
-            Product productToRead = _productDatabaseAccess.GetProductById(productIdOfInsertedProduct);
+            Product productToRead = _productDatabaseAccess.GetProductByProductNo(productIdOfInsertedProduct);
 
             extraOutput.WriteLine("PRODUKTINFO");
             extraOutput.WriteLine("Produkt nr:" + productToRead.Id);

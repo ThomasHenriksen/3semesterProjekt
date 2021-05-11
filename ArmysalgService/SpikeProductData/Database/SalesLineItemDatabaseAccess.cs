@@ -226,7 +226,7 @@ namespace ArmysalgDataAccess.Database
             tempId = salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("id"));
             quantity = salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("quantity"));
             int test = salesLineItemReader.GetInt32(salesLineItemReader.GetOrdinal("productNo_fk"));
-            tempProduct = _productDatabase.GetProductById(test);
+            tempProduct = _productDatabase.GetProductByProductNo(test);
 
 
             foundSalesLineItem = new SalesLineItem(tempId, quantity, tempProduct);
