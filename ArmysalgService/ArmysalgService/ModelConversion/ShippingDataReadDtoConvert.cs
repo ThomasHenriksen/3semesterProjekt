@@ -15,20 +15,5 @@ namespace ArmysalgService.ModelConversion
             }
             return aShippingReadDto;
         }
-        public static List<ShippingDataReadDto> FromShippingCollection(List<Shipping> shippings)
-        {
-            List<ShippingDataReadDto> aShippingCollection = null;
-            if (shippings != null)
-            {
-                aShippingCollection = new List<ShippingDataReadDto>();
-                ShippingDataReadDto tempDto;
-                foreach (Shipping aShipping in shippings)
-                {
-                    tempDto = FromShipping(aShipping);
-                    aShippingCollection.Add(tempDto);
-                }
-            }
-            return aShippingCollection;
-        }
     }
 }

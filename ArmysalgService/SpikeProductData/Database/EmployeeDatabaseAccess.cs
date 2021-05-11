@@ -15,12 +15,19 @@ namespace ArmysalgDataAccess.Database
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
         }
 
+        // Used for testing
+        /// <summary>
+        /// Used for testing
+        /// </summary>
+        /// <param name="connectionString">Connection string.</param>
         public EmployeeDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
         }
 
-        public int CreateEmployee(Employee aEmployee)
+        // Add employee to the database.
+        /// <inheritdoc/>
+        public int AddEmployee(Employee aEmployee)
         {
             int insertedId = -1;
 
@@ -53,12 +60,8 @@ namespace ArmysalgDataAccess.Database
             return insertedId;
         }
 
-
-        /* Three possible returns:
-        * A Employee object
-        * An empty Employee object (no match on employeeNo)
-        * Null - Some error occurred
-        */
+        // Find and return employee from database by employee number.
+        /// <inheritdoc/>
         public Employee GetEmployeeByEmployeeNo(int findEmployeeNo)
         {
             Employee foundEmployee = null;
@@ -81,6 +84,14 @@ namespace ArmysalgDataAccess.Database
             return foundEmployee;
         }
 
+        // Build and return employee object based on SQL data read.
+        /// <summary>
+        /// Build and return employee object based on SQL data read.
+        /// </summary>
+        /// <returns>
+        /// employee object.
+        /// </returns>
+        /// <param name="employeeReader">SQL data read.</param>
         private Employee GetEmployeeFromReader(SqlDataReader employeeReader)
         {
             Employee foundEmployee;
@@ -104,6 +115,8 @@ namespace ArmysalgDataAccess.Database
             return foundEmployee;
         }
 
+        // Find and return all employees from database.
+        /// <inheritdoc/>
         public List<Employee> GetAllEmployees()
         {
             List<Employee> foundEmployees;
@@ -128,6 +141,8 @@ namespace ArmysalgDataAccess.Database
             return foundEmployees;
         }
 
+        // Delete employee from database based on employee number.
+        /// <inheritdoc/>
         public bool DeleteEmployeeByEmployeeNo(int id)
         {
             int numRowsUpdated = 0;

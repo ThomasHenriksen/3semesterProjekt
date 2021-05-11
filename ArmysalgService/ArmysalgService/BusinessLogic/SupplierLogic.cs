@@ -14,18 +14,15 @@ namespace ArmysalgService.BusinessLogic
             _suppliberAccess = new SupplierDatabaseAccess(inConfiguration);
         }
 
-        /*
-         * Create a new supplier in the database
-         * @param Supplier
-         * 
-         * @return insertedSupplierId
-         */
-        public int CreateSupplier(Supplier supplierToCreate)
+        // Add supplier to the database.
+        /// <inheritdoc/>
+        public int AddSupplier(Supplier aSupplier)
         {
             int insertedSupplierId;
+
             try
             {
-                insertedSupplierId = _suppliberAccess.CreateSupplier(supplierToCreate);
+                insertedSupplierId = _suppliberAccess.AddSupplier(aSupplier);
             }
             catch
             {
@@ -34,6 +31,8 @@ namespace ArmysalgService.BusinessLogic
             return insertedSupplierId;
         }
 
+        // Find and return all suppliers from database.
+        /// <inheritdoc/>
         public List<Supplier> GetAllSuppliers()
         {
             List<Supplier> foundSuppliers;

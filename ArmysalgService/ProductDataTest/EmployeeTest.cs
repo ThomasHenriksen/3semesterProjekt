@@ -36,7 +36,7 @@ namespace ArmysalgDataTest
             Employee employeeToCreate = new(firstName, lastName, address, zipCode, city, phone, email, salary, position);
 
             //Act
-            int idOfInsertedEmployee = _employeeAccess.CreateEmployee(employeeToCreate);
+            int idOfInsertedEmployee = _employeeAccess.AddEmployee(employeeToCreate);
             Employee readEmployee = _employeeAccess.GetEmployeeByEmployeeNo(idOfInsertedEmployee);
 
             extraOutput.WriteLine("EMPLOYEE INFO");

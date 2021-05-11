@@ -14,18 +14,14 @@ namespace ArmysalgService.BusinessLogic
             _employeeAccess = new EmployeeDatabaseAccess(inConfiguration);
         }
 
-        /*
-           *  Create a new employee in the database
-           *  @param newEmployee
-           *  
-           *  @return insertedEmployeeNo
-         */
+        // Add a new employee in the database.
+        /// <inheritdoc/>
         public int AddEmployee(Employee newEmployee)
         {
             int insertedEmployeeNo;
             try
             {
-                insertedEmployeeNo = _employeeAccess.CreateEmployee(newEmployee);
+                insertedEmployeeNo = _employeeAccess.AddEmployee(newEmployee);
             }
             catch
             {
@@ -34,11 +30,8 @@ namespace ArmysalgService.BusinessLogic
             return insertedEmployeeNo;
         }
 
-        /*
-           *  Find all employees in the db
-           *  
-           *  @return List<Employee>
-         */
+        // Find and return employee from database by employee number.
+        /// <inheritdoc/>
         public Employee GetEmployee(int employeeNoToMatch)
         {
             Employee foundEmployee;
@@ -53,6 +46,8 @@ namespace ArmysalgService.BusinessLogic
             return foundEmployee;
         }
 
+        // Find and return employees from database.
+        /// <inheritdoc/>
         public List<Employee> GetAllEmployees()
         {
             List<Employee> foundEmployees;

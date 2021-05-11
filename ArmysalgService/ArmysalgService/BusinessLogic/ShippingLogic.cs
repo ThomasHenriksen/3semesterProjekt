@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ArmysalgService.BusinessLogic
 {
-    public class ShippingLogic
+    public class ShippingLogic : IShippingLogic
     {
         IShippingDatabaseAccess _shippingAccess;
 
@@ -13,12 +13,15 @@ namespace ArmysalgService.BusinessLogic
             _shippingAccess = new ShippingDatabaseAccess(inConfiguration);
         }
 
-        public int AddShipping(Shipping shippingToAdd)
+        // Add shipping to the database.
+        /// <inheritdoc/>
+        public int AddShipping(Shipping aShipping)
         {
             int insertedShippingID;
+
             try
             {
-                insertedShippingID = _shippingAccess.CreateShipping(shippingToAdd);
+                insertedShippingID = _shippingAccess.AddShipping(aShipping);
             }
             catch
             {
@@ -27,12 +30,14 @@ namespace ArmysalgService.BusinessLogic
             return insertedShippingID;
         }
 
-        public Shipping GetShippingByID(int shippingToFind)
+        // Find and return shipping from database by shipping Id.
+        /// <inheritdoc/>
+        public Shipping GetShippingByID(int shippingId)
         {
             Shipping foundShipping;
             try
             {
-                foundShipping = _shippingAccess.GetShippingByShippingID(shippingToFind);
+                foundShipping = _shippingAccess.GetShippingByShippingID(shippingId);
             }
             catch
             {
