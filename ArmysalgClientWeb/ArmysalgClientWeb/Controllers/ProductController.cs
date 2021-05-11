@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ArmysalgClientWeb.Data;
 using ArmysalgClientWeb.Models;
 using ArmysalgClientWeb.BusinessLogic;
 using ArmysalgClientWeb.BusinessLogicLayer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ArmysalgClientWeb.Controllers
@@ -33,7 +31,6 @@ namespace ArmysalgClientWeb.Controllers
         public async Task<IActionResult> Index()
         {
             List<Product> foundProducts = (List<Product>)await _productLogic.GetAllProducts();
-            // IEnumerable<Product> allProducts = (IEnumerable<Product>)_cmdAccess.GetAllProducts();
             return View(foundProducts);
         }
 
@@ -92,10 +89,12 @@ namespace ArmysalgClientWeb.Controllers
                 Task<Customer> customer = _customerLogic.GetCustomerByEmail(customerEmail);
                 Cart cart = (Cart)await _cartLogic.GetCartByCustomerNo(customer.Result.CustomerNo);
 
+                cart.LastUpdated = DateTime.Now;
                 int cartSize = cart.SalesLineItems.Count;
                 int i = 0;
                 SalesLineItem salesLineItemToAdd = null;
                 bool found = false;
+
                 if (cartSize > 0)
                 {
                     while (!found && cartSize > i)
@@ -119,6 +118,7 @@ namespace ArmysalgClientWeb.Controllers
                     cart.SalesLineItems.Add(salesLineItemToAdd);
                 }
 
+                
                 bool ok = await _cartLogic.UpdateCart(cart);
 
                 return RedirectToAction(nameof(Index));
@@ -129,7 +129,6 @@ namespace ArmysalgClientWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-
 
         // GET: Product/Edit/5
         public async Task<IActionResult> Edit(int? id)

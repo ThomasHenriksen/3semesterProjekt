@@ -5,6 +5,10 @@
         public int CustomerNo { get; set; }
         public Cart Cart { get; set; }
 
+        // Constuct a customer object.
+        /// <summary>
+        /// Constuct a customer object.
+        /// </summary>
         public Customer()
         {
         }

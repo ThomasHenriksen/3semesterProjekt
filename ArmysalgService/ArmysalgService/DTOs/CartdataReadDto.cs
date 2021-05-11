@@ -10,16 +10,6 @@ namespace ArmysalgService.DTOs
         public DateTime LastUpdated { get; set; }
         public List<SalesLineItem> SalesLineItems { get; set; }
 
-
-        public CartdataReadDto()
-        {
-
-        }
-
-        public CartdataReadDto(DateTime lastUpdated)
-        {
-            LastUpdated = lastUpdated;
-        }
         public CartdataReadDto(int id, DateTime lastUpdated, List<SalesLineItem> salesLineItems)
         {
             Id = id;

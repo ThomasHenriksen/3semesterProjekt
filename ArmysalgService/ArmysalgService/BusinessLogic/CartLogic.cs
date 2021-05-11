@@ -6,25 +6,24 @@ namespace ArmysalgService.BusinessLogic
 {
     public class CartLogic : ICartLogic
     {
-        ICartDatabaseAccess _cartAccess;
-        ISalesLineItemDatabaseAcces _salesLineItemAcces;
+        ICartDatabaseAccess _cartDatabaseAccess;
+        ISalesLineItemDatabaseAcces _salesLineItemDatabaseAccess;
 
         public CartLogic(IConfiguration inConfiguration)
         {
-            _cartAccess = new CartDatabaseAccess(inConfiguration);
-            _salesLineItemAcces = new SalesLineItemDatabaseAccess(inConfiguration);
+            _cartDatabaseAccess = new CartDatabaseAccess(inConfiguration);
+            _salesLineItemDatabaseAccess = new SalesLineItemDatabaseAccess(inConfiguration);
         }
-        public Cart Get(Customer customer)
-        {
-            return _cartAccess.GetCartByCustomerNo(customer.CustomerNo);
-        }
-        public int AddCart(Cart cartToAdd, Customer customer)
+
+        // Add cart to the database.
+        /// <inheritdoc/>
+        public int AddCart(Cart aCart, Customer aCustomer)
         {
             int insertedId;
 
             try
             {
-                insertedId = _cartAccess.CreateCart(cartToAdd, customer);
+                insertedId = _cartDatabaseAccess.AddCart(aCart, aCustomer);
             }
             catch
             {
@@ -32,31 +31,40 @@ namespace ArmysalgService.BusinessLogic
             }
             return insertedId;
         }
-        public Cart UpdateCart(Cart aCurrCart)
+
+        // Find and return cart from database by customer object.
+        /// <inheritdoc/>
+        public Cart GetCart(Customer aCustomer)
+        {
+            return _cartDatabaseAccess.GetCartByCustomerNo(aCustomer.CustomerNo);
+        }
+
+        // Update cart in the database.
+        /// <inheritdoc/>
+        public Cart UpdateCart(Cart aCart)
         {
 
-            foreach (SalesLineItem salesLineItem in aCurrCart.SalesLineItems)
+            foreach (SalesLineItem salesLineItem in aCart.SalesLineItems)
             {
-                if (_salesLineItemAcces.CheckSalesLineItem(salesLineItem, aCurrCart))
+                if (_salesLineItemDatabaseAccess.CheckSalesLineItem(salesLineItem, aCart))
                 {
-                    _salesLineItemAcces.UpdateSalesLineItem(salesLineItem, aCurrCart, null);
-                    _cartAccess.UpdateCart(aCurrCart);
+                    _salesLineItemDatabaseAccess.UpdateSalesLineItem(salesLineItem, aCart, null);
+                    _cartDatabaseAccess.UpdateCart(aCart);
 
                 }
                 else
                 {
-                    _salesLineItemAcces.CreateSalesLineItem(salesLineItem, aCurrCart);
+                    _salesLineItemDatabaseAccess.CreateSalesLineItem(salesLineItem, aCart);
                 }
             }
-            return aCurrCart;
+            return aCart;
         }
-        private bool RemoveSalesLineItem(SalesLineItem aSalesLineItem)
+
+        // Delete cart from database based on cart ID.
+        /// <inheritdoc/>
+        public bool DeleteCart(int cartId)
         {
-            return _salesLineItemAcces.DeleteSaleLineItem(aSalesLineItem);
-        }
-        public bool DeleteCart(int id)
-        {
-            return _cartAccess.DeleteCartByCartId(id);
+            return _cartDatabaseAccess.DeleteCartByCartId(cartId);
         }
     }
 }

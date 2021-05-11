@@ -10,25 +10,28 @@ namespace ArmysalgDataAccess.Database
     public class CartDatabaseAccess : ICartDatabaseAccess
     {
         readonly string _connectionString;
-        private ISalesLineItemDatabaseAcces _salelineitem;
-        private string connectionString;
+        private ISalesLineItemDatabaseAcces _salelineitemDatabaseAccess;
 
         public CartDatabaseAccess(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ArmysalgConnection");
-            _salelineitem = new SalesLineItemDatabaseAccess(configuration);
+            _salelineitemDatabaseAccess = new SalesLineItemDatabaseAccess(configuration);
         }
 
-        /*
-          * Used for testing.
-         */
+        // Used for testing
+        /// <summary>
+        /// Used for testing
+        /// </summary>
+        /// <param name="connectionString">Connection string.</param>
         public CartDatabaseAccess(string inConnectionString)
         {
             _connectionString = inConnectionString;
-            _salelineitem = new SalesLineItemDatabaseAccess(inConnectionString);
+            _salelineitemDatabaseAccess = new SalesLineItemDatabaseAccess(inConnectionString);
         }
 
-        public int CreateCart(Cart aCart, Customer customer)
+        // Add cart to the database.
+        /// <inheritdoc/>
+        public int AddCart(Cart aCart, Customer aCustomer)
         {
             int insertedId = -1;
 
@@ -39,7 +42,7 @@ namespace ArmysalgDataAccess.Database
             {
                 SqlParameter lastUpdatedParam = new SqlParameter("@LastUpdated", aCart.LastUpdated);
                 CreateCommand.Parameters.Add(lastUpdatedParam);
-                SqlParameter customerNoParam = new SqlParameter("@CustomerNo", customer.CustomerNo);
+                SqlParameter customerNoParam = new SqlParameter("@CustomerNo", aCustomer.CustomerNo);
                 CreateCommand.Parameters.Add(customerNoParam);
 
                 con.Open();
@@ -47,10 +50,37 @@ namespace ArmysalgDataAccess.Database
             }
             return insertedId;
         }
-        public Cart GetCartByCustomerNo(int CustomerNo)
+
+        // Find and return cart from database by cart ID.
+        /// <inheritdoc/>
+        public Cart GetCartById(int cartId)
         {
             Cart FoundCart = null;
 
+            string queryString = "select id, lastUpdated from Cart where id = @Id";
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(queryString, con))
+            {
+                SqlParameter idParam = new SqlParameter("@Id", cartId);
+                readCommand.Parameters.Add(idParam);
+
+                con.Open();
+
+                SqlDataReader cartReader = readCommand.ExecuteReader();
+                FoundCart = new Cart();
+                while (cartReader.Read())
+                {
+                    FoundCart = GetCartFromReader(cartReader);
+                }
+            }
+            return FoundCart;
+        }
+
+        // Find and return cart from database by customer number.
+        /// <inheritdoc/>
+        public Cart GetCartByCustomerNo(int CustomerNo)
+        {
+            Cart FoundCart = null;
 
             string queryString = "select id, lastUpdated from Cart where customerNo_fk = @CustomerNo";
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -69,33 +99,10 @@ namespace ArmysalgDataAccess.Database
                 }
             }
             return FoundCart;
-
-        }
-        public Cart GetCartById(int id)
-        {
-            Cart FoundCart = null;
-
-
-            string queryString = "select id, lastUpdated from Cart where id = @Id";
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            using (SqlCommand readCommand = new SqlCommand(queryString, con))
-            {
-                SqlParameter idParam = new SqlParameter("@Id", id);
-                readCommand.Parameters.Add(idParam);
-
-                con.Open();
-
-                SqlDataReader cartReader = readCommand.ExecuteReader();
-                FoundCart = new Cart();
-                while (cartReader.Read())
-                {
-                    FoundCart = GetCartFromReader(cartReader);
-                }
-            }
-            return FoundCart;
-
         }
 
+        // Update cart in the database.
+        /// <inheritdoc/>
         public bool UpdateCart(Cart aCart)
         {
             int numRowsUpdated = 0;
@@ -116,7 +123,9 @@ namespace ArmysalgDataAccess.Database
             return (numRowsUpdated == 1);
         }
 
-        public bool DeleteCartByCartId(int id)
+        // Delete cart from database based on cart ID.
+        /// <inheritdoc/>
+        public bool DeleteCartByCartId(int cartId)
         {
             int numRowsUpdated = 0;
             string queryString = "Delete Cart where id = @Id";
@@ -126,33 +135,37 @@ namespace ArmysalgDataAccess.Database
                 numRowsUpdated = con.Execute(queryString,
                  new
                  {
-                     Id = id
+                     Id = cartId
                  });
             }
             return (numRowsUpdated == 1);
         }
 
-        private Cart GetCartFromReader(SqlDataReader CartReader)
+        // Build and return cart object based on SQL data read.
+        /// <summary>
+        /// Build and return cart object based on SQL data read.
+        /// </summary>
+        /// <returns>
+        /// Cart object.
+        /// </returns>
+        /// <param name="cartReader">SQL data read.</param>
+        private Cart GetCartFromReader(SqlDataReader cartReader)
         {
-
             Cart foundCart;
             int tempId;
             DateTime tempLastUpdated;
             List<SalesLineItem> tempSalesLineItem = null;
 
-
-            tempId = CartReader.GetInt32(CartReader.GetOrdinal("id"));
-            tempLastUpdated = CartReader.GetDateTime(CartReader.GetOrdinal("lastUpdated"));
-            if (_salelineitem.GetSalesLineItems(tempId, null) != null)
+            tempId = cartReader.GetInt32(cartReader.GetOrdinal("id"));
+            tempLastUpdated = cartReader.GetDateTime(cartReader.GetOrdinal("lastUpdated"));
+            if (_salelineitemDatabaseAccess.GetSalesLineItems(tempId, null) != null)
             {
-                tempSalesLineItem = _salelineitem.GetSalesLineItems(tempId, null);
+                tempSalesLineItem = _salelineitemDatabaseAccess.GetSalesLineItems(tempId, null);
             }
 
             foundCart = new Cart(tempId, tempLastUpdated, tempSalesLineItem);
 
             return foundCart;
         }
-
-
     }
 }

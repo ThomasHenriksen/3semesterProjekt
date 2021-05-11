@@ -13,6 +13,7 @@ namespace ArmysalgService.BusinessLogic
         /// </returns>
         /// <param name="aCustomer">Customer object.</param>
         int AddCustomer(Customer aCustomer);
+
         // Find and return customer from database by customer number.
         /// <summary>
         /// Find and return customer from database by customer number.
@@ -22,6 +23,7 @@ namespace ArmysalgService.BusinessLogic
         /// </returns>
         /// <param name="customerNo">Customer number.</param>
         Customer GetCustomer(int customerNo);
+
         // Find and return customer from database by customer email.
         /// <summary>
         /// Find and return customer from database by customer email.
@@ -31,7 +33,5 @@ namespace ArmysalgService.BusinessLogic
         /// </returns>
         /// <param name="customerEmail">Customer email.</param>
         Customer GetCustomer(string customerEmail);
-
-
     }
 }

@@ -13,6 +13,7 @@ namespace ArmysalgDataAccess.Database
         /// </returns>
         /// <param name="aCustomer">Customer object.</param>
         int AddCustomer(Customer aCustomer);
+
         // Find and return customer from database by customer number.
         /// <summary>
         /// Find and return customer from database by customer number.
@@ -22,6 +23,7 @@ namespace ArmysalgDataAccess.Database
         /// </returns>
         /// <param name="customerNo">Customer number.</param>
         Customer GetCustomerByCustomerNo(int customerNo);
+
         // Find and return customer from database by customer email.
         /// <summary>
         /// Find and return customer from database by customer email.
@@ -31,6 +33,7 @@ namespace ArmysalgDataAccess.Database
         /// </returns>
         /// <param name="customerEmail">Customer email.</param>
         Customer GetCustomerByCustomerEmail(string findCustomerEmail);
+
         // Delete customer from database based on customer number.
         /// <summary>
         /// Delete customer from database based on customer number.
@@ -40,6 +43,7 @@ namespace ArmysalgDataAccess.Database
         /// </returns>
         /// <param name="customerNo">Customer number.</param>
         bool DeleteCustomerByCustomerNo(int customerNo);
+
         // Checks if customer has AspNetUser by comparing email parameter.
         /// <summary>
         /// Checks if customer has AspNetUser by comparing email parameter.
@@ -49,6 +53,7 @@ namespace ArmysalgDataAccess.Database
         /// </returns>
         /// <param name="aCustomer">Customer object.</param>
         bool CustomerHasAspNetUser(Customer aCustomer);
+
         // Connects customer to AspNetUser in database.
         /// <summary>
         /// Connects customer to AspNetUser in database.

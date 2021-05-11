@@ -44,7 +44,7 @@ namespace ArmysalgDataTest
             int idOfInsertedCustomer = _customerDatabaseAccess.AddCustomer(customerToCreate);
             Customer customerToRead = _customerDatabaseAccess.GetCustomerByCustomerNo(idOfInsertedCustomer);
 
-            int idOfInsertedCart = _cartDatabaseAccess.CreateCart(cartToCreate, customerToRead);
+            int idOfInsertedCart = _cartDatabaseAccess.AddCart(cartToCreate, customerToRead);
             Cart cartToRead = _cartDatabaseAccess.GetCartById(idOfInsertedCart);
 
             extraOutput.WriteLine("KURVINFO");

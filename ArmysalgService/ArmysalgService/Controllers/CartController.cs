@@ -22,16 +22,15 @@ namespace ArmysalgService.Controllers
             _customerController = new CustomerLogic(_configuration);
         }
 
-
         /* Data retrieved from the database, is converted to eksternal 
          * format, evaluated and the an response must be sent back*/
-        // URL: api/products
+        // URL: api/Cart
         [HttpGet, Route("{CustomerNo}")]
-        public ActionResult<CartdataReadDto> Get(int CustomerNo)
+        public ActionResult<CartdataReadDto> GetCustomer(int customerNo)
         {
             ActionResult<CartdataReadDto> foundReturn;
             // retrieve and convert data
-            Cart foundCart = _cartControl.Get(_customerController.GetCustomer(CustomerNo));
+            Cart foundCart = _cartControl.GetCart(_customerController.GetCustomer(customerNo));
             CartdataReadDto foundDts = ModelConversion.CartdataReadDtoConvert.FromCart(foundCart);
             // evaluate
             if (foundDts != null)
@@ -53,18 +52,16 @@ namespace ArmysalgService.Controllers
             return foundReturn;
         }
 
-
-
-        // URL: api/Product
+        // URL: api/Cart/5
         [HttpPost, Route("{CustomerNo}")]
-        public ActionResult<int> PostCart(CartdataWriteDto inCart, int CustomerNo)
+        public ActionResult<int> PostCart(CartdataWriteDto inCart, int customerNo)
         {
             ActionResult<int> foundReturn;
             int insertedId = -1;
             if (inCart != null)
             {
                 Cart dbCart = CartdataWriteDtoConvert.ToCart(inCart);
-                insertedId = _cartControl.AddCart(dbCart, _customerController.GetCustomer(CustomerNo));
+                insertedId = _cartControl.AddCart(dbCart, _customerController.GetCustomer(customerNo));
             }
             if (insertedId > 0)
             {
@@ -76,9 +73,10 @@ namespace ArmysalgService.Controllers
             }
             return foundReturn;
         }
-        // URL: api/Product/2
+
+        // URL: api/Cart/3
         [HttpPut, Route("{id}")]
-        public ActionResult<int> PutUpdateProduct(int id, CartdataWriteDto inCart)
+        public ActionResult<int> UpdateCart(int cartId, CartdataWriteDto inCart)
         {
 
             ActionResult<int> foundReturn;
@@ -86,7 +84,7 @@ namespace ArmysalgService.Controllers
             if (inCart != null)
             {
                 Cart dbCart = CartdataWriteDtoConvert.ToCart(inCart);
-                dbCart.Id = id;
+                dbCart.Id = cartId;
                 _cartControl.UpdateCart(dbCart);
                 insertedId = dbCart.Id;
             }
@@ -101,13 +99,13 @@ namespace ArmysalgService.Controllers
             return foundReturn;
         }
 
-        // URL: api/Product/2
+        // URL: api/Cart/7
         [HttpDelete, Route("{id}")]
-        public ActionResult<bool> DeleteCart(int id)
+        public ActionResult<bool> DeleteCart(int cartId)
         {
             ActionResult<bool> foundReturn;
             bool insertedId = false;
-            Cart findCart = _cartControl.Get(_customerController.GetCustomer(id));
+            Cart findCart = _cartControl.GetCart(_customerController.GetCustomer(cartId));
             if (findCart != null)
             {
                 insertedId = _cartControl.DeleteCart(findCart.Id);
