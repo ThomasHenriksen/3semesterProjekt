@@ -24,7 +24,7 @@ namespace ArmysalgService.Controllers
 
         /* Data retrieved from the database, is converted to eksternal 
          * format, evaluated and the an response must be sent back*/
-        // URL: api/Cart
+        // URL: api/Cart/1
         [HttpGet, Route("{CustomerNo}")]
         public ActionResult<CartdataReadDto> GetCustomer(int customerNo)
         {
