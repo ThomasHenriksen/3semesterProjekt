@@ -165,9 +165,9 @@ namespace ArmysalgDataAccess.Database
             decimal tempPayMentAmount;
             DateTime tempSalesDate;
             List<SalesLineItem> tempSalesItem = null;
-            int? tempShipId;
-            int? tempEmpId;
-            int? tempCusId;
+            int tempShipId;
+            int tempEmpId;
+            int tempCusId;
 
 
             tempId = salesOrderReader.GetInt32(salesOrderReader.GetOrdinal("salesNo"));

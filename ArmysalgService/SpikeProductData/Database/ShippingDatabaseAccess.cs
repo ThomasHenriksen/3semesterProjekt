@@ -53,7 +53,7 @@ namespace ArmysalgDataAccess.Database
             return insertedId;
         }
 
-        public Shipping GetShippingByShippingID(int? shippingID)
+        public Shipping GetShippingByShippingID(int shippingID)
         {
 
             Shipping foundShipping = null;
