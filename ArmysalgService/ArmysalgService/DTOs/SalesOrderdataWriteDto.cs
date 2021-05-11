@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ArmysalgService.DTOs
 {
-    public class SalesOrderdataWriteDto
+    public class SalesOrderDataWriteDto
     {
         //public int SalesNo { get; set; }
         public DateTime SalesDate { get; set; }
@@ -15,11 +15,11 @@ namespace ArmysalgService.DTOs
         public Employee Employee { get; set; }
         public Customer Customer { get; set; }
 
-        public SalesOrderdataWriteDto()
+        public SalesOrderDataWriteDto()
         {
         }
 
-        public SalesOrderdataWriteDto(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem)
+        public SalesOrderDataWriteDto(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem)
         {
 
             SalesDate = salesDate;
@@ -28,7 +28,7 @@ namespace ArmysalgService.DTOs
             SalesLineItem = salesLineItem;
         }
 
-        public SalesOrderdataWriteDto(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping shippingId, Employee employeeId, Customer customerId) : this(salesDate, paymentAmount, status, salesLineItem)
+        public SalesOrderDataWriteDto(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping shippingId, Employee employeeId, Customer customerId) : this(salesDate, paymentAmount, status, salesLineItem)
         {
             Shipping = shippingId;
             Employee = employeeId;
