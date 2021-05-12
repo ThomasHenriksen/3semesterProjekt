@@ -25,11 +25,13 @@ namespace ArmysalgService.BusinessLogic
                 price.EndDate = newPrice.StartDate;
                 Put(price);
                 insertedId = _PriceAccess.AddPrice(newPrice, product);
+                newPrice.Id = insertedId;
             }
             else
             {
 
                 insertedId = _PriceAccess.AddPrice(newPrice, product);
+                newPrice.Id = insertedId;
             }
             return insertedId;
         }
