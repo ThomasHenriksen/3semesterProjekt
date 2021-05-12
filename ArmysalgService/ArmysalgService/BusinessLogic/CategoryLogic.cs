@@ -75,7 +75,7 @@ namespace ArmysalgService.BusinessLogic
             {
                 categoryHasBeenUpdated = _categoryAccess.UpdateCategory(categoryToUpdate);
             }
-            catch 
+            catch
             {
                 categoryHasBeenUpdated = false;
             }

@@ -1,7 +1,6 @@
 ﻿using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
 using Microsoft.Extensions.Configuration;
-using System;
 
 namespace ArmysalgService.BusinessLogic
 {
@@ -71,7 +70,7 @@ namespace ArmysalgService.BusinessLogic
             {
                 foundCustomer = _customerAccess.GetCustomerByCustomerEmail(customerEmail);
             }
-            catch 
+            catch
             {
                 foundCustomer = null;
             }

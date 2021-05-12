@@ -218,9 +218,9 @@ namespace ArmysalgDataAccess.Database
             {
                 numRowsUpdated = con.Execute(queryString, new
                 {
-                inQuantity = aSalesLineItem.Quantity,
-                inSaleId = aSalesOrder.SalesNo,
-                Id = aSalesLineItem.Id
+                    inQuantity = aSalesLineItem.Quantity,
+                    inSaleId = aSalesOrder.SalesNo,
+                    Id = aSalesLineItem.Id
                 });
             }
             return (numRowsUpdated == 1);

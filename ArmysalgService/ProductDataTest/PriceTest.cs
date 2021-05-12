@@ -1,9 +1,9 @@
-using System;
-using Xunit;
-using System.Collections.Generic;
-using Xunit.Abstractions;
 using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
+using System;
+using System.Collections.Generic;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace ArmysalgDataTest
 {
@@ -31,7 +31,7 @@ namespace ArmysalgDataTest
             decimal value = 99;
             DateTime startDate = DateTime.Now;
             DateTime? endDate = null;
-            Price priceToCreate = new (value, startDate, endDate);
+            Price priceToCreate = new(value, startDate, endDate);
 
             string productName = "Army Bukser";
             string productDescription = "Busker i Army farve";
@@ -42,8 +42,8 @@ namespace ArmysalgDataTest
             bool isDeleted = false;
             List<Category> categories = new();
 
-            Product productToCreate = new (productName, productDescription, purchasePrice, stock, minStock, maxStock, isDeleted, priceToCreate, categories);
-            
+            Product productToCreate = new(productName, productDescription, purchasePrice, stock, minStock, maxStock, isDeleted, priceToCreate, categories);
+
             //Act
             int idOfInsertedProduct = _productDatabaseAccess.AddProduct(productToCreate);
             productToCreate.Id = idOfInsertedProduct;

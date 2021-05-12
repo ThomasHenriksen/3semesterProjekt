@@ -1,7 +1,7 @@
-﻿using Xunit;
-using Xunit.Abstractions;
-using ArmysalgDataAccess.Database;
+﻿using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace ArmysalgDataTest
 {
@@ -57,7 +57,7 @@ namespace ArmysalgDataTest
 
             //CleanUp
             _customerDatabaseAccess.DeleteCustomerByCustomerNo(customerNoOfInsertedCustomer);
-   
+
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using ArmysalgDataAccess.Model;
 using ArmysalgService.DTOs;
-using System.Collections.Generic;
 
 namespace ArmysalgService.ModelConversion
 {

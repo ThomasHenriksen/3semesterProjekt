@@ -42,6 +42,6 @@ namespace ArmysalgDataAccess.Database
         /// Bool statement whether supplier was deleted or not.
         /// </returns>
         /// <param name="supplierId">Supplier id.</param>
-        bool DeleteSupplierById(int supplierId);       
+        bool DeleteSupplierById(int supplierId);
     }
 }

@@ -1,9 +1,9 @@
-using System;
-using Xunit;
-using System.Collections.Generic;
-using Xunit.Abstractions;
 using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
+using System;
+using System.Collections.Generic;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace ProductDataTest
 {

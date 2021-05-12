@@ -1,8 +1,7 @@
 ﻿using ArmysalgDataAccess.Model;
-using System.Collections.Generic;
 
 namespace ArmysalgDataAccess.Database
-{   
+{
     public interface IShippingDatabaseAccess
     {
         //Add shipping to the database.

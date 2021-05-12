@@ -20,7 +20,7 @@ namespace ArmysalgService.Controllers
             _configuration = inConfiguration;
             _categoryLogic = new CategoryLogic(_configuration);
         }
-        
+
         // URL: api/categories
         [HttpGet]
         public ActionResult<List<CategoryDataReadDto>> GetAllCategories()
@@ -30,7 +30,7 @@ namespace ArmysalgService.Controllers
             // retrieve and convert data
             List<Category> foundCategory = _categoryLogic.GetAllCategories();
             List<CategoryDataReadDto> foundDts = ModelConversion.CategoryDataReadDtoConvert.FromCategoryCollection(foundCategory);
-            
+
             if (foundDts != null)
             {
                 if (foundDts.Count > 0)
@@ -48,7 +48,7 @@ namespace ArmysalgService.Controllers
             }
             return foundReturn;
         }
-        
+
         // URL: api/categories/{id}
         [HttpGet, Route("{id}")]
         public ActionResult<CategoryDataReadDto> GetCategoryById(int categoryId)
@@ -59,7 +59,7 @@ namespace ArmysalgService.Controllers
             // retrieve and convert data
             Category foundCategorys = _categoryLogic.GetCategory(categoryId);
             CategoryDataReadDto foundDts = ModelConversion.CategoryDataReadDtoConvert.FromCategory(foundCategorys);
-            
+
             if (foundDts != null)
             {
                 if (foundDts != null)

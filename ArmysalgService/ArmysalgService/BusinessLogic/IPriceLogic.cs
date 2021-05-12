@@ -1,5 +1,4 @@
 ﻿using ArmysalgDataAccess.Model;
-using System.Collections.Generic;
 
 namespace ArmysalgService.BusinessLogic
 {

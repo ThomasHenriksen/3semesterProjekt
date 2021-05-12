@@ -1,8 +1,6 @@
 ﻿using ArmysalgDataAccess.Database;
 using ArmysalgDataAccess.Model;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 
 namespace ArmysalgService.BusinessLogic
 {
