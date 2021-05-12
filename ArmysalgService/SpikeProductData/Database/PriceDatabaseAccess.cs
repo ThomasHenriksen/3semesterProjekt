@@ -95,14 +95,21 @@ namespace ArmysalgDataAccess.Database
             {
                 SqlParameter productNoParam = new SqlParameter("@id", productNo);
                 readCommand.Parameters.Add(productNoParam);
-
+                SqlDataReader priceReader = null;
                 con.Open();
-
-                SqlDataReader priceReader = readCommand.ExecuteReader();
-                foundPrice = new Price();
-                while (priceReader.Read())
+                try
                 {
-                    foundPrice = GetPriceFromReader(priceReader);
+
+                    priceReader = readCommand.ExecuteReader();
+                }
+                catch { }
+                foundPrice = new Price();
+                if (priceReader != null)
+                {
+                    while (priceReader.Read())
+                    {
+                        foundPrice = GetPriceFromReader(priceReader);
+                    }
                 }
             }
             return foundPrice;
