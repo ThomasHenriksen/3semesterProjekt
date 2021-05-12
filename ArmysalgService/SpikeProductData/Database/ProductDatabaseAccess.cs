@@ -19,6 +19,7 @@ namespace ArmysalgDataAccess.Database
 
 
         }
+
         // Used for testing
         /// <summary>
         /// Used for testing
@@ -29,6 +30,7 @@ namespace ArmysalgDataAccess.Database
             _connectionString = inConnectionString;
 
         }
+
         // Add product to the database.
         /// <inheritdoc/>
         public int AddProduct(Product aProduct)
@@ -70,6 +72,7 @@ namespace ArmysalgDataAccess.Database
                 return insertedId;
             }
         }
+
         // Checks if product has a connects with category or not.
         /// <summary>
         /// Checks if product has a connects with category or not.
@@ -104,6 +107,7 @@ namespace ArmysalgDataAccess.Database
             }
             return exiting;
         }
+
         // Add a connects with categories
         /// <summary>
         /// Add a connects with categories
@@ -134,6 +138,7 @@ namespace ArmysalgDataAccess.Database
                 }
             }
         }
+
         // Find and return product from database by product number.
         /// <inheritdoc/>
         public Product GetProductByProductNo(int ProductNo)
@@ -165,6 +170,7 @@ namespace ArmysalgDataAccess.Database
             }
             return foundProduct;
         }
+
         // Find and return all product from database.
         /// <inheritdoc/>
         public List<Product> GetProductAll()
@@ -282,9 +288,9 @@ namespace ArmysalgDataAccess.Database
             return (numRowsUpdated == 1);
         }
 
-        // Build and return product object based on SQL data read.
+        // Build and return product object and price object based on SQL data read.
         /// <summary>
-        /// Build and return product object based on SQL data read.
+        /// Build and return product object and price object based on SQL data read.
         /// </summary>
         /// <returns>
         /// product object.
@@ -304,6 +310,7 @@ namespace ArmysalgDataAccess.Database
             DateTime? tempEndDate = null;
             List<Category> tempCategory = null;
 
+            // Build a  product object
             tempId = productReader.GetInt32(productReader.GetOrdinal("productNo"));
             tempName = productReader.GetString(productReader.GetOrdinal("ProductName"));
             tempDescription = productReader.GetString(productReader.GetOrdinal("ProductDescription"));
@@ -320,6 +327,7 @@ namespace ArmysalgDataAccess.Database
                 tempIsDeleted = false;
             }
 
+            // Build a price object
             tempPriceId = productReader.GetInt32(productReader.GetOrdinal("PriceID"));
             tempValue = productReader.GetDecimal(productReader.GetOrdinal("price"));
             tempStartDate = productReader.GetDateTime(productReader.GetOrdinal("startDate"));
@@ -328,7 +336,6 @@ namespace ArmysalgDataAccess.Database
                 tempEndDate = productReader.GetDateTime(productReader.GetOrdinal("endDate"));
             }
 
-            //  tempCategory = GetAllCategoryForProduct(tempId);
             foundPrice = new Price(tempPriceId, tempValue, tempStartDate, tempEndDate);
             foundProduct = new Product(tempId, tempName, tempDescription, tempPurchasePrice, tempStock, tempMinStock, tempMaxStock, tempIsDeleted, foundPrice, tempCategory);
 
