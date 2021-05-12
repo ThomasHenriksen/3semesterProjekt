@@ -18,28 +18,24 @@ namespace ArmysalgService.BusinessLogic
         public int Add(Price newPrice, Product product)
         {
             int insertedId;
-            try
+
+            Price price = _PriceAccess.GetPriceByProductNo(product.Id);
+            if (price != null)
             {
-                Price price = _PriceAccess.GetPriceByProductNo(product.Id);
-                if (price != null)
-                {
-                    price.EndDate = newPrice.StartDate;
-                    Put(price);
-                    insertedId = _PriceAccess.AddPrice(newPrice, product);
-                }
-                else
-                {
-
-                    insertedId = _PriceAccess.AddPrice(newPrice, product);
-                }
-
+                price.EndDate = newPrice.StartDate;
+                Put(price);
+                insertedId = _PriceAccess.AddPrice(newPrice, product);
             }
-            catch
+            else
             {
-                insertedId = -1;
+
+                insertedId = _PriceAccess.AddPrice(newPrice, product);
             }
             return insertedId;
         }
+
+
+
 
         // Update a price in the database.
         /// <inheritdoc/>
