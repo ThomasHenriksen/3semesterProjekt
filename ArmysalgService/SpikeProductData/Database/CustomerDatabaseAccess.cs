@@ -146,10 +146,7 @@ namespace ArmysalgDataAccess.Database
 
                 return customerHasAspNetUser;
             }
-
-
         }
-
         // Connects customer to AspNetUser in database.
         /// <inheritdoc/>
         public void ConnectCustomerToAspNetUser(Customer aCustomer)

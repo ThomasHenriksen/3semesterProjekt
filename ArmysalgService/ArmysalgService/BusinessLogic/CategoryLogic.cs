@@ -7,57 +7,79 @@ namespace ArmysalgService.BusinessLogic
 {
     public class CategoryLogic : ICategoryLogic
     {
-        private ICategoryDatabaseAccess _CategoryAccess;
-        private IPriceLogic _priceData;
+        private ICategoryDatabaseAccess _categoryAccess;
 
         public CategoryLogic(IConfiguration inConfiguration)
         {
-            _CategoryAccess = new CategoryDatabaseAccess(inConfiguration);
-            _priceData = new PriceLogic(inConfiguration);
+            _categoryAccess = new CategoryDatabaseAccess(inConfiguration);
         }
 
-        public int Add(Category aCategory)
+        // Add category to the database.
+        /// <inheritdoc/>
+        public int AddCategory(Category aCategory)
         {
-            int insertedId;
+            int insertedCategoryId;
 
-            insertedId = _CategoryAccess.CreateCategory(aCategory);
-            aCategory.Id = insertedId;
-
-
-            return insertedId;
+            try
+            {
+                insertedCategoryId = _categoryAccess.AddCategory(aCategory);
+                aCategory.Id = insertedCategoryId;
+            }
+            catch (System.Exception)
+            {
+                insertedCategoryId = -1;
+            }
+            return insertedCategoryId;
         }
 
-
-        /*
-           *  this method is use to find a product in the database by id
-           *  @param idToMatch
-           *  
-           *  @return Product
-         */
-        public Category Get(int idToMatch)
+        // Find and return category from database by category id.
+        /// <inheritdoc/>
+        public Category GetCategory(int categoryId)
         {
-
-            return _CategoryAccess.GetCategoryById(idToMatch);
-        }
-        /*
-           *  this method is use to find all products in the database where IsDelete is false 
-           *  @return List<Product> 
-         */
-        public List<Category> GetAll()
-        {
-
-            return _CategoryAccess.GetCategorysAll(); ;
+            Category foundCategory;
+            try
+            {
+                foundCategory = _categoryAccess.GetCategoryById(categoryId);
+            }
+            catch
+            {
+                foundCategory = null;
+            }
+            return foundCategory;
         }
 
-        /*
-           *  this method is use to update a product where ID is use to find product 
-           *  @param productToUpdate
-           *  @param id 
-           *  @return bool
-         */
-        public bool Put(Category categoryToUpdate)
+        // Find and return all categories from database.
+        /// <inheritdoc/>
+        public List<Category> GetAllCategories()
         {
-            return _CategoryAccess.UpdateCategory(categoryToUpdate);
+            List<Category> foundCategories;
+
+            try
+            {
+                foundCategories = _categoryAccess.GetAllCategories();
+            }
+            catch
+            {
+                foundCategories = null;
+            }
+            return foundCategories;
+        }
+
+        // Updates category from database based on category object.
+        /// <inheritdoc/>
+        public bool UpdateCategory(Category categoryToUpdate)
+        {
+            bool categoryHasBeenUpdated;
+
+            try
+            {
+                categoryHasBeenUpdated = _categoryAccess.UpdateCategory(categoryToUpdate);
+            }
+            catch 
+            {
+                categoryHasBeenUpdated = false;
+            }
+            return categoryHasBeenUpdated;
         }
     }
 }

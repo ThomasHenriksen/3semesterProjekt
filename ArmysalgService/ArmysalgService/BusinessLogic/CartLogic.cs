@@ -54,7 +54,7 @@ namespace ArmysalgService.BusinessLogic
                 }
                 else
                 {
-                    _salesLineItemDatabaseAccess.CreateSalesLineItem(salesLineItem, aCart);
+                    _salesLineItemDatabaseAccess.AddSalesLineItem(salesLineItem, aCart);
                 }
             }
             return aCart;

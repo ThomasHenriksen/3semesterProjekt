@@ -31,22 +31,5 @@ namespace ArmysalgService.DTOs
             Employee = employeeId;
             Customer = customerId;
         }
-
-
-        //public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem)
-        //{
-        //    SalesNo = salesNo;
-        //    SalesDate = salesDate;
-        //    PaymentAmount = paymentAmount;
-        //    Status = status;
-        //    SalesLineItem = salesLineItem;
-        //}
-
-        //public SalesOrderdataReadDto(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, int shippingId, int employeeId, int customerId) : this(salesNo, salesDate, paymentAmount, status, salesLineItem)
-        //{
-        //    ShippingId = shippingId;
-        //    EmployeeId = employeeId;
-        //    CustomerId = customerId;
-        //}
     }
 }

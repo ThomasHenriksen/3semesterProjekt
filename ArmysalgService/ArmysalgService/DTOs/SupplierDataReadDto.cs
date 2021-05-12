@@ -13,7 +13,6 @@
 
         public SupplierDataReadDto()
         {
-
         }
 
         public SupplierDataReadDto(int id, string name, string address, string zipCode, string city, string country, string phone, string email)

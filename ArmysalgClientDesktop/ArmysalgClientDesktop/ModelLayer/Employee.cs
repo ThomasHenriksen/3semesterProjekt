@@ -42,5 +42,10 @@ namespace ArmysalgClientDesktop.ModelLayer
             Salary = salary;
             Position = position;
         }
+
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
+        }
     }
 }
