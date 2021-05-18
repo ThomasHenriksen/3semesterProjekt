@@ -103,7 +103,7 @@ namespace ArmysalgDataAccess.Database
                     priceReader = readCommand.ExecuteReader();
                 }
                 catch { }
-               
+
                 if (priceReader != null)
                 {
                     foundPrice = new Price();
