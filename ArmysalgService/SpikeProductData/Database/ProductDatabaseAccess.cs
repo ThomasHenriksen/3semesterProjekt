@@ -37,8 +37,10 @@ namespace ArmysalgDataAccess.Database
         {
             int insertedId = -1;
 
-            string insertString = "insert into product (name, description, purchasePrice, stock, minStock, maxStock) OUTPUT INSERTED.productNo " +
-                "values (@Name, @Description, @PurchasePrice, @Stock, @MinStock, @MaxStock)";
+            string insertString = "insert into product (name, description, purchasePrice, stock, minStock, maxStock) ";
+            string output = "OUTPUT INSERTED.productNo ";
+            string values = "values (@Name, @Description, @PurchasePrice, @Stock, @MinStock, @MaxStock)";
+            insertString = insertString + output + values;
             using (TransactionScope scope = new TransactionScope())
             {
                 using (SqlConnection con = new SqlConnection(_connectionString))
