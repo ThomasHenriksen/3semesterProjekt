@@ -20,24 +20,30 @@ namespace ArmysalgClientDesktop.ModelLayer
         public Price price { get; set; }
         public List<Category> Categories { get; set; }
         public Supplier Supplier { get; set; }
+
+        // Constuct a product object.
+        /// <summary>
+        /// Constuct a product object.
+        /// </summary>
         public Product()
         {
         }
 
-        public Product(string name, string description, decimal purchasePrice, int stock, int minStock, int maxStock, bool isDeleted)
-        {
-            Name = name;
-            Description = description;
-            PurchasePrice = purchasePrice;
-            Stock = stock;
-            MinStock = minStock;
-            MaxStock = maxStock;
-            IsDeleted = isDeleted;
-        }
-
+        // Constuct a product object.
+        /// <summary>
+        /// Constuct a product object.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="purchasePrice"></param>
+        /// <param name="stock"></param>
+        /// <param name="minStock"></param>
+        /// <param name="maxStock"></param>
+        /// <param name="isDeleted"></param>
+        /// <param name="price"></param>
+        /// <param name="categories"></param>
         public Product(string name, string description, decimal purchasePrice,  int stock, int minStock, int maxStock, bool isDeleted, Price? price, List<Category> categories)
-        {
-           
+        {           
             Name = name;
             Description = description;
             PurchasePrice = purchasePrice;
@@ -46,8 +52,7 @@ namespace ArmysalgClientDesktop.ModelLayer
             MaxStock = maxStock;
             IsDeleted = isDeleted;
             this.price = price;
-            Categories = categories;
-            
+            Categories = categories;            
         }
 
         public override string ToString()

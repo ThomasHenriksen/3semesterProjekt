@@ -23,6 +23,14 @@ namespace ArmysalgClientDesktop.ServiceLayer
 
         public HttpStatusCode CurrentHttpStatusCode { get; set; }
 
+        // Find and return all categorie objects.
+        /// <summary>
+        /// Find and return all categories objects.
+        /// </summary>
+        /// <returns>
+        /// A list of category objects.
+        /// </returns>
+        /// <param name="tokenToUse">Jwt Token.</param>
         public async Task<List<Category>> GetAllCategories(string tokenToUse)
         {
             List<Category> categoriesFromService = null;

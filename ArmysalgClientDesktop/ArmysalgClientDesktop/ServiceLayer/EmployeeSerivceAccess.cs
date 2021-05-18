@@ -25,6 +25,15 @@ namespace ArmysalgClientDesktop.ServiceLayer
 
         /* Method to retrieve an Employee
          */
+        // Find and return all categorie objects.
+        /// <summary>
+        /// Find and return all categories objects.
+        /// </summary>
+        /// <returns>
+        /// A list of category objects.
+        /// </returns>
+        /// <param name="tokenToUse">Jwt Token.</param>
+        /// <param name="id">Employee number.</param>
         public async Task<Employee> GetEmployee(string tokenToUse, int id)
         {
             Employee employeeFromService = null;
@@ -70,6 +79,14 @@ namespace ArmysalgClientDesktop.ServiceLayer
             return employeeFromService;
         }
 
+        //  Find and returns all employees.
+        /// <summary>
+        /// Find and returns all employees.
+        /// </summary>
+        /// <returns>
+        /// List of employee.
+        /// </returns>
+        /// <param name="tokenToUse">Jwt Token</param>
         public async Task<List<Employee>> GetAllEmployees(string tokenToUse)
         {
             List<Employee> employeesFromService = null;
@@ -109,6 +126,15 @@ namespace ArmysalgClientDesktop.ServiceLayer
             return employeesFromService;
         }
 
+        //  Save a new employee object.
+        /// <summary>
+        /// Save a new employee object.
+        /// </summary>
+        /// <returns>
+        /// employee number of saved employee object.
+        /// </returns>
+        /// <param name="employeeToSave">Employee object.</param>
+        /// <param name="tokenToUse">Jwt Token.</param>
         public async Task<int> SaveEmployee(Employee employeeToSave, string tokenToUse)
         {
             int insertedEmployeeId;

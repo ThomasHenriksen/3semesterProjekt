@@ -19,9 +19,12 @@ namespace ArmysalgClientDesktop.ServiceLayer
             _httpClient = new HttpClient();
         }
 
-        /* 
-         * Method to save an Supplier
-         */
+        //  Save a new supplier object.
+        /// <summary>
+        /// Save a new supplier object.
+        /// </summary>
+        /// <returns>Supplier id of save supplier object.</returns>
+        /// <param name="supplierToSave">Supplier object</param>
         public async Task<int> SaveSupplier(Supplier supplierToSave)
         {
             int insertedSupplierId;
@@ -54,6 +57,13 @@ namespace ArmysalgClientDesktop.ServiceLayer
             return insertedSupplierId;
         }
 
+        // Find and return all suppliers.
+        /// <summary>
+        /// Find and return all suppliers.
+        /// </summary>
+        /// <returns>
+        /// A list of category objects.
+        /// </returns>
         public async Task<List<Supplier>> GetAllSuppliers()
         {
             List<Supplier> suppliersFromService = null;
@@ -82,7 +92,6 @@ namespace ArmysalgClientDesktop.ServiceLayer
             {
                 suppliersFromService = null;
             }
-
             return suppliersFromService;
         }
     }

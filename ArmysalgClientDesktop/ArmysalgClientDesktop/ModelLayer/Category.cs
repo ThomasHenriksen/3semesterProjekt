@@ -16,6 +16,12 @@ namespace ArmysalgClientDesktop.ModelLayer
         {
 
         }
+        // Construct a category object.
+        /// <summary>
+        /// Construct a category object.
+        /// </summary>
+        /// <param name="name">Name of category</param>
+        /// <param name="description">Description of category</param>
         public Category(string name, string description)
         {
             Name = name;
