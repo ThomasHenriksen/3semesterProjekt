@@ -13,34 +13,20 @@ namespace ArmysalgClientDesktop.ModelLayer
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-
-
         public Price() { }
 
+        // Constuct a price object.
+        /// <summary>
+        /// Constuct a price object.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
         public Price(decimal value, DateTime startDate, DateTime? endDate)
         {
             Value = value;
             StartDate = startDate;
             EndDate = endDate;
-
-        }
-        public Price(int id, decimal value, DateTime startDate)
-        {
-            Id = id;
-            Value = value;
-            StartDate = startDate;
-
-        }
-        public Price(int id, decimal value, DateTime startDate, DateTime? endDate)
-        {
-            Id = id;
-            Value = value;
-            StartDate = startDate;
-            if (endDate != null)
-            {
-                EndDate = endDate;
-            }
-
         }
     }
 }

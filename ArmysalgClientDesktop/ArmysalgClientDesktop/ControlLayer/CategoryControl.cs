@@ -20,6 +20,13 @@ namespace ArmysalgClientDesktop.ControlLayer
             _cAccess = new CategoryServiceAccess();
         }
 
+        // Find and return all categorie objects.
+        /// <summary>
+        /// Find and return all categories objects.
+        /// </summary>
+        /// <returns>
+        /// A list of category objects.
+        /// </returns>
         public async Task<List<Category>> GetAllCategories()
         {
             List<Category> foundCategories = null; //await _cAccess.GetAllCategories(tokenVaule);
@@ -44,7 +51,14 @@ namespace ArmysalgClientDesktop.ControlLayer
             }
             return foundCategories;
         }
-
+        //  Find and return Jwt token.
+        /// <summary>
+        /// Find and return Jwt token.
+        /// </summary>
+        /// <returns>
+        /// A Jwt token objekt.
+        /// </returns>
+        /// <param name="useState">Jwt token objekt</param>
         private async Task<string> GetToken(TokenState useState)
         {
             //string foundToken = null;

@@ -19,6 +19,13 @@ namespace ArmysalgClientDesktop.ControlLayer
             _pAccess = new ProductServiceAccess();
         }
 
+        //  Find and return products.
+        /// <summary>
+        /// Find and return products.
+        /// </summary>
+        /// <returns>
+        /// List of product.
+        /// </returns>
         public async Task<List<Product>> GetAllProducts()
         {
             List<Product> foundProducts = null; // await _pAccess.GetProducts();
@@ -41,12 +48,27 @@ namespace ArmysalgClientDesktop.ControlLayer
                     foundProducts = await _pAccess.GetProducts(tokenValue);
                 }
             }
-
             return foundProducts;
         }
 
-
-
+        //  Save a new product object.
+        /// <summary>
+        /// Save a new product object.
+        /// </summary>
+        /// <returns>
+        /// Employee number of saved employee object.
+        /// </returns>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="purchasePrice"></param>
+        /// <param name="stock"></param>
+        /// <param name="minStock"></param>
+        /// <param name="maxStock"></param>
+        /// <param name="isDeleted"></param>
+        /// <param name="value"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="categories"></param>
         public async Task<int> SaveProduct(string name, string description, decimal purchasePrice, 
             int stock, int minStock, int maxStock, bool isDeleted, decimal value, DateTime startDate, DateTime? endDate, List<Category> categories)
         {
@@ -77,13 +99,20 @@ namespace ArmysalgClientDesktop.ControlLayer
             return await _pAccess.SaveProduct(newProduct, tokenValue);
         }
 
+        //  Find and return Jwt token.
+        /// <summary>
+        /// Find and return Jwt token.
+        /// </summary>
+        /// <returns>
+        /// A Jwt token objekt.
+        /// </returns>
+        /// <param name="useState">Jwt token objekt</param>
         private async Task<string> GetToken(TokenState useState)
         {
             //string foundToken = null;
             TokenManager tokenHelp = new TokenManager();
             string foundToken = await tokenHelp.GetToken(useState);
             return foundToken;
-
         }
     }
 }

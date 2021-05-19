@@ -23,8 +23,15 @@ namespace ArmysalgClientDesktop.ServiceLayer
 
         public HttpStatusCode CurrentHttpStatusCode { get; set; }
 
-        /* Method to retrieve Products 
-         */
+        //  Find and return products.
+        /// <summary>
+        /// Find and return products.
+        /// </summary>
+        /// <returns>
+        /// List of product.
+        /// </returns>
+        /// <param name="tokenToUse">Jwt Token.</param>
+        /// <param name="id"></param>
         public async Task<List<Product>> GetProducts(string tokenToUse, int id = -1)
         {
             List<Product> productFromService = null;
@@ -82,6 +89,15 @@ namespace ArmysalgClientDesktop.ServiceLayer
             return productFromService;
         }
 
+        //  Save a new product object.
+        /// <summary>
+        /// Save a new product object.
+        /// </summary>
+        /// <returns>
+        /// Product number on saved product object.
+        /// </returns>
+        /// <param name="productToSave">Product object.</param>
+        /// <param name="tokenToUse">Jwt Token</param>
         public async Task<int> SaveProduct(Product productToSave, string tokenToUse)
         {
             int insertedProductId;

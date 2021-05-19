@@ -19,6 +19,14 @@ namespace ArmysalgClientDesktop.ControlLayer
             _eAccess = new EmployeeServiceAccess();
         }
 
+        // Find and return employee by employee number.
+        /// <summary>
+        /// Find and return employee by employee number.
+        /// </summary>
+        /// <returns>
+        /// employee object.
+        /// </returns>
+        /// <param name="id">Employee number.</param>
         public async Task<Employee> GetEmployee(int id)
         {
             Employee foundEmployee = null; // await _eAccess.GetEmployee(id);
@@ -44,6 +52,13 @@ namespace ArmysalgClientDesktop.ControlLayer
             return foundEmployee;
         }
 
+        // Find and return all employees.
+        /// <summary>
+        /// Find and return all employees.
+        /// </summary>
+        /// <returns>
+        /// List of employee.
+        /// </returns>
         public async Task<List<Employee>> GetAllEmployees()
         {
             List<Employee> foundEmployees = null; // await _eAccess.GetAllEmployees();
@@ -68,7 +83,22 @@ namespace ArmysalgClientDesktop.ControlLayer
             }
             return foundEmployees;
         }
-
+        //  Save a new employee object.
+        /// <summary>
+        /// Save a new employee object.
+        /// </summary>
+        /// <returns>
+        /// Employee number of saved employee object.
+        /// </returns>
+        /// <param name="firstName">First name of employee</param>
+        /// <param name="lastName">Last name of employee</param>
+        /// <param name="address">Address of employee</param>
+        /// <param name="zipCode">Zipcode of employee</param>
+        /// <param name="city">City of employee</param>
+        /// <param name="phone">Phone of employee</param>
+        /// <param name="email">Email of employee</param>
+        /// <param name="salary">Salary of employee</param>
+        /// <param name="position">Position of employee</param>
         public async Task<int> SaveEmployee(string firstName, string lastName, string address, string zipCode, string city, string phone, string email, double salary, string position)
         {
             Employee newEmployee = null;
@@ -91,18 +121,24 @@ namespace ArmysalgClientDesktop.ControlLayer
                     newEmployee = new Employee(firstName, lastName, address, zipCode, city,
                 phone, email, salary, position);
                 }
-            }            
-
+            }       
             return await _eAccess.SaveEmployee(newEmployee, tokenValue);
         }
 
+        //  Find and return Jwt token.
+        /// <summary>
+        /// Find and return Jwt token.
+        /// </summary>
+        /// <returns>
+        /// A Jwt token objekt.
+        /// </returns>
+        /// <param name="useState">Jwt token objekt</param>
         private async Task<string> GetToken(TokenState useState)
         {
             //string foundToken = null;
             TokenManager tokenHelp = new TokenManager();
             string foundToken = await tokenHelp.GetToken(useState);
             return foundToken;
-
         }
     }
 }
