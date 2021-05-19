@@ -1,8 +1,5 @@
 ﻿using ArmysalgClientWeb.Models;
 using ArmysalgClientWeb.ServiceLayer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ArmysalgClientWeb.BusinessLogic
@@ -15,7 +12,14 @@ namespace ArmysalgClientWeb.BusinessLogic
         {
             _salesOrderService = new SalesOrderService();
         }
-
+        // Method to save a SalesOrder.
+        /// <summary>
+        /// Method to save a SalesOrder.
+        /// </summary>
+        /// <returns>
+        /// int 
+        /// </returns>
+        /// <param name="salesOrderToSave">SalesOrder object.</param>
         public async Task<int> InsertSalesOrder(SalesOrder salesOrder)
         {
             int wasInserted = -1;

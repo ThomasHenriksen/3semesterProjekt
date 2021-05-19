@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace ArmysalgClientWeb.Models
@@ -17,10 +15,6 @@ namespace ArmysalgClientWeb.Models
         public Employee? Employee { get; set; }
         public Customer? Customer { get; set; }
 
-        public SalesOrder()
-        {
-           
-        }
 
         public SalesOrder(decimal paymentAmount, List<SalesLineItem> salesLineItems, Customer customer)
         {
@@ -29,27 +23,6 @@ namespace ArmysalgClientWeb.Models
             Status = 0;
             SalesLineItem = salesLineItems;
             Customer = customer;
-        }
-
-        public SalesOrder(DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping? shippingId, Employee? employeeId, Customer? customerId)
-        {
-            SalesDate = salesDate;
-            PaymentAmount = paymentAmount;
-            Status = status;
-            SalesLineItem = salesLineItem;
-            Shipping = shippingId;
-            Employee = employeeId;
-            Customer = customerId;
-        }
-
-
-
-        public SalesOrder(int salesNo, DateTime salesDate, decimal paymentAmount, SalesOrderStatus status, List<SalesLineItem> salesLineItem, Shipping? shippingId, Employee? employeeId, Customer? customerId) : this(salesNo, salesDate, paymentAmount, status)
-        {
-            SalesLineItem = salesLineItem;
-            Shipping = shippingId;
-            Employee = employeeId;
-            Customer = customerId;
         }
 
         public SalesOrder(int salesNo, DateTime date, decimal paymentAmount, SalesOrderStatus status)

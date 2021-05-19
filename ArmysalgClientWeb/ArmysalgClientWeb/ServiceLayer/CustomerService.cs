@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,17 +16,21 @@ namespace ArmysalgClientWeb.ServiceLayer
         {
             _httpClient = new HttpClient();
         }
-
-        public async Task<List<Customer>> GetCustomers(int id = -1)
+        // Method to retrieve all customers.
+        /// <summary>
+        /// Method to retrieve all customers.
+        /// </summary>
+        /// <returns>
+        /// list of Customers object.
+        /// </returns>
+        /// <param name="CustomerNo">Customer Number.</param>
+        public async Task<List<Customer>> GetCustomers()
         {
             List<Customer> customerFromService = null;
 
             string useRestUrl = restUrl;
-            bool hasValidId = (id > 0);
-            if (hasValidId)
-            {
-                useRestUrl += id;
-            }
+            bool hasValidId = false;
+
             var uri = new Uri(String.Format(useRestUrl));
             try
             {
@@ -66,7 +69,14 @@ namespace ArmysalgClientWeb.ServiceLayer
             }
             return customerFromService;
         }
-
+        // Method to retrieve a customer by customerEmail.
+        /// <summary>
+        /// Method to retrieve a customer by customerEmail.
+        /// </summary>
+        /// <returns>
+        /// Customers object.
+        /// </returns>
+        /// <param name="customerEmail">customer email.</param>
         public async Task<Customer> GetCustomerByEmail(string customerEmail)
         {
             Customer customerFromService = null;
@@ -100,7 +110,14 @@ namespace ArmysalgClientWeb.ServiceLayer
             }
             return customerFromService;
         }
-
+        // Method to save a customer.
+        /// <summary>
+        /// Method to save a customer.
+        /// </summary>
+        /// <returns>
+        /// int 
+        /// </returns>
+        /// <param name="customerToSave">customer object.</param>
         public async Task<int> SaveCustomer(Customer customerToSave)
         {
             int insertedCustomerNo;

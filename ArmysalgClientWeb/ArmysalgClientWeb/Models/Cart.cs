@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ArmysalgClientWeb.Models
 {
@@ -20,14 +18,13 @@ namespace ArmysalgClientWeb.Models
         {
             LastUpdated = DateTime.Now;
         }
-
-        public Cart(int id, DateTime lastUpdated, List<SalesLineItem> salesLineItems)
-        {
-            Id = id;
-            LastUpdated = lastUpdated;
-            SalesLineItems = salesLineItems;
-        }
-
+        //Method to calculate a total value of cart.
+        /// <summary>
+        /// Method to calculate a total value of cart.
+        /// </summary>
+        /// <returns>
+        /// decimal
+        /// </returns>
         private decimal CalcTotalValueOfCart()
         {
             decimal totalValue = 0;
