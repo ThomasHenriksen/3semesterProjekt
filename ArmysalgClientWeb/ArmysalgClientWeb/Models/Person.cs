@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ArmysalgClientWeb.Models
+﻿namespace ArmysalgClientWeb.Models
 {
     public class Person
     {
@@ -15,8 +10,5 @@ namespace ArmysalgClientWeb.Models
         public string Phone { get; set; }
         public string Email { get; set; }
 
-        public Person()
-        {
-        }
     }
 }

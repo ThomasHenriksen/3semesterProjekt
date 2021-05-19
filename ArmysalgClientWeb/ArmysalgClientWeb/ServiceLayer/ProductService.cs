@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -18,18 +17,21 @@ namespace ArmysalgClientWeb.ServiceLayer
             _httpClient = new HttpClient();
         }
 
-        /* Method to retrieve Products 
-         */
-        public async Task<List<Product>> GetProducts(int id = -1)
+        // Method to retrieve all products.
+        /// <summary>
+        /// Method to retrieve all products.
+        /// </summary>
+        /// <returns>
+        /// list of product object.
+        /// </returns>
+        /// <param name="id">Product id.</param>
+        public async Task<List<Product>> GetProducts()
         {
             List<Product> productFromService = null;
 
             string useRestUrl = restUrl;
-            bool hasValidId = (id > 0);
-            if (hasValidId)
-            {
-                useRestUrl += id;
-            }
+            bool hasValidId = false;
+
             var uri = new Uri(String.Format(useRestUrl));
             try
             {
@@ -68,7 +70,14 @@ namespace ArmysalgClientWeb.ServiceLayer
             }
             return productFromService;
         }
-
+        // Method to retrieve a product by id.
+        /// <summary>
+        /// Method to retrieve a product by id.
+        /// </summary>
+        /// <returns>
+        /// product object.
+        /// </returns>
+        /// <param name="id">Product id.</param>
         public async Task<Product> GetProduct(int id)
         {
             Product productFromService = null;

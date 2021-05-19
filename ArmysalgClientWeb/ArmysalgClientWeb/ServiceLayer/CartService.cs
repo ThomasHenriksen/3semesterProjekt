@@ -1,8 +1,6 @@
 ﻿using ArmysalgClientWeb.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +17,14 @@ namespace ArmysalgClientWeb.ServiceLayer
             _httpClient = new HttpClient();
         }
 
-        /* Method to retrieve all Products in customers cart
-         */
+        // Find and return cart from database by CustomerNo.
+        /// <summary>
+        /// Find and return cart from database by CustomerNo.
+        /// </summary>
+        /// <returns>
+        /// Cart object.
+        /// </returns>
+        /// <param name="CustomerNo">Customer Number.</param>
         public async Task<Cart> GetCartByCustomerNo(int CustomerNo)
         {
             Cart cartFromService = null;
@@ -54,7 +58,14 @@ namespace ArmysalgClientWeb.ServiceLayer
             }
             return cartFromService;
         }
-
+        // Update cart in the database.
+        /// <summary>
+        /// Update cart in the database.
+        /// </summary>
+        /// <returns>
+        /// Bool statement whether cart was deleted or not.
+        /// </returns>
+        /// <param name="aCart">Cart object.</param>
         public async Task<bool> UpdateCart(Cart cartToUpdate)
         {
             bool updatedOk;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ArmysalgClientWeb.Models
+﻿namespace ArmysalgClientWeb.Models
 {
     public enum SalesOrderStatus
     {

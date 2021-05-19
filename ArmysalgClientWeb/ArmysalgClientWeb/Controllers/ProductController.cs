@@ -1,14 +1,14 @@
-﻿using System;
+﻿using ArmysalgClientWeb.BusinessLogic;
+using ArmysalgClientWeb.BusinessLogicLayer;
+using ArmysalgClientWeb.Data;
+using ArmysalgClientWeb.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ArmysalgClientWeb.Data;
-using ArmysalgClientWeb.Models;
-using ArmysalgClientWeb.BusinessLogic;
-using ArmysalgClientWeb.BusinessLogicLayer;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ArmysalgClientWeb.Controllers
 {
@@ -80,7 +80,8 @@ namespace ArmysalgClientWeb.Controllers
         {
             try
             {
-                if (quantity == 0) {
+                if (quantity == 0)
+                {
                     quantity = 1;
                 }
                 Product productToAdd = await _productLogic.GetProductById(id);
@@ -112,13 +113,13 @@ namespace ArmysalgClientWeb.Controllers
                         i++;
                     }
                 }
-                if(!found)
+                if (!found)
                 {
                     salesLineItemToAdd = new SalesLineItem(quantity, productToAdd);
                     cart.SalesLineItems.Add(salesLineItemToAdd);
                 }
 
-                
+
                 bool ok = await _cartLogic.UpdateCart(cart);
 
                 return RedirectToAction(nameof(Index));

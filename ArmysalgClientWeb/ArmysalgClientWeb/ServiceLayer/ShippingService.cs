@@ -1,8 +1,6 @@
 ﻿using ArmysalgClientWeb.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +17,14 @@ namespace ArmysalgClientWeb.ServiceLayer
         {
             _client = new HttpClient();
         }
-
+        // Method to save a Shipping.
+        /// <summary>
+        /// Method to save a Shipping.
+        /// </summary>
+        /// <returns>
+        /// int 
+        /// </returns>
+        /// <param name="shippingToSave">Shipping object.</param>
         public async Task<int> SaveShipping(Shipping shippingToSave)
         {
             int insertedShippingID;

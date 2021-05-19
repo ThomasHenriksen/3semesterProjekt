@@ -1,5 +1,3 @@
-using System;
-
 namespace ArmysalgClientWeb.Models
 {
     public class ErrorViewModel

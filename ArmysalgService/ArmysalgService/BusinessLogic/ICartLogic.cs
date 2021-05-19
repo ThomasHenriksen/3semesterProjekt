@@ -30,9 +30,9 @@ namespace ArmysalgService.BusinessLogic
         /// Update cart in the database.
         /// </summary>
         /// <returns>
-        /// Bool statement whether cart was updated or not.
+        /// Cart object.
         /// </returns>
-        /// <param name="cartId">Cart ID.</param>
+        /// <param name="aCart">Cart object.</param>
         Cart UpdateCart(Cart aCart);
 
         // Delete cart from database based on cart ID.
